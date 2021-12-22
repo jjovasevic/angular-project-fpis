@@ -1,0 +1,5 @@
+<h1>Kupci</h1>
+
+<p *ngFor = "let customer of customers">
+    {{ customer.naziv_kupca }} | {{customer.adresa.broj_adrese}} | {{customer.adresa.id.adresa_ID}} | {{ customer.zaposleni.jmbg }}
+</p>

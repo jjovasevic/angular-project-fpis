@@ -1,5 +1,116 @@
-<h1>Kupci</h1>
-
 <p *ngFor = "let customer of customers">
     {{ customer.naziv_kupca }} | {{customer.adresa.broj_adrese}} | {{customer.adresa.id.adresa_ID}} | {{ customer.zaposleni.jmbg }}
 </p>
+<p>--------------------------------------------------------------------------------------------</p>
+
+
+<form [formGroup]="customerFormGroup" (ngSubmit)="onSubmit()">
+
+    <div formGroupName="customer" class="form-area">
+        <h3>Unos novog kupca</h3>
+
+        <div class="row">
+            <div class="col-md-2"><label>pib</label></div>
+            <div class="col-md-9">
+                <div class="input-space">
+                    <input formControlName ="pib" type="number">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2"><label>Naziv kupca</label></div>
+            <div class="col-md-9">
+                <div class="input-space">
+                    <input formControlName ="naziv_kupca" type="text">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2"><label>Email kupca</label></div>
+            <div class="col-md-9">
+                <div class="input-space">
+                    <input formControlName ="email_kupca" type="text">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2"><label>Telefon kupca</label></div>
+            <div class="col-md-9">
+                <div class="input-space">
+                    <input formControlName ="telefon_kupca" type="text">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2"><label>Potpis kupca</label></div>
+            <div class="col-md-9">
+                <div class="input-space">
+                    <input formControlName ="potpis" type="text">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2"><label>Grad</label></div>
+            <div class="col-md-9">
+                <div class="input-space">
+                    <select formControlName ="postanski_broj" (change)="getStreets()">
+                        <!-- [ngValue] cuvamo referencu na city objekat -->
+                        <option *ngFor="let city of cities" [ngValue]="city">
+                            {{city.postanski_broj}} | {{city.naziv_grada}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2"><label>Ulica</label></div>
+            <div class="col-md-9">
+                <div class="input-space">
+                    <select formControlName ="sifra_ulice" (change)="getAdress()">
+                        <!-- [ngValue] cuvamo referencu na street objekat -->
+                        <option *ngFor="let street of streets" [ngValue]="street">
+                            {{street.id.sifra_ulice}} | {{street.naziv_ulice}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2"><label>Adresa</label></div>
+            <div class="col-md-9">
+                <div class="input-space">
+                    <select formControlName ="adresa_ID">
+                        <option *ngFor="let adr of adress" [ngValue]="adr">
+                            {{adr.id.adresa_ID}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2"><label>Zaposleni</label></div>
+            <div class="col-md-9">
+                <div class="input-space">
+                    <select formControlName ="jmbg">
+                        <option *ngFor="let employee of employees" [ngValue]="employee">
+                            {{employee.jmbg}} | {{employee.ime_prezime}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-info">Unesi</button>
+        </div>
+    </div>
+
+</form>

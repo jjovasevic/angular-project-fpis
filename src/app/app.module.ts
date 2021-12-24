@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { KupacComponent } from './kupac/kupac.component';
 import {HttpClientModule} from '@angular/common/http';
 import { KupacService } from './services/kupac.service';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { KupacService } from './services/kupac.service';
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [KupacService],
   bootstrap: [AppComponent]

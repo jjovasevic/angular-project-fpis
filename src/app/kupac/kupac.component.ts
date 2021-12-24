@@ -33,15 +33,6 @@ export class KupacComponent implements OnInit {
     //forma za unos novog kupca
      this.customerFormGroup = this.formBuilder.group({
         customer: this.formBuilder.group({
-            // pib: [''],
-            // naziv_kupca: [''],
-            // email_kupca: [''],
-            // telefon_kupca: [''],
-            // potpis: [''],
-            // adresa_ID: [''],
-            // sifra_ulice: [''],
-            // postanski_broj: [''],
-            // jmbg: ['']
             pib: [''],
             naziv_kupca: [''],
             email_kupca: [''],
@@ -96,14 +87,7 @@ export class KupacComponent implements OnInit {
       data => {
           this.streets = data;
       }
-    )
-    // const grad = this.customerFormGroup.get('customer')?.value.postanski_broj;
-
-    // this.kupacService.getStreets(grad.postanski_broj).subscribe(
-    //   data => {
-    //       this.streets = data;
-    //   }
-    // )
+    );
   }
 
   getAdress(){
@@ -113,14 +97,7 @@ export class KupacComponent implements OnInit {
       data => {
           this.adress = data;
       }
-    )
-    // const ulica = this.customerFormGroup.get('customer')?.value.sifra_ulice;
-    // console.log(ulica);
-    // this.kupacService.getAdress(ulica.id.postanski_broj,ulica.id.sifra_ulice).subscribe(
-    //   data => {
-    //       this.adress = data;
-    //   }
-    // )
+    );
   }
 
 
@@ -142,7 +119,7 @@ export class KupacComponent implements OnInit {
 
     this.kupacService.postCustomer(newCustomer).subscribe({
         next: response => {
-          alert(`Kupac uspesno ubacen u bazu!\nNovi kupac: ${response.kupac}`);
+          alert(`Kupac uspesno ubacen u bazu!`);
           this.resetForm();
         },
         error: err => {

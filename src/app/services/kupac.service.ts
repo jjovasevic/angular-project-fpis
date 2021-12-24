@@ -47,6 +47,7 @@ export class KupacService {
   }
 
   postCustomer(kupacIns : KupacInsert):Observable<any>{
+    console.log(kupacIns);
     return this.httpClient.post<KupacInsert>(this.customerUrl,kupacIns);
   }
 

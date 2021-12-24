@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Adresa } from '../klase/adresa';
 import { Grad } from '../klase/grad';
 import { Kupac } from '../klase/kupac';
+import { KupacInsert } from '../klase/kupac-insert';
 import { Ulica } from '../klase/ulica';
 import { Zaposleni } from '../klase/zaposleni';
 import { KupacService } from '../services/kupac.service';
@@ -32,15 +33,24 @@ export class KupacComponent implements OnInit {
     //forma za unos novog kupca
      this.customerFormGroup = this.formBuilder.group({
         customer: this.formBuilder.group({
+            // pib: [''],
+            // naziv_kupca: [''],
+            // email_kupca: [''],
+            // telefon_kupca: [''],
+            // potpis: [''],
+            // adresa_ID: [''],
+            // sifra_ulice: [''],
+            // postanski_broj: [''],
+            // jmbg: ['']
             pib: [''],
             naziv_kupca: [''],
             email_kupca: [''],
             telefon_kupca: [''],
             potpis: [''],
-            adresa_ID: [''],
-            sifra_ulice: [''],
-            postanski_broj: [''],
-            jmbg: ['']
+            adresa: [''],
+            ulica: [''],
+            grad: [''],
+            zaposleni: ['']
         })
      });
 
@@ -80,34 +90,72 @@ export class KupacComponent implements OnInit {
   }
 
   getStreets(){
-    const grad = this.customerFormGroup.get('customer')?.value.postanski_broj;
+    const grad = this.customerFormGroup.get('customer')?.value.grad;
 
     this.kupacService.getStreets(grad.postanski_broj).subscribe(
       data => {
           this.streets = data;
       }
     )
+    // const grad = this.customerFormGroup.get('customer')?.value.postanski_broj;
+
+    // this.kupacService.getStreets(grad.postanski_broj).subscribe(
+    //   data => {
+    //       this.streets = data;
+    //   }
+    // )
   }
 
   getAdress(){
-    const ulica = this.customerFormGroup.get('customer')?.value.sifra_ulice;
+    const ulica = this.customerFormGroup.get('customer')?.value.ulica;
     console.log(ulica);
     this.kupacService.getAdress(ulica.id.postanski_broj,ulica.id.sifra_ulice).subscribe(
       data => {
           this.adress = data;
       }
     )
+    // const ulica = this.customerFormGroup.get('customer')?.value.sifra_ulice;
+    // console.log(ulica);
+    // this.kupacService.getAdress(ulica.id.postanski_broj,ulica.id.sifra_ulice).subscribe(
+    //   data => {
+    //       this.adress = data;
+    //   }
+    // )
   }
 
 
   //ubaci kupca u bazu
   onSubmit(){
     console.log(this.customerFormGroup.get('customer')?.value);
-    console.log(this.customerFormGroup.get('customer')?.value.naziv_kupca);
-    console.log(this.customerFormGroup.get('customer')?.value.jmbg);
-  } 
-  
 
+    let newCustomer = new KupacInsert();
+    
+    newCustomer.pib = this.customerFormGroup.get('customer')?.value.pib;
+    newCustomer.naziv_kupca = this.customerFormGroup.get('customer')?.value.naziv_kupca; 
+    newCustomer.email_kupca = this.customerFormGroup.get('customer')?.value.email_kupca;
+    newCustomer.telefon_kupca = this.customerFormGroup.get('customer')?.value.telefon_kupca;
+    newCustomer.potpis = this.customerFormGroup.get('customer')?.value.potpis;   
+    newCustomer.adresa_ID = this.customerFormGroup.get('customer')?.value.adresa.id.adresa_ID;
+    newCustomer.sifra_ulice = this.customerFormGroup.get('customer')?.value.ulica.id.sifra_ulice;
+    newCustomer.postanski_broj = this.customerFormGroup.get('customer')?.value.grad.postanski_broj;
+    newCustomer.jmbg = this.customerFormGroup.get('customer')?.value.zaposleni.jmbg;   
+
+    this.kupacService.postCustomer(newCustomer).subscribe({
+        next: response => {
+          alert(`Kupac uspesno ubacen u bazu!\nNovi kupac: ${response.kupac}`);
+          this.resetForm();
+        },
+        error: err => {
+          alert(`Kupac nije uspesno sacuvan u bazi. ${err.message}`);
+        }
+        
+      }
+    );
+  }
+  
+  resetForm(){
+    this.customerFormGroup.reset();
+  }
 
 
 

@@ -8,12 +8,13 @@
 
     <div formGroupName="customer" class="form-area">
         <h3>Unos novog kupca</h3>
-
+        <h5>Sva polja, osim polja PIB, su obavezna!</h5>
+        
         <div class="row">
             <div class="col-md-2"><label>pib</label></div>
             <div class="col-md-9">
                 <div class="input-space">
-                    <input formControlName ="pib" type="number">
+                    <input formControlName ="pib" type="text">
                 </div>
             </div>
         </div>
@@ -58,7 +59,7 @@
             <div class="col-md-2"><label>Grad</label></div>
             <div class="col-md-9">
                 <div class="input-space">
-                    <select formControlName ="postanski_broj" (change)="getStreets()">
+                    <select formControlName ="grad" (change)="getStreets()">
                         <!-- [ngValue] cuvamo referencu na city objekat -->
                         <option *ngFor="let city of cities" [ngValue]="city">
                             {{city.postanski_broj}} | {{city.naziv_grada}}
@@ -72,7 +73,7 @@
             <div class="col-md-2"><label>Ulica</label></div>
             <div class="col-md-9">
                 <div class="input-space">
-                    <select formControlName ="sifra_ulice" (change)="getAdress()">
+                    <select formControlName ="ulica" (change)="getAdress()">
                         <!-- [ngValue] cuvamo referencu na street objekat -->
                         <option *ngFor="let street of streets" [ngValue]="street">
                             {{street.id.sifra_ulice}} | {{street.naziv_ulice}}
@@ -86,7 +87,7 @@
             <div class="col-md-2"><label>Adresa</label></div>
             <div class="col-md-9">
                 <div class="input-space">
-                    <select formControlName ="adresa_ID">
+                    <select formControlName ="adresa">
                         <option *ngFor="let adr of adress" [ngValue]="adr">
                             {{adr.id.adresa_ID}}
                         </option>
@@ -99,7 +100,7 @@
             <div class="col-md-2"><label>Zaposleni</label></div>
             <div class="col-md-9">
                 <div class="input-space">
-                    <select formControlName ="jmbg">
+                    <select formControlName ="zaposleni">
                         <option *ngFor="let employee of employees" [ngValue]="employee">
                             {{employee.jmbg}} | {{employee.ime_prezime}}
                         </option>

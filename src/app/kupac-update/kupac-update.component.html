@@ -1,12 +1,6 @@
-<!-- <p *ngFor = "let customer of customers">
-    {{ customer.naziv_kupca }} | {{customer.adresa.broj_adrese}} | {{customer.adresa.id.adresa_ID}} | {{ customer.zaposleni.jmbg }}
-</p>
-<p>--------------------------------------------------------------------------------------------</p> -->
+<form [formGroup]="customerUpdateFormGroup" (ngSubmit)="onSubmit()">
 
-
-<form [formGroup]="customerFormGroup" (ngSubmit)="onSubmit()">
-
-    <div formGroupName="customer" class="form-area">
+    <div class="form-area">
         <h3>Unos novog kupca</h3>
         <br>
         
@@ -60,7 +54,7 @@
             <div class="col-md-9">
                 <div class="input-space">
                     <select formControlName ="grad" (change)="getStreets()">
-                        <!-- [ngValue] cuvamo referencu na city objekat -->
+                        <option selected hidden [value]="customer.adresa.ulica.grad" > {{customer.adresa.ulica.grad.postanski_broj}} | {{customer.adresa.ulica.grad.naziv_grada}}</option>
                         <option *ngFor="let city of cities" [ngValue]="city">
                             {{city.postanski_broj}} | {{city.naziv_grada}}
                         </option>
@@ -74,7 +68,7 @@
             <div class="col-md-9">
                 <div class="input-space">
                     <select formControlName ="ulica" (change)="getAdress()">
-                        <!-- [ngValue] cuvamo referencu na street objekat -->
+                        <option selected hidden [value]="customer.adresa.ulica" > {{customer.adresa.ulica.id.sifra_ulice}} | {{customer.adresa.ulica.naziv_ulice}}</option>
                         <option *ngFor="let street of streets" [ngValue]="street">
                             {{street.id.sifra_ulice}} | {{street.naziv_ulice}}
                         </option>
@@ -88,6 +82,7 @@
             <div class="col-md-9">
                 <div class="input-space">
                     <select formControlName ="adresa">
+                        <option selected hidden [value]="customer.adresa" > {{customer.adresa.id.adresa_ID}}</option>
                         <option *ngFor="let adr of adress" [ngValue]="adr">
                             {{adr.id.adresa_ID}}
                         </option>
@@ -101,6 +96,7 @@
             <div class="col-md-9">
                 <div class="input-space">
                     <select formControlName ="zaposleni">
+                        <option selected hidden [value]="customer.zaposleni" > {{customer.zaposleni.jmbg}} | {{customer.zaposleni.ime_prezime}}</option>
                         <option *ngFor="let employee of employees" [ngValue]="employee">
                             {{employee.jmbg}} | {{employee.ime_prezime}}
                         </option>

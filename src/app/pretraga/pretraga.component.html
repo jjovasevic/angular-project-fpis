@@ -1,0 +1,72 @@
+<form [formGroup]="searchFormGroup" (ngSubmit)="onSubmit()">
+
+    <div class="row">
+        <div class="col-md-2"><label>Unesite naziv kupca:</label></div> 
+            <div class="col-md-9">
+                <div class="input-space">
+                    <input formControlName ="polje" type="text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button type="submit" class="btn btn-info">Pronadji kupce</button>
+                </div>
+                
+            </div> 
+        
+    </div>
+
+</form>
+
+<table style="width:100%">
+    <thead>
+      <tr>
+        <th>PIB</th>
+        <th>Naziv kupca</th>
+        <th>Email kupca</th>
+        <th>Telefon kupca</th>
+        <th>Grad</th>
+        <th>Ulica</th>
+        <th>Adresa</th>
+        <th>Zaposleni</th>
+      </tr>
+    </thead>
+    <tbody style="text-align:center">
+      <tr *ngFor="let customer of customers">
+        <td>{{ customer.pib }}</td>
+        <td>{{ customer.naziv_kupca }}</td>
+        <td>{{ customer.email_kupca }}</td>
+        <td>{{ customer.telefon_kupca }}</td>
+        <td>{{ customer.adresa.id.postanski_broj }} | {{ customer.adresa.ulica.grad.naziv_grada }}</td>
+        <td>{{ customer.adresa.ulica.naziv_ulice }}</td>
+        <td>{{ customer.adresa.id.adresa_ID }}</td>
+        <td>{{ customer.zaposleni.ime_prezime }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <br>
+  <br>
+
+  <form [formGroup]="searchFormGroup" (ngSubmit)="onSubmitUpdate()">
+    <div class="row">
+        <div class="col-md-9"><label>Unesite PIB kupca kojeg zelite da izmenite</label></div> 
+            <div class="col-md-9">
+                <div class="input-space">
+                    <input formControlName ="izmena" type="text"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button type="submit" class="btn btn-info">Izmeni kupca</button>
+                </div> 
+            </div> 
+    </div>
+</form>
+
+<br>
+<br>
+
+<form [formGroup]="searchFormGroup" (ngSubmit)="onSubmitDelete()">
+    <div class="row">
+        <div class="col-md-9"><label>Unesite PIB kupca kojeg zelite da obrisete iz baze</label></div> 
+            <div class="col-md-9">
+                <div class="input-space">
+                    <input formControlName ="brisanje" type="text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button type="submit" class="btn btn-info">Obrisi kupca</button>
+                </div> 
+            </div> 
+    </div>
+</form>

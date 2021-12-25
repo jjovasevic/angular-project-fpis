@@ -33,7 +33,7 @@ export class KupacComponent implements OnInit {
     //forma za unos novog kupca
      this.customerFormGroup = this.formBuilder.group({
         customer: this.formBuilder.group({
-            pib: [''],
+            pib: ['0'],
             naziv_kupca: [''],
             email_kupca: [''],
             telefon_kupca: [''],
@@ -132,6 +132,7 @@ export class KupacComponent implements OnInit {
   
   resetForm(){
     this.customerFormGroup.reset();
+    
   }
 
 

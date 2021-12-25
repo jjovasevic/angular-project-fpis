@@ -7,11 +7,17 @@ import { KupacComponent } from './kupac/kupac.component';
 import {HttpClientModule} from '@angular/common/http';
 import { KupacService } from './services/kupac.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { PocetnaComponent } from './pocetna/pocetna.component';
+import { PretragaComponent } from './pretraga/pretraga.component';
+import { KupacUpdateComponent } from './kupac-update/kupac-update.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    KupacComponent
+    KupacComponent,
+    PocetnaComponent,
+    PretragaComponent,
+    KupacUpdateComponent
   ],
   imports: [
     BrowserModule,

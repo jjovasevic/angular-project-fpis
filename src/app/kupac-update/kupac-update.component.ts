@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Adresa } from '../klase/adresa';
 import { Grad } from '../klase/grad';
 import { Kupac } from '../klase/kupac';
@@ -27,7 +28,8 @@ export class KupacUpdateComponent implements OnInit {
   customerUpdateFormGroup!: FormGroup;
 
   constructor(private kupacService: KupacService,
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder,
+    private router: Router) {
 
   }
 
@@ -43,21 +45,6 @@ export class KupacUpdateComponent implements OnInit {
     this.getCities();
     //vrati zaposlene iz baze
     this.getEmployees();
-
-    //forma za unos novog kupca
-    // this.customerUpdateFormGroup = this.formBuilder.group({
-    //   customer: this.formBuilder.group({
-    //     pib: [this.customer.pib],
-    //     naziv_kupca: [this.customer.naziv_kupca],
-    //     email_kupca: [this.customer.email_kupca],
-    //     telefon_kupca: [this.customer.telefon_kupca],
-    //     potpis: [this.customer.potpis],
-    //     adresa: [''],
-    //     ulica: [''],
-    //     grad: [''],
-    //     zaposleni: ['']
-    //   })
-    // });
 
     this.customerUpdateFormGroup = this.formBuilder.group({
       pib: [this.customer.pib],
@@ -144,6 +131,7 @@ export class KupacUpdateComponent implements OnInit {
         next: response => {
           alert(`Kupac je uspesno izmenjen!`);
           this.resetForm();
+          this.router.navigate(['/']);
         },
         error: err => {
           alert(`Kupac nije uspesno izmenjen!. ${err.message}`);

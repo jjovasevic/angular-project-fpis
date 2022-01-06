@@ -92,7 +92,7 @@ export class KupacComponent implements OnInit {
 
   getAdress(){
     const ulica = this.customerFormGroup.get('customer')?.value.ulica;
-    console.log(ulica);
+    
     this.kupacService.getAdress(ulica.id.postanski_broj,ulica.id.sifra_ulice).subscribe(
       data => {
           this.adress = data;

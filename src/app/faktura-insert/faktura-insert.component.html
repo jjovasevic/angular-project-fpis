@@ -1,0 +1,218 @@
+<form [formGroup]="invoiceFormGroup" (ngSubmit)="onSubmit()">
+
+    <!-- Kreiranje forme za fakturu -->
+    <div formGroupName="invoice" class="form-area">
+        <h3>Kreiranje nove fakture</h3>
+        <br>
+        
+        <div class="row">
+            <div class="col-md-2"><label>Sifra fakture</label></div>
+            <div class="col-md-9">
+                <div class="input-space">
+                    <input formControlName ="sifraFakture" type="text" readonly="true"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2"><label>Datum prometa</label></div>
+            <div class="col-md-9">
+                <div class="input-space">
+                    <input formControlName ="datumPrometa" type="date">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2"><label>Valuta</label></div>
+            <div class="col-md-9">
+                <div class="input-space">
+                    <select formControlName ="valuta">
+                        <option *ngFor="let c of currency" [ngValue]="c">
+                            {{c}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2"><label>Nacin placanja</label></div>
+            <div class="col-md-9">
+                <div class="input-space">
+                    <select formControlName ="nacinPlacanja">
+                        <option *ngFor="let np of paymentMethods" [ngValue]="np">
+                            {{np.npID}} | {{np.nacinPlacanja}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2"><label>Nacin isporuke</label></div>
+            <div class="col-md-9">
+                <div class="input-space">
+                    <select formControlName ="nacinIsporuke">
+                        <option *ngFor="let ni of deliveryMethods" [ngValue]="ni">
+                            {{ni.niID}} | {{ni.nacinIsporuke}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2"><label>Grad</label></div>
+            <div class="col-md-9">
+                <div class="input-space">
+                    <select formControlName ="grad" (change)="getStreets()">
+                        <!-- [ngValue] cuvamo referencu na city objekat -->
+                        <option *ngFor="let city of cities" [ngValue]="city">
+                            {{city.postanski_broj}} | {{city.naziv_grada}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2"><label>Ulica</label></div>
+            <div class="col-md-9">
+                <div class="input-space">
+                    <select formControlName ="ulica" (change)="getAdress()">
+                        <!-- [ngValue] cuvamo referencu na street objekat -->
+                        <option *ngFor="let street of streets" [ngValue]="street">
+                            {{street.id.sifra_ulice}} | {{street.naziv_ulice}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2"><label>Adresa</label></div>
+            <div class="col-md-9">
+                <div class="input-space">
+                    <select formControlName ="adresa">
+                        <option *ngFor="let adr of adress" [ngValue]="adr">
+                            {{adr.id.adresa_ID}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2"><label>Zaposleni</label></div>
+            <div class="col-md-9">
+                <div class="input-space">
+                    <select formControlName ="zaposleni">
+                        <option *ngFor="let employee of employees" [ngValue]="employee">
+                            {{employee.jmbg}} | {{employee.ime_prezime}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- kraj forme za unos fakture -->
+    <br>
+    <!-- forma za unos stavke fakture -->
+
+    <div formGroupName="inoviceItem" class="form-area">
+        <h3>Kreiranje stavki fakture</h3>
+        <br>
+        
+        <div class="row">
+            <div class="col-md-2"><label>Broj stavke</label></div>
+            <div class="col-md-9">
+                <div class="input-space">
+                    <input formControlName ="sifraStavke" type="text"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2"><label>Opis </label></div>
+            <div class="col-md-9">
+                <div class="input-space">
+                    <input formControlName ="opis" type="text"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2"><label>EAN </label></div>
+            <div class="col-md-9">
+                <div class="input-space">
+                    <input formControlName ="ean" type="text"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2"><label>Proizvod</label></div>
+            <div class="col-md-9">
+                <div class="input-space">
+                    <select formControlName ="proizvod">
+                        <option *ngFor="let product of products" [ngValue]="product">
+                            {{product.sifraProizvoda}} | {{product.nazivProizvoda}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2"><label>Kolicina </label></div>
+            <div class="col-md-9">
+                <div class="input-space">
+                    <input formControlName ="kolicina" type="text"/>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <button type="button" class="btn btn-primary" (click)="onSubmitAddItem()">Unesi stavku</button>
+        </div>
+
+    </div> 
+
+    <!-- kraj forme za stavke fakture -->   
+
+    <br>
+
+    <h5>Unete stavke:</h5>
+    <br>
+
+    <table style="width:100%">
+        <thead>
+          <tr>
+            <th>Sifra stavke</th>
+            <th>Opis</th>
+            <th>Ean</th>
+            <th>Kolicina</th>
+            <th>Proizvod</th>
+          </tr>
+        </thead>
+        <tbody style="text-align:center">
+          <tr *ngFor="let s of stavke">
+            <td>{{ s.sifraStavke }}</td>
+            <td>{{ s.opis }}</td>
+            <td>{{ s.ean }}</td>
+            <td>{{ s.kolicina }}</td>
+            <td>{{ s.sifraProizvoda }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+    <br>
+
+    <div>
+        <button type="submit" class="btn btn-success">Potvrdi unos</button>
+    </div>
+
+</form>

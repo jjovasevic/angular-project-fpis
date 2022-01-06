@@ -10,6 +10,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PocetnaComponent } from './pocetna/pocetna.component';
 import { PretragaComponent } from './pretraga/pretraga.component';
 import { KupacUpdateComponent } from './kupac-update/kupac-update.component';
+import { FakturaInsertComponent } from './faktura-insert/faktura-insert.component';
+import { FakturaService } from './services/faktura.service';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 @NgModule({
   declarations: [
@@ -17,15 +20,17 @@ import { KupacUpdateComponent } from './kupac-update/kupac-update.component';
     KupacComponent,
     PocetnaComponent,
     PretragaComponent,
-    KupacUpdateComponent
+    KupacUpdateComponent,
+    FakturaInsertComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BsDatepickerModule.forRoot()
   ],
-  providers: [KupacService],
+  providers: [KupacService, FakturaService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

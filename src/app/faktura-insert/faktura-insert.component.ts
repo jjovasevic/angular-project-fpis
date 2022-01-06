@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Adresa } from '../klase/adresa';
 import { Grad } from '../klase/grad';
 import { Ulica } from '../klase/ulica';
@@ -32,7 +33,7 @@ export class FakturaInsertComponent implements OnInit {
   invoiceFormGroup!: FormGroup;
 
   constructor(private fakturaService: FakturaService,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder, private router:Router) { }
 
   ngOnInit(): void {
 
@@ -147,8 +148,6 @@ export class FakturaInsertComponent implements OnInit {
       s.ean = this.invoiceFormGroup.get('inoviceItem')?.value.ean;
       s.sifraProizvoda = this.invoiceFormGroup.get('inoviceItem')?.value.proizvod.sifraProizvoda;
       s.kolicina = this.invoiceFormGroup.get('inoviceItem')?.value.kolicina;
-
-      //reset formu
       
       //poslati do servica da sacuva stavku
       this.fakturaService.setInvoiceItem(s);
@@ -156,7 +155,14 @@ export class FakturaInsertComponent implements OnInit {
       // stavke koje su sacuvane u operativnoj memoriji
       this.stavke = this.fakturaService.vratiStavkeZaUnos();
 
-      
+      //reset formu
+      this.invoiceFormGroup.get('inoviceItem')?.reset({
+        sifraStavke: [''],
+        opis: [''],
+        ean: [''],
+        proizvod: [''],
+        kolicina: ['']
+      });
 
     }
 
@@ -180,10 +186,13 @@ export class FakturaInsertComponent implements OnInit {
       next: response => {
         alert(`Faktura je uspesno sacuvana!`);
         this.invoiceFormGroup.reset();
+        //isprazni operativnu memoriju koja sadrzi stavke
         this.fakturaService.isprazni();
+        this.router.navigate(['']);
       },
       error: err => {
         alert(`Faktura nije uspesno sacuvana. ${err.message}`);
+        this.fakturaService.isprazni();
       }
     });
   }

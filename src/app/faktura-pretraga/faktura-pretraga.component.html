@@ -1,0 +1,86 @@
+<form [formGroup]="searchInvoiceFormGroup" (ngSubmit)="onSubmitSearch()">
+
+    <div class="row">
+        <h3>Prikaz trazenih faktura</h3>
+        <br>
+        <br>
+        <div class="col-md-9"><label>Unesite naziv valute po kojoj zelite da pretrazite fakture:</label></div> 
+            <div class="col-md-9">
+                <div class="input-space">
+                    <input formControlName ="pretraga" type="text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button type="submit" class="btn btn-info">Pronadji fakture</button>
+                </div>
+                
+            </div> 
+        
+    </div>
+
+</form>
+
+<br>
+<br>
+
+<table style="width:100%">
+    <thead>
+      <tr>
+        <th>Sifra fakture</th>
+        <th>Datum prometa</th>
+        <th>Valuta</th>
+        <th>Nacin placanja</th>
+        <th>Nacin isporuke</th>
+        <th>Potpisnik</th>
+      </tr>
+    </thead>
+    <tbody style="text-align:center">
+      <tr *ngFor="let invoice of invoices">
+        <td>{{ invoice.sifraFakture }}</td>
+        <td>{{ invoice.datumPrometa }}</td>
+        <td>{{ invoice.valuta }}</td>
+        <td>{{ invoice.nacinPlacanja.nacinPlacanja }}</td>
+        <td>{{ invoice.nacinIsporuke.nacinIsporuke }}</td>
+        <td>{{ invoice.zaposleni.ime_prezime }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <br>
+  <br>
+
+  <form [formGroup]="searchInvoiceFormGroup" (ngSubmit)="onSubmitUpdate()">
+
+    <div class="row">
+        <div class="col-md-9"><label>Unesite sifru fakture koju zelite da izmenite:</label></div> 
+            <div class="col-md-9">
+                <div class="input-space">
+                    <input formControlName ="izmena" type="text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button type="submit" class="btn btn-info">Izmeni fakturu i njene stavke</button>
+                </div>
+                
+            </div> 
+        
+    </div>
+
+</form>
+
+<br>
+<br>
+
+<form [formGroup]="searchInvoiceFormGroup" (ngSubmit)="onSubmitDelete()">
+
+    <div class="row">
+        <br>
+        <div class="col-md-9"><label>Unesite sifru fakture koju zelite da obrisete:</label></div> 
+            <div class="col-md-9">
+                <div class="input-space">
+                    <input formControlName ="brisanje" type="text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button type="submit" class="btn btn-info">Obrisi fakturu i njene stavke</button>
+                </div>
+                
+            </div> 
+        
+    </div>
+
+</form>
+
+<br>
+<br>

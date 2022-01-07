@@ -13,6 +13,7 @@ import { KupacUpdateComponent } from './kupac-update/kupac-update.component';
 import { FakturaInsertComponent } from './faktura-insert/faktura-insert.component';
 import { FakturaService } from './services/faktura.service';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { FakturaPretragaComponent } from './faktura-pretraga/faktura-pretraga.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     PocetnaComponent,
     PretragaComponent,
     KupacUpdateComponent,
-    FakturaInsertComponent
+    FakturaInsertComponent,
+    FakturaPretragaComponent
   ],
   imports: [
     BrowserModule,

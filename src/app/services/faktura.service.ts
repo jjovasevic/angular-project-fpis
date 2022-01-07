@@ -95,7 +95,17 @@ export class FakturaService {
     return this.stavkeZaUnos;
   }
  
+  // vrati fakture sa odredjenom valutom
+  getInvoicesWithCertainCurrency(currency: String):Observable<Faktura[]>{
+    const searchInvoicesUrl = `${this.invoiceUrl}/${currency}`;
+    return this.httpClient.get<Faktura[]>(searchInvoicesUrl);
+  }
 
+    // obrisi fakturu
+    deleteInvoice(id: number):Observable<any>{
+      const deleteInvoicesUrl = `${this.invoiceUrl}/${id}`;
+      return this.httpClient.delete(deleteInvoicesUrl, {responseType: 'text'});
+    }
 
 
 }

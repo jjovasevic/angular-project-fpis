@@ -14,6 +14,7 @@ import { FakturaInsertComponent } from './faktura-insert/faktura-insert.componen
 import { FakturaService } from './services/faktura.service';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { FakturaPretragaComponent } from './faktura-pretraga/faktura-pretraga.component';
+import { FakturaPrikazComponent } from './faktura-prikaz/faktura-prikaz.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { FakturaPretragaComponent } from './faktura-pretraga/faktura-pretraga.co
     PretragaComponent,
     KupacUpdateComponent,
     FakturaInsertComponent,
-    FakturaPretragaComponent
+    FakturaPretragaComponent,
+    FakturaPrikazComponent
   ],
   imports: [
     BrowserModule,

@@ -8,7 +8,15 @@
             <div class="col-md-9">
                 <div class="input-space">
                     <input formControlName ="pretraga" type="text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <button type="submit" class="btn btn-info">Pronadji fakture</button>
+                    <button type="submit" class="btn btn-info">Pronadji fakture</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     <!-- check box -->
+                     <label class = "au-checkbox">
+                        <input type="radio" name = "radio" value="popunjena" (change)="fillInvoiceStatus($event)">Popunjena
+                        <br>
+                        <input type="radio" name = "radio" value="proverena" (change)="fillInvoiceStatus($event)">Proverena
+                        <br>
+                        <input type="radio" name = "radio" value="validirana" (change)="fillInvoiceStatus($event)">Validirana
+                    </label>
                 </div>
                 
             </div> 
@@ -46,10 +54,27 @@
   <br>
   <br>
 
+  <form [formGroup]="searchInvoiceFormGroup" (ngSubmit)="onSubmitShow()">
+
+    <div class="row">
+        <div class="col-md-9"><h6>Unesite sifru fakture koju zelite da prikazete:</h6></div> 
+            <div class="col-md-9">
+                <div class="input-space">
+                    <input formControlName ="prikaz" type="text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button type="submit" class="btn btn-info">Prikazi fakturu i njene stavke</button>
+                </div>
+            </div>         
+    </div>
+
+</form>
+
+<br>
+<br>
+
   <form [formGroup]="searchInvoiceFormGroup" (ngSubmit)="onSubmitUpdate()">
 
     <div class="row">
-        <div class="col-md-9"><label>Unesite sifru fakture koju zelite da izmenite:</label></div> 
+        <div class="col-md-9"><h6>Unesite sifru fakture koju zelite da izmenite:</h6></div> 
             <div class="col-md-9">
                 <div class="input-space">
                     <input formControlName ="izmena" type="text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -69,7 +94,7 @@
 
     <div class="row">
         <br>
-        <div class="col-md-9"><label>Unesite sifru fakture koju zelite da obrisete:</label></div> 
+        <div class="col-md-9"><h6>Unesite sifru fakture koju zelite da obrisete:</h6></div> 
             <div class="col-md-9">
                 <div class="input-space">
                     <input formControlName ="brisanje" type="text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

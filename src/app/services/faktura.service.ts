@@ -13,6 +13,7 @@ import { NacinPlacanja } from '../klaseSlozen/nacin-placanja';
 import { FakturaInsert } from '../klaseSlozen/new-faktura';
 import { StavkaFaktureInsert } from '../klaseSlozen/new-stavka-fakture';
 import { Proizvod } from '../klaseSlozen/proizvod';
+import { StavkaFakture } from '../klaseSlozen/stavka-fakture';
 
 @Injectable({
   providedIn: 'root'
@@ -24,58 +25,61 @@ export class FakturaService {
   private adressUrl = 'http://localhost:8080/adresa';
   private employeesUrl = 'http://localhost:8080/zaposleni';
   private paymentMethodsUrl = "http://localhost:8080/nacinPlacanja";
-  private deliveryMethodsUrl="http://localhost:8080/nacinIsporuke";
+  private deliveryMethodsUrl = "http://localhost:8080/nacinIsporuke";
   private productUrl = 'http://localhost:8080/proizvod';
   private invoiceUrl = 'http://localhost:8080/faktura';
+  private invoiceItemUrl = 'http://localhost:8080/stavka';
 
-  private currency: String[] = ["FKP","FRF","EUR","DIN","HKD","IDR","MKD","NOK","NLG","PGK","RUB","USD"];
-  
-  stavkeZaUnos: StavkaFaktureInsert[] = []; 
+  private currency: String[] = ["FKP", "FRF", "EUR", "DIN", "HKD", "IDR", "MKD", "NOK", "NLG", "PGK", "RUB", "USD"];
+
+  stavkeZaUnos: StavkaFaktureInsert[] = [];
+  invoiceForShow!: Faktura;
+  invoiceItemForShow!: StavkaFakture[];
 
   constructor(private httpClient: HttpClient, private router: Router) { }
 
-  getCities():Observable<Grad[]>{
+  getCities(): Observable<Grad[]> {
     return this.httpClient.get<Grad[]>(this.cityUrl);
   }
 
-  getEmployees():Observable<Zaposleni[]>{
+  getEmployees(): Observable<Zaposleni[]> {
     return this.httpClient.get<Zaposleni[]>(this.employeesUrl);
   }
 
-  getStreets(postalCode: number):Observable<Ulica[]>{
+  getStreets(postalCode: number): Observable<Ulica[]> {
     const searchStreetUrl = `${this.streetUrl}/${postalCode}`;
     return this.httpClient.get<Ulica[]>(searchStreetUrl);
   }
 
-  getAdress(post_broj: number, sif_ulice: String):Observable<Adresa[]>{
+  getAdress(post_broj: number, sif_ulice: String): Observable<Adresa[]> {
     const searchAdressUrl = `${this.adressUrl}/${post_broj}/${sif_ulice}`;
     return this.httpClient.get<Adresa[]>(searchAdressUrl);
   }
 
-  getPaymentMethods():Observable<NacinPlacanja[]>{
+  getPaymentMethods(): Observable<NacinPlacanja[]> {
     return this.httpClient.get<NacinPlacanja[]>(this.paymentMethodsUrl);
   }
 
-  getDeliveryMethods():Observable<NacinIsporuke[]>{
+  getDeliveryMethods(): Observable<NacinIsporuke[]> {
     return this.httpClient.get<NacinIsporuke[]>(this.deliveryMethodsUrl);
   }
 
-  getProducts():Observable<Proizvod[]>{
+  getProducts(): Observable<Proizvod[]> {
     return this.httpClient.get<Proizvod[]>(this.productUrl);
   }
 
-  getCurrency():String[] {
+  getCurrency(): String[] {
     return this.currency;
   }
 
   //unesi stavku fakture u niz stavki
-  setInvoiceItem(data: any){
-    this.stavkeZaUnos.push(data);      
+  setInvoiceItem(data: any) {
+    this.stavkeZaUnos.push(data);
   }
 
   // post za fakturu
-  postInvoice(fakturatIns : FakturaInsert):Observable<any>{
-    
+  postInvoice(fakturatIns: FakturaInsert): Observable<any> {
+
     let insertObject = new InsertObjekat();
     insertObject.fakturaInsert = fakturatIns;
     insertObject.stavkaFaktureInsert = this.stavkeZaUnos;
@@ -86,26 +90,62 @@ export class FakturaService {
   }
 
   // isprazni listu stavki
-  isprazni(){
+  isprazni() {
     this.stavkeZaUnos = [];
   }
 
   //vrati stavke fakture
-  vratiStavkeZaUnos(): StavkaFaktureInsert[]{
+  vratiStavkeZaUnos(): StavkaFaktureInsert[] {
     return this.stavkeZaUnos;
   }
- 
+
   // vrati fakture sa odredjenom valutom
-  getInvoicesWithCertainCurrency(currency: String):Observable<Faktura[]>{
+  getInvoicesWithCertainCurrency(currency: String): Observable<Faktura[]> {
     const searchInvoicesUrl = `${this.invoiceUrl}/${currency}`;
     return this.httpClient.get<Faktura[]>(searchInvoicesUrl);
   }
 
-    // obrisi fakturu
-    deleteInvoice(id: number):Observable<any>{
-      const deleteInvoicesUrl = `${this.invoiceUrl}/${id}`;
-      return this.httpClient.delete(deleteInvoicesUrl, {responseType: 'text'});
-    }
+  // obrisi fakturu
+  deleteInvoice(id: number): Observable<any> {
+    const deleteInvoicesUrl = `${this.invoiceUrl}/${id}`;
+    return this.httpClient.delete(deleteInvoicesUrl, { responseType: 'text' });
+  }
+
+  //vrati fakturu za prikaz
+  getInvoiceForShow(id: number): Observable<Faktura> {
+    const searchInvoiceUrl = `${this.invoiceUrl}/id/${id}`;
+    return this.httpClient.get<Faktura>(searchInvoiceUrl);
+  }
+
+  //postavi fakturu za prikaz
+  setInvoiceForShow(data: Faktura) {
+    console.log("Faktura: ", data);
+    this.invoiceForShow = data;
+  }
+
+  getInvoiceForPrikaz(){
+    return this.invoiceForShow;
+  }
+
+  //vrati stavke fakture za prikaz
+  getInvoiceItemForShow(id: number): Observable<StavkaFakture[]> {
+    const searchInvoiceItemUrl = `${this.invoiceItemUrl}/${id}`;
+    return this.httpClient.get<StavkaFakture[]>(searchInvoiceItemUrl);
+  }
+
+  //postavi stavke fakture za prikaz
+  setInvoiceItemForShow(data: StavkaFakture[]) {
+    console.log("Stavke fakture: ", data);
+    this.invoiceItemForShow = data;
+    this.router.navigate(['/faktura-prikaz']);
+  }
+
+  getInvoiceItemForPrikaz(){
+    return this.invoiceItemForShow;
+  }
+
+
+
 
 
 }

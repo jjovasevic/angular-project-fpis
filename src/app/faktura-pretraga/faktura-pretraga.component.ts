@@ -16,6 +16,8 @@ export class FakturaPretragaComponent implements OnInit {
   invoiceStatus: String = "";
   invoiceForShow!:Faktura;
   invoiceItemForShow!: StavkaFakture[];
+  invoiceForUpdate!:Faktura;
+  invoiceItemsForUpdate!: StavkaFakture[];
 
   constructor(private fakturaService: FakturaService, private formBuilder: FormBuilder) { }
 
@@ -57,7 +59,7 @@ export class FakturaPretragaComponent implements OnInit {
   //brisanje fakture
   onSubmitDelete() {
 
-    //ako je stiklirano bilo koje polje, onda mozemo obrisati fakturu
+    //ako je stiklirano polje popunjena ili proverena, onda mozemo obrisati fakturu
     if (this.invoiceStatus == "popunjena" ||this.invoiceStatus == "proverena") {
 
       let idBrisanje = this.searchInvoiceFormGroup.get('brisanje')?.value;
@@ -83,13 +85,14 @@ export class FakturaPretragaComponent implements OnInit {
     this.searchInvoiceFormGroup.get('brisanje')?.setValue("");
   }
 
+  //za prikaz fakture
   onSubmitShow(){
 
     if(this.invoiceStatus != ""){
       let idPrikazi = this.searchInvoiceFormGroup.get('prikaz')?.value;
 
       //faktura
-      this.fakturaService.getInvoiceForShow(idPrikazi).subscribe(
+      this.fakturaService.getInvoiceForShowOrUpdate(idPrikazi).subscribe(
         data => {
           this.invoiceForShow = data;
           this.fakturaService.setInvoiceForShow(this.invoiceForShow);
@@ -97,7 +100,7 @@ export class FakturaPretragaComponent implements OnInit {
       );
 
       //stavke fakture
-      this.fakturaService.getInvoiceItemForShow(idPrikazi).subscribe(
+      this.fakturaService.getInvoiceItemForShowOrUpdate(idPrikazi).subscribe(
         data => {
           this.invoiceItemForShow = data;
           this.fakturaService.setInvoiceItemForShow(this.invoiceItemForShow);
@@ -109,7 +112,33 @@ export class FakturaPretragaComponent implements OnInit {
     }
   }
 
+  // za update fakture
   onSubmitUpdate() {
+
+        //ako je stiklirano polje popunjena ili proverena, onda mozemo izmeniti fakturu
+        if (this.invoiceStatus == "popunjena" || this.invoiceStatus == "proverena") {
+
+          let idIzmena = this.searchInvoiceFormGroup.get('izmena')?.value;
+    
+      //faktura
+      this.fakturaService.getInvoiceForShowOrUpdate(idIzmena).subscribe(
+        data => {
+          this.invoiceForUpdate = data;
+          this.fakturaService.setInvoiceForUpdate(this.invoiceForUpdate);
+        }
+      );
+
+      //stavke fakture
+      this.fakturaService.getInvoiceItemForShowOrUpdate(idIzmena).subscribe(
+        data => {
+          this.invoiceItemsForUpdate = data;
+          this.fakturaService.setInvoiceItemsForUpdate(this.invoiceItemsForUpdate);
+        }
+      );
+    
+        }else{
+          alert(`Status forme mora biti POPUNJENA ili PROVERENA da bi izmenili fakturu i njene stavke.`);
+        }
 
   }
 

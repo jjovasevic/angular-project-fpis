@@ -44,7 +44,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let i of invoiceItem">
+      <tr *ngFor="let i of invoiceItems">
         <td>{{i.id.sifraStavke}}</td>
         <td>{{i.opis}}</td>
         <td>{{i.ean}}</td>
@@ -53,3 +53,8 @@
       </tr>
     </tbody>
   </table>
+
+  <br>
+  <br>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button [routerLink]="['/faktura-pretraga']" class="btn btn-primary">Vrati se na prethodnu stranicu</button>

@@ -35,6 +35,8 @@ export class FakturaService {
   stavkeZaUnos: StavkaFaktureInsert[] = [];
   invoiceForShow!: Faktura;
   invoiceItemForShow!: StavkaFakture[];
+  invoiceForUpdate!: Faktura;
+  invoiceItemsForUpdate!: StavkaFakture[];
 
   constructor(private httpClient: HttpClient, private router: Router) { }
 
@@ -111,8 +113,8 @@ export class FakturaService {
     return this.httpClient.delete(deleteInvoicesUrl, { responseType: 'text' });
   }
 
-  //vrati fakturu za prikaz
-  getInvoiceForShow(id: number): Observable<Faktura> {
+  //vrati fakturu za prikaz ili izmenu
+  getInvoiceForShowOrUpdate(id: number): Observable<Faktura> {
     const searchInvoiceUrl = `${this.invoiceUrl}/id/${id}`;
     return this.httpClient.get<Faktura>(searchInvoiceUrl);
   }
@@ -123,12 +125,24 @@ export class FakturaService {
     this.invoiceForShow = data;
   }
 
+    //postavi fakturu za izmenu
+    setInvoiceForUpdate(data: Faktura) {
+      console.log("Faktura: ", data);
+      this.invoiceForUpdate = data;
+    }
+
+  //komponenta za prikaz uzima fakturu koju treba da prikaze
   getInvoiceForPrikaz(){
     return this.invoiceForShow;
   }
 
-  //vrati stavke fakture za prikaz
-  getInvoiceItemForShow(id: number): Observable<StavkaFakture[]> {
+  //komponenta za izmenu uzima fakturu koju treba da izmeni
+  getInvoiceForIzmena(){
+    return this.invoiceForUpdate;
+  }
+
+  //vrati stavke fakture za prikaz ili izmenu
+  getInvoiceItemForShowOrUpdate(id: number): Observable<StavkaFakture[]> {
     const searchInvoiceItemUrl = `${this.invoiceItemUrl}/${id}`;
     return this.httpClient.get<StavkaFakture[]>(searchInvoiceItemUrl);
   }
@@ -140,8 +154,21 @@ export class FakturaService {
     this.router.navigate(['/faktura-prikaz']);
   }
 
+    //postavi stavke fakture za izmenu
+    setInvoiceItemsForUpdate(data: StavkaFakture[]) {
+      console.log("Stavke fakture: ", data);
+      this.invoiceItemsForUpdate = data;
+      this.router.navigate(['/faktura-update']);
+    }
+
+  //komponenta za prikaz uzima stavke fakture koje treba da prikaze
   getInvoiceItemForPrikaz(){
     return this.invoiceItemForShow;
+  }
+
+  //komponenta za izmenu uzima stavke fakture koje treba da izmeni
+  getInvoiceItemsForIzmena(){
+    return this.invoiceItemsForUpdate;
   }
 
 

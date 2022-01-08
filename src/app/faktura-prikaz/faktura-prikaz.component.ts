@@ -11,14 +11,14 @@ import { FakturaService } from '../services/faktura.service';
 export class FakturaPrikazComponent implements OnInit {
 
   invoice!: Faktura;
-  invoiceItem!: StavkaFakture[];
+  invoiceItems!: StavkaFakture[];
 
   constructor(private fakturaService: FakturaService) { }
 
   ngOnInit(): void {
 
     this.invoice = this.fakturaService.getInvoiceForPrikaz();
-    this.invoiceItem = this.fakturaService.getInvoiceItemForPrikaz();
+    this.invoiceItems = this.fakturaService.getInvoiceItemForPrikaz();
 
   }
 

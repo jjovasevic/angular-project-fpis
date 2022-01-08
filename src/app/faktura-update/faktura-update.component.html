@@ -1,8 +1,8 @@
-<form [formGroup]="invoiceFormGroup" (ngSubmit)="onSubmit()">
+<form [formGroup]="invoiceFormGroupUpdate" (ngSubmit)="onSubmit()">
 
-    <!-- Kreiranje forme za fakturu -->
+    <!-- Kreiranje forme za izmenu fakture -->
     <div formGroupName="invoice" class="form-area">
-        <h3>Kreiranje nove fakture</h3>
+        <h3>Izmena postojece fakture</h3>
         <br>
         
         <div class="row">
@@ -41,6 +41,7 @@
             <div class="col-md-9">
                 <div class="input-space">
                     <select formControlName ="nacinPlacanja">
+                        <option selected hidden [value]="invoiceForUpdate.nacinPlacanja" > {{invoiceForUpdate.nacinPlacanja.npID}} | {{invoiceForUpdate.nacinPlacanja.nacinPlacanja}}</option>
                         <option *ngFor="let np of paymentMethods" [ngValue]="np">
                             {{np.npID}} | {{np.nacinPlacanja}}
                         </option>
@@ -54,6 +55,7 @@
             <div class="col-md-9">
                 <div class="input-space">
                     <select formControlName ="nacinIsporuke">
+                        <option selected hidden [value]="invoiceForUpdate.nacinIsporuke" > {{invoiceForUpdate.nacinIsporuke.niID}} | {{invoiceForUpdate.nacinIsporuke.nacinIsporuke}}</option>
                         <option *ngFor="let ni of deliveryMethods" [ngValue]="ni">
                             {{ni.niID}} | {{ni.nacinIsporuke}}
                         </option>
@@ -67,6 +69,7 @@
             <div class="col-md-9">
                 <div class="input-space">
                     <select formControlName ="grad" (change)="getStreets()">
+                        <option selected hidden [value]="invoiceForUpdate.adresa.ulica.grad" > {{invoiceForUpdate.adresa.ulica.grad.postanski_broj}} | {{invoiceForUpdate.adresa.ulica.grad.naziv_grada}}</option>
                         <!-- [ngValue] cuvamo referencu na city objekat -->
                         <option *ngFor="let city of cities" [ngValue]="city">
                             {{city.postanski_broj}} | {{city.naziv_grada}}
@@ -81,6 +84,7 @@
             <div class="col-md-9">
                 <div class="input-space">
                     <select formControlName ="ulica" (change)="getAdress()">
+                        <option selected hidden [value]="invoiceForUpdate.adresa.ulica" > {{invoiceForUpdate.adresa.ulica.id.sifra_ulice}} | {{invoiceForUpdate.adresa.ulica.naziv_ulice}}</option>
                         <!-- [ngValue] cuvamo referencu na street objekat -->
                         <option *ngFor="let street of streets" [ngValue]="street">
                             {{street.id.sifra_ulice}} | {{street.naziv_ulice}}
@@ -95,6 +99,7 @@
             <div class="col-md-9">
                 <div class="input-space">
                     <select formControlName ="adresa">
+                        <option selected hidden [value]="invoiceForUpdate.adresa" > {{invoiceForUpdate.adresa.id.adresa_ID}}</option>
                         <option *ngFor="let adr of adress" [ngValue]="adr">
                             {{adr.id.adresa_ID}}
                         </option>
@@ -108,6 +113,7 @@
             <div class="col-md-9">
                 <div class="input-space">
                     <select formControlName ="zaposleni">
+                        <option selected hidden [value]="invoiceForUpdate.zaposleni" > {{invoiceForUpdate.zaposleni.jmbg}} | {{invoiceForUpdate.zaposleni.ime_prezime}}</option>
                         <option *ngFor="let employee of employees" [ngValue]="employee">
                             {{employee.jmbg}} | {{employee.ime_prezime}}
                         </option>
@@ -118,12 +124,12 @@
 
     </div>
 
-    <!-- kraj forme za unos fakture -->
+    <!-- kraj forme za izmenu fakture -->
     <br>
-    <!-- forma za unos stavke fakture -->
+    <!-- forma za izmenu stavke fakture -->
 
     <div formGroupName="inoviceItem" class="form-area">
-        <h3>Kreiranje stavki fakture</h3>
+        <h3>Izmena i unos stavki fakture</h3>
         <br>
         
         <div class="row">
@@ -175,17 +181,26 @@
             </div>
         </div>
 
+        <br>
+
         <div>
-            <button type="button" class="btn btn-primary" (click)="onSubmitAddItem()">Unesi stavku</button>
-        </div>
+            <button type="button" class="btn btn-primary" (click)="onSubmitAddNewItem()">Unesi novu stavku</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="button" class="btn btn-primary" (click)="onSubmitUpdateItem()">Izmeni stavku</button>
+       </div>
+
+       <!--  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input formControlName ="sifraZaIzmenuStavke" type="text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="submit" class="btn btn-info">Izmeni postojecu stavku</button> -->
+        <!-- <div>
+            <button type="button" class="btn btn-primary" (click)="onSubmitUpdateItem()">Izmeni stavku</button>
+        </div> -->
 
     </div> 
 
-    <!-- kraj forme za stavke fakture -->   
+    <!-- kraj forme za izmenu/unos stavke fakture -->   
 
     <br>
 
-    <h5>Unete stavke:</h5>
+    <h5>Postojece stavke:</h5>
     <br>
 
     <table class="table">
@@ -199,12 +214,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let s of stavke">
-            <td>{{ s.sifraStavke }}</td>
+        <tr *ngFor="let s of invoiceItemsForUpdate">
+            <td>{{ s.id.sifraStavke }}</td>
             <td>{{ s.opis }}</td>
             <td>{{ s.ean }}</td>
             <td>{{ s.kolicina }}</td>
-            <td>{{ s.sifraProizvoda }}</td>
+            <td>{{ s.proizvod.sifraProizvoda }}</td>
         </tr>
       </tbody>
     </table>
@@ -212,7 +227,7 @@
     <br>
 
     <div>
-        <button type="submit" class="btn btn-success">Potvrdi unos</button>
+        <button type="submit" class="btn btn-success">Potvrdi izmenu</button>
     </div>
 
 </form>

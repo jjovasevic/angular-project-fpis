@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Adresa } from '../klase/adresa';
 import { Grad } from '../klase/grad';
 import { Ulica } from '../klase/ulica';
@@ -7,6 +8,8 @@ import { Zaposleni } from '../klase/zaposleni';
 import { Faktura } from '../klaseSlozen/faktura';
 import { NacinIsporuke } from '../klaseSlozen/nacin-isporuke';
 import { NacinPlacanja } from '../klaseSlozen/nacin-placanja';
+import { FakturaInsert } from '../klaseSlozen/new-faktura';
+import { StavkaFaktureInsert } from '../klaseSlozen/new-stavka-fakture';
 import { Proizvod } from '../klaseSlozen/proizvod';
 import { StavkaFakture } from '../klaseSlozen/stavka-fakture';
 import { FakturaService } from '../services/faktura.service';
@@ -20,6 +23,7 @@ export class FakturaUpdateComponent implements OnInit {
 
   invoiceForUpdate!: Faktura;
   invoiceItemsForUpdate!: StavkaFakture[];
+  stavke!: StavkaFaktureInsert[];
 
   employees!: Zaposleni[];
   adress!: Adresa[];
@@ -32,7 +36,7 @@ export class FakturaUpdateComponent implements OnInit {
 
   invoiceFormGroupUpdate!: FormGroup;
 
-  constructor(private fakturaService: FakturaService, private formBuilder: FormBuilder) { }
+  constructor(private fakturaService: FakturaService, private formBuilder: FormBuilder, private router:Router) { }
 
   ngOnInit(): void {
 
@@ -58,8 +62,7 @@ export class FakturaUpdateComponent implements OnInit {
         ean: [''],
         proizvod: [''],
         kolicina: ['']
-      }),
-      'sifraZaIzmenuStavke': new FormControl()
+      })
 
     });
 
@@ -144,68 +147,121 @@ export class FakturaUpdateComponent implements OnInit {
 
   onSubmitAddNewItem() {
 
-    // if (this.invoiceFormGroup.get('inoviceItem')?.value.kolicina != 0) {
-    //   let s = new StavkaFaktureInsert();
+    if (this.invoiceFormGroupUpdate.get('inoviceItem')?.value.kolicina != 0) {
+      let s = new StavkaFaktureInsert();
 
-    //   s.sifraStavke = this.invoiceFormGroup.get('inoviceItem')?.value.sifraStavke;
-    //   s.opis = this.invoiceFormGroup.get('inoviceItem')?.value.opis;
-    //   s.ean = this.invoiceFormGroup.get('inoviceItem')?.value.ean;
-    //   s.sifraProizvoda = this.invoiceFormGroup.get('inoviceItem')?.value.proizvod.sifraProizvoda;
-    //   s.kolicina = this.invoiceFormGroup.get('inoviceItem')?.value.kolicina;
+      s.sifraStavke = this.invoiceFormGroupUpdate.get('inoviceItem')?.value.sifraStavke;
+      s.opis = this.invoiceFormGroupUpdate.get('inoviceItem')?.value.opis;
+      s.ean = this.invoiceFormGroupUpdate.get('inoviceItem')?.value.ean;
+      s.sifraProizvoda = this.invoiceFormGroupUpdate.get('inoviceItem')?.value.proizvod.sifraProizvoda;
+      s.kolicina = this.invoiceFormGroupUpdate.get('inoviceItem')?.value.kolicina;
       
-    //   //poslati do servica da sacuva stavku
-    //   this.fakturaService.setInvoiceItem(s);
+      //poslati do servica da sacuva stavku
+      this.fakturaService.setInvoiceItem(s);
 
-    //   // stavke koje su sacuvane u operativnoj memoriji
-    //   this.stavke = this.fakturaService.vratiStavkeZaUnos();
+      // stavke koje su sacuvane u operativnoj memoriji
+      this.stavke = this.fakturaService.vratiStavkeZaUnos();
 
-    //   //reset formu
-    //   this.invoiceFormGroup.get('inoviceItem')?.reset({
-    //     sifraStavke: [''],
-    //     opis: [''],
-    //     ean: [''],
-    //     proizvod: [''],
-    //     kolicina: ['']
-    //   });
+      //reset formu
+      this.invoiceFormGroupUpdate.get('inoviceItem')?.reset({
+        sifraStavke: [''],
+        opis: [''],
+        ean: [''],
+        proizvod: [''],
+        kolicina: ['']
+      });
 
-    // }
+    }
 
   }
 
   onSubmitUpdateItem(){
     
+    if (this.invoiceFormGroupUpdate.get('inoviceItem')?.value.kolicina != 0) {
+      let s = new StavkaFaktureInsert();
+
+      s.sifraStavke = this.invoiceFormGroupUpdate.get('inoviceItem')?.value.sifraStavke;
+      s.opis = this.invoiceFormGroupUpdate.get('inoviceItem')?.value.opis;
+      s.ean = this.invoiceFormGroupUpdate.get('inoviceItem')?.value.ean;
+      s.sifraProizvoda = this.invoiceFormGroupUpdate.get('inoviceItem')?.value.proizvod.sifraProizvoda;
+      s.kolicina = this.invoiceFormGroupUpdate.get('inoviceItem')?.value.kolicina;
+      
+      //poslati do servica da sacuva stavku
+      this.fakturaService.updateInvoiceItem(s);
+
+      // stavke koje su sacuvane u operativnoj memoriji
+      this.stavke = this.fakturaService.vratiStavkeZaUnos();
+      this.invoiceItemsForUpdate = this.fakturaService.getInvoiceItemsForIzmena();
+
+      //reset formu
+      this.invoiceFormGroupUpdate.get('inoviceItem')?.reset({
+        sifraStavke: [''],
+        opis: [''],
+        ean: [''],
+        proizvod: [''],
+        kolicina: ['']
+      });
+
+    }
+
   }
 
   onSubmit() {
 
-    // let f = new FakturaInsert();
+    let f = new FakturaInsert();
 
-    // f.sifraFakture = 0;
-    // f.datumPrometa = this.invoiceFormGroup.get('invoice')?.value.datumPrometa;
-    // f.valuta = this.invoiceFormGroup.get('invoice')?.value.valuta;
-    // f.npID = this.invoiceFormGroup.get('invoice')?.value.nacinPlacanja.npID;
-    // f.niID = this.invoiceFormGroup.get('invoice')?.value.nacinIsporuke.niID;
-    // f.jmbg = this.invoiceFormGroup.get('invoice')?.value.zaposleni.jmbg;
-    // f.postanskiBroj = this.invoiceFormGroup.get('invoice')?.value.grad.postanski_broj;
-    // f.sifraUlice = this.invoiceFormGroup.get('invoice')?.value.ulica.id.sifra_ulice;
-    // f.adresaID = this.invoiceFormGroup.get('invoice')?.value.adresa.id.adresa_ID;
+    f.sifraFakture = this.invoiceFormGroupUpdate.get('invoice')?.value.sifraFakture;
+    f.datumPrometa = this.invoiceFormGroupUpdate.get('invoice')?.value.datumPrometa;
+    f.valuta = this.invoiceFormGroupUpdate.get('invoice')?.value.valuta;
+    f.npID = this.invoiceFormGroupUpdate.get('invoice')?.value.nacinPlacanja.npID;
+    f.niID = this.invoiceFormGroupUpdate.get('invoice')?.value.nacinIsporuke.niID;
+    f.jmbg = this.invoiceFormGroupUpdate.get('invoice')?.value.zaposleni.jmbg;
+    f.postanskiBroj = this.invoiceFormGroupUpdate.get('invoice')?.value.grad.postanski_broj;
+    f.sifraUlice = this.invoiceFormGroupUpdate.get('invoice')?.value.ulica.id.sifra_ulice;
+    f.adresaID = this.invoiceFormGroupUpdate.get('invoice')?.value.adresa.id.adresa_ID;
 
-    // this.fakturaService.postInvoice(f).subscribe({
-    //   next: response => {
-    //     alert(`Faktura je uspesno sacuvana!`);
-    //     this.invoiceFormGroup.reset();
-    //     //isprazni operativnu memoriju koja sadrzi stavke
-    //     this.fakturaService.isprazni();
-    //     this.router.navigate(['']);
-    //   },
-    //   error: err => {
-    //     alert(`Faktura nije uspesno sacuvana. ${err.message}`);
-    //     this.fakturaService.isprazni();
-    //   }
-    // });
+    this.fakturaService.putInvoice(f).subscribe({
+      next: response => {
+        alert(`Faktura je uspesno izmenjena!`);
+        this.invoiceFormGroupUpdate.reset();
+        //isprazni operativnu memoriju koja sadrzi stavke
+        this.fakturaService.isprazni();
+        this.router.navigate(['']);
+      },
+      error: err => {
+        alert(`Faktura nije uspesno izmenjena. ${err.message}`);
+        this.fakturaService.isprazni();
+        this.router.navigate(['']);
+      }
+    });
+
   }
 
+  
+  onSubmitDeleteItem(){
+    
+    if (this.invoiceFormGroupUpdate.get('inoviceItem')?.value.sifraStavke != 0) {
 
+      //obrisi iz operativne memorije
+      this.fakturaService.deleteInvoiceItemFromMemory(this.invoiceFormGroupUpdate.get('inoviceItem')?.value.sifraStavke);
+     
+      this.stavke = this.fakturaService.vratiStavkeZaUnos();
+      this.invoiceItemsForUpdate = this.fakturaService.getInvoiceItemsForIzmena();
+
+      //obrisi odmah iz baze
+     // this.fakturaService.deleteInvoiceItem(this.invoiceFormGroupUpdate.get('inoviceItem')?.value.sifraStavke,this.invoiceFormGroupUpdate.get('invoice')?.value.sifraFakture).subscribe();      
+      
+      this.invoiceFormGroupUpdate.get('inoviceItem')?.reset({
+        sifraStavke: [''],
+        opis: [''],
+        ean: [''],
+        proizvod: [''],
+        kolicina: ['']
+      });
+
+    }
+
+  }
 
 
 

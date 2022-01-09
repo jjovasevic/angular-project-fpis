@@ -85,6 +85,8 @@ export class FakturaService {
     let insertObject = new InsertObjekat();
     insertObject.fakturaInsert = fakturatIns;
     insertObject.stavkaFaktureInsert = this.stavkeZaUnos;
+    //dodala sam i ovo, da ispraznimo listu nakon unosa novog objekta.
+    this.stavkeZaUnos = [];
 
     console.log(insertObject);
 
@@ -125,19 +127,19 @@ export class FakturaService {
     this.invoiceForShow = data;
   }
 
-    //postavi fakturu za izmenu
-    setInvoiceForUpdate(data: Faktura) {
-      console.log("Faktura: ", data);
-      this.invoiceForUpdate = data;
-    }
+  //postavi fakturu za izmenu
+  setInvoiceForUpdate(data: Faktura) {
+    console.log("Faktura: ", data);
+    this.invoiceForUpdate = data;
+  }
 
   //komponenta za prikaz uzima fakturu koju treba da prikaze
-  getInvoiceForPrikaz(){
+  getInvoiceForPrikaz() {
     return this.invoiceForShow;
   }
 
   //komponenta za izmenu uzima fakturu koju treba da izmeni
-  getInvoiceForIzmena(){
+  getInvoiceForIzmena() {
     return this.invoiceForUpdate;
   }
 
@@ -154,25 +156,85 @@ export class FakturaService {
     this.router.navigate(['/faktura-prikaz']);
   }
 
-    //postavi stavke fakture za izmenu
-    setInvoiceItemsForUpdate(data: StavkaFakture[]) {
-      console.log("Stavke fakture: ", data);
-      this.invoiceItemsForUpdate = data;
-      this.router.navigate(['/faktura-update']);
-    }
+  //postavi stavke fakture za izmenu
+  setInvoiceItemsForUpdate(data: StavkaFakture[]) {
+    console.log("Stavke fakture: ", data);
+    this.invoiceItemsForUpdate = data;
+    this.router.navigate(['/faktura-update']);
+  }
 
   //komponenta za prikaz uzima stavke fakture koje treba da prikaze
-  getInvoiceItemForPrikaz(){
+  getInvoiceItemForPrikaz() {
     return this.invoiceItemForShow;
   }
 
   //komponenta za izmenu uzima stavke fakture koje treba da izmeni
-  getInvoiceItemsForIzmena(){
+  getInvoiceItemsForIzmena() {
     return this.invoiceItemsForUpdate;
   }
 
 
+  // izmeni stavku koja se nalazi u bazi
+  updateInvoiceItem(data: StavkaFaktureInsert) {
+    if (this.invoiceItemsForUpdate != null) {
+      for (let i = 0; i < this.invoiceItemsForUpdate.length; i++) {
+        if (data.sifraStavke == this.invoiceItemsForUpdate[i].id.sifraStavke) {
+          this.invoiceItemsForUpdate[i].opis = data.opis;
+          this.invoiceItemsForUpdate[i].ean = data.ean;
+          this.invoiceItemsForUpdate[i].kolicina = data.kolicina;
+          this.invoiceItemsForUpdate[i].proizvod.nazivProizvoda = "";
+          this.invoiceItemsForUpdate[i].proizvod.sifraProizvoda = data.sifraProizvoda;
+        }
+      }
+    }
+  }
 
+  // put za fakturu
+  putInvoice(fakturatIns: FakturaInsert): Observable<any> {
 
+    let insertObject = new InsertObjekat();
+    insertObject.fakturaInsert = fakturatIns;
+
+    for (let l = 0; l < this.invoiceItemsForUpdate.length; l++) {
+      let sfi = new StavkaFaktureInsert();
+      sfi.sifraStavke = this.invoiceItemsForUpdate[l].id.sifraStavke;
+      sfi.opis = this.invoiceItemsForUpdate[l].opis;
+      sfi.ean = this.invoiceItemsForUpdate[l].ean;
+      sfi.kolicina = this.invoiceItemsForUpdate[l].kolicina;
+      sfi.sifraProizvoda = this.invoiceItemsForUpdate[l].proizvod.sifraProizvoda;
+
+      this.stavkeZaUnos.push(sfi);
+    }
+
+    insertObject.stavkaFaktureInsert = this.stavkeZaUnos;
+    //dodala sam i ovo, da ispraznimo listu nakon unosa novog objekta.
+    this.stavkeZaUnos = [];
+    this.invoiceItemsForUpdate = [];
+    //trebalo bi i objekat invoiceForUpdate da reset.
+
+    console.log(insertObject);
+
+    return this.httpClient.put<any>(this.invoiceUrl, insertObject);
+  }
+
+    //obrisi stavku iz operativne memorije
+  deleteInvoiceItemFromMemory(sifraSt:number){
+    for(let j = 0; j < this.invoiceItemsForUpdate.length; j++){
+      if(sifraSt == this.invoiceItemsForUpdate[j].id.sifraStavke){
+          this.invoiceItemsForUpdate.splice(j,1);          
+      }
+    }
+    for(let k = 0; k < this.stavkeZaUnos.length; k++){
+      if(sifraSt == this.stavkeZaUnos[k].sifraStavke){
+          this.stavkeZaUnos.splice(k,1);
+      }
+    }
+  }
+
+    // obrisi stavku fakture iz baze!!!! TO URADITI
+    // deleteInvoiceItem(idStavke: number, idFakture: number): Observable<any> {
+    //   const deleteInvoiceItemUrl = `${this.invoiceItemUrl}/${idStavke}/${idFakture}`;
+    //   return this.httpClient.delete(deleteInvoiceItemUrl, { responseType: 'text' });
+    // }
 
 }

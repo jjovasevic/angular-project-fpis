@@ -185,14 +185,19 @@
 
         <div>
             <button type="button" class="btn btn-primary" (click)="onSubmitAddNewItem()">Unesi novu stavku</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button type="button" class="btn btn-primary" (click)="onSubmitUpdateItem()">Izmeni stavku</button>
        </div>
 
-       <!--  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input formControlName ="sifraZaIzmenuStavke" type="text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button type="submit" class="btn btn-info">Izmeni postojecu stavku</button> -->
-        <!-- <div>
-            <button type="button" class="btn btn-primary" (click)="onSubmitUpdateItem()">Izmeni stavku</button>
-        </div> -->
+       <br>
+
+       <div>
+        <button type="button" class="btn btn-primary" (click)="onSubmitUpdateItem()">Izmeni postojecu stavku</button>
+       </div>
+
+       <br>
+
+       <div>
+        <button type="button" class="btn btn-primary" (click)="onSubmitDeleteItem()">Obrisi stavku</button>
+       </div>
 
     </div> 
 
@@ -220,6 +225,13 @@
             <td>{{ s.ean }}</td>
             <td>{{ s.kolicina }}</td>
             <td>{{ s.proizvod.sifraProizvoda }}</td>
+        </tr>
+        <tr *ngFor="let st of stavke">
+            <td>{{ st.sifraStavke }}</td>
+            <td>{{ st.opis }}</td>
+            <td>{{ st.ean }}</td>
+            <td>{{ st.kolicina }}</td>
+            <td>{{ st.sifraProizvoda }}</td>
         </tr>
       </tbody>
     </table>

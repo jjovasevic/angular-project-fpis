@@ -13,6 +13,7 @@ export class FakturaPretragaComponent implements OnInit {
 
   searchInvoiceFormGroup!: FormGroup;
   invoices!: Faktura[];
+
   invoiceStatus: String = "";
   invoiceForShow!:Faktura;
   invoiceItemForShow!: StavkaFakture[];
@@ -114,7 +115,7 @@ export class FakturaPretragaComponent implements OnInit {
 
   // za update fakture
   onSubmitUpdate() {
-
+    
         //ako je stiklirano polje popunjena ili proverena, onda mozemo izmeniti fakturu
         if (this.invoiceStatus == "popunjena" || this.invoiceStatus == "proverena") {
 

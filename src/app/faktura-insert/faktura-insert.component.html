@@ -19,6 +19,12 @@
             <div class="col-md-9">
                 <div class="input-space">
                     <input formControlName ="datumPrometa" type="date">
+                    <!-- validacija -->
+                    <div *ngIf="datumPrometa?.invalid && (datumPrometa?.dirty  || datumPrometa?.touched)" class="alert alert-danger mt1">
+                        <div *ngIf="datumPrometa?.errors?.required">
+                            Polje datum prometa je obavezno polje.
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -32,6 +38,12 @@
                             {{c}}
                         </option>
                     </select>
+                    <!-- validacija -->
+                    <div *ngIf="valuta?.invalid && (valuta?.dirty  || valuta?.touched)" class="alert alert-danger mt1">
+                        <div *ngIf="valuta?.errors?.required">
+                            Polje valuta je obavezno polje.
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -45,6 +57,12 @@
                             {{np.npID}} | {{np.nacinPlacanja}}
                         </option>
                     </select>
+                    <!-- validacija -->
+                    <div *ngIf="nacinPlacanja?.invalid && (nacinPlacanja?.dirty  || nacinPlacanja?.touched)" class="alert alert-danger mt1">
+                        <div *ngIf="nacinPlacanja?.errors?.required">
+                            Polje nacin placanja je obavezno polje.
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -58,6 +76,12 @@
                             {{ni.niID}} | {{ni.nacinIsporuke}}
                         </option>
                     </select>
+                    <!-- validacija -->
+                    <div *ngIf="nacinIsporuke?.invalid && (nacinIsporuke?.dirty  || nacinIsporuke?.touched)" class="alert alert-danger mt1">
+                        <div *ngIf="nacinIsporuke?.errors?.required">
+                            Polje nacin isporuke je obavezno polje.
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -72,6 +96,12 @@
                             {{city.postanski_broj}} | {{city.naziv_grada}}
                         </option>
                     </select>
+                    <!-- validacija -->
+                    <div *ngIf="grad?.invalid && (grad?.dirty  || grad?.touched)" class="alert alert-danger mt1">
+                        <div *ngIf="grad?.errors?.required">
+                            Polje grad je obavezno polje.
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -86,6 +116,12 @@
                             {{street.id.sifra_ulice}} | {{street.naziv_ulice}}
                         </option>
                     </select>
+                    <!-- validacija -->
+                    <div *ngIf="ulica?.invalid && (ulica?.dirty  || ulica?.touched)" class="alert alert-danger mt1">
+                        <div *ngIf="ulica?.errors?.required">
+                            Polje ulica je obavezno polje i popunjava se nakon popunjavanja polja grad.
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -99,6 +135,12 @@
                             {{adr.id.adresa_ID}}
                         </option>
                     </select>
+                    <!-- validacija -->
+                    <div *ngIf="adresa?.invalid && (adresa?.dirty  || adresa?.touched)" class="alert alert-danger mt1">
+                        <div *ngIf="adresa?.errors?.required">
+                            Polje adresa je obavezno polje i popunjava se nakon popunjavanja polja ulica.
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -112,6 +154,12 @@
                             {{employee.jmbg}} | {{employee.ime_prezime}}
                         </option>
                     </select>
+                    <!-- validacija -->
+                    <div *ngIf="zaposleni?.invalid && (zaposleni?.dirty  || zaposleni?.touched)" class="alert alert-danger mt1">
+                        <div *ngIf="zaposleni?.errors?.required">
+                            Polje zaposleni je obavezno polje.
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -131,6 +179,21 @@
             <div class="col-md-9">
                 <div class="input-space">
                     <input formControlName ="sifraStavke" type="text"/>
+                    <!-- validacija -->
+                    <div *ngIf="sifraStavke?.invalid && (sifraStavke?.dirty  || sifraStavke?.touched)" class="alert alert-danger mt1">
+                        <div *ngIf="sifraStavke?.errors?.required || sifraStavke?.errors?.whiteSpace">
+                            Polje broj stavke je obavezno polje!
+                        </div>
+                        <div *ngIf="sifraStavke?.errors?.minlength">
+                            Polje broj stavke mora imati minimalno 2 karaktera!
+                        </div>
+                        <div *ngIf="sifraStavke?.errors?.maxlength">
+                            Polje broj stavke ne sme imati vise od 6 karaktera!
+                        </div>
+                        <div *ngIf="sifraStavke?.errors?.pattern">
+                            Polje broj stavke sme da zadrzi samo brojeve.
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -140,6 +203,18 @@
             <div class="col-md-9">
                 <div class="input-space">
                     <input formControlName ="opis" type="text"/>
+                    <!-- validacija -->
+                    <div *ngIf="opis?.invalid && (opis?.dirty  || opis?.touched)" class="alert alert-danger mt1">
+                        <div *ngIf="opis?.errors?.required || opis?.errors?.whiteSpace">
+                            Polje opis je obavezno polje!
+                        </div>
+                        <div *ngIf="opis?.errors?.minlength">
+                            Polje opis mora imati minimalno 2 karaktera!
+                        </div>
+                        <div *ngIf="opis?.errors?.maxlength">
+                            Polje opis ne sme imati vise od 40 karaktera!
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -149,6 +224,15 @@
             <div class="col-md-9">
                 <div class="input-space">
                     <input formControlName ="ean" type="text"/>
+                    <!-- validacija -->
+                    <div *ngIf="ean?.invalid && (ean?.dirty  || ean?.touched)" class="alert alert-danger mt1">
+                        <div *ngIf="ean?.errors?.required || ean?.errors?.whiteSpace">
+                            Polje ean je obavezno polje!
+                        </div>
+                        <div *ngIf="ean?.errors?.pattern">
+                            Polje ean mora imati tacno 13 karaktera! I da sadrzi samo brojeve, ne slova.
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -162,6 +246,12 @@
                             {{product.sifraProizvoda}} | {{product.nazivProizvoda}}
                         </option>
                     </select>
+                    <!-- validacija -->
+                    <div *ngIf="proizvod?.invalid && (proizvod?.dirty  || proizvod?.touched)" class="alert alert-danger mt1">
+                        <div *ngIf="proizvod?.errors?.required">
+                            Polje proizvod je obavezno polje.
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -171,6 +261,21 @@
             <div class="col-md-9">
                 <div class="input-space">
                     <input formControlName ="kolicina" type="text"/>
+                    <!-- validacija -->
+                    <div *ngIf="kolicina?.invalid && (kolicina?.dirty  || kolicina?.touched)" class="alert alert-danger mt1">
+                        <div *ngIf="kolicina?.errors?.required || kolicina?.errors?.whiteSpace">
+                            Polje kolicina je obavezno polje!
+                        </div>
+                        <div *ngIf="kolicina?.errors?.minlength">
+                            Polje kolicina mora imati minimalno 1 karakter!
+                        </div>
+                        <div *ngIf="kolicina?.errors?.maxlength">
+                            Polje kolicina ne sme imati vise od 4 karaktera!
+                        </div>
+                        <div *ngIf="kolicina?.errors?.pattern">
+                            Polje kolicina sme da zadrzi samo brojeve.
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

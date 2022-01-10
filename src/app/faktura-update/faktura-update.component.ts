@@ -249,7 +249,7 @@ export class FakturaUpdateComponent implements OnInit {
       this.invoiceItemsForUpdate = this.fakturaService.getInvoiceItemsForIzmena();
 
       //obrisi odmah iz baze
-     // this.fakturaService.deleteInvoiceItem(this.invoiceFormGroupUpdate.get('inoviceItem')?.value.sifraStavke,this.invoiceFormGroupUpdate.get('invoice')?.value.sifraFakture).subscribe();      
+      this.fakturaService.deleteInvoiceItem(this.invoiceFormGroupUpdate.get('inoviceItem')?.value.sifraStavke,this.invoiceFormGroupUpdate.get('invoice')?.value.sifraFakture).subscribe();      
       
       this.invoiceFormGroupUpdate.get('inoviceItem')?.reset({
         sifraStavke: [''],

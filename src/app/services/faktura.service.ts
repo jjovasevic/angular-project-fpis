@@ -231,10 +231,10 @@ export class FakturaService {
     }
   }
 
-    // obrisi stavku fakture iz baze!!!! TO URADITI
-    // deleteInvoiceItem(idStavke: number, idFakture: number): Observable<any> {
-    //   const deleteInvoiceItemUrl = `${this.invoiceItemUrl}/${idStavke}/${idFakture}`;
-    //   return this.httpClient.delete(deleteInvoiceItemUrl, { responseType: 'text' });
-    // }
+  //  obrisi stavku fakture iz baze!!!!
+    deleteInvoiceItem(idStavke: number, idFakture: number): Observable<any> {
+      const deleteInvoiceItemUrl = `${this.invoiceItemUrl}/${idStavke}/${idFakture}`;
+      return this.httpClient.delete(deleteInvoiceItemUrl, { responseType: 'text' });
+    }
 
 }

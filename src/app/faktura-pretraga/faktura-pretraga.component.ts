@@ -15,9 +15,9 @@ export class FakturaPretragaComponent implements OnInit {
   invoices!: Faktura[];
 
   invoiceStatus: String = "";
-  invoiceForShow!:Faktura;
+  invoiceForShow!: Faktura;
   invoiceItemForShow!: StavkaFakture[];
-  invoiceForUpdate!:Faktura;
+  invoiceForUpdate!: Faktura;
   invoiceItemsForUpdate!: StavkaFakture[];
 
   constructor(private fakturaService: FakturaService, private formBuilder: FormBuilder) { }
@@ -38,12 +38,19 @@ export class FakturaPretragaComponent implements OnInit {
   onSubmitSearch() {
     let valuta = this.searchInvoiceFormGroup.get('pretraga')?.value;
 
-    this.fakturaService.getInvoicesWithCertainCurrency(valuta).subscribe(
-      data => {
-        this.invoices = data;
-        console.log(data);
-      }
-    );
+    //provera da li je uneta bilo koja vrednost
+    if(valuta != null){
+      this.fakturaService.getInvoicesWithCertainCurrency(valuta).subscribe(
+        data => {
+          this.invoices = data;
+          if (this.invoices.length === 0) {
+            alert(`Ne postoje fakture sa trazenom valutom: ` + valuta);
+          }
+        }
+      );
+    }else{
+      alert(`Morate uneti naziv valute po kojoj zelite da pretrazite fakture.`);
+    }
   }
 
   //popuni status forme
@@ -61,23 +68,34 @@ export class FakturaPretragaComponent implements OnInit {
   onSubmitDelete() {
 
     //ako je stiklirano polje popunjena ili proverena, onda mozemo obrisati fakturu
-    if (this.invoiceStatus == "popunjena" ||this.invoiceStatus == "proverena") {
+    if (this.invoiceStatus == "popunjena" || this.invoiceStatus == "proverena") {
 
       let idBrisanje = this.searchInvoiceFormGroup.get('brisanje')?.value;
 
-      this.fakturaService.deleteInvoice(idBrisanje).subscribe({
-        next: response => {
-          alert(`Faktura i stavke su uspesno obrisane iz baze!`);
-          this.resetFieldDelete();
-        },
-        error: err => {
-          alert(`Faktura i stavke nisu uspesno obrisane iz baze. ${err.message}`);
+      //proveravamo da li je uneta bilo koja vrednost:
+      if (idBrisanje != null) {
+        this.fakturaService.deleteInvoice(idBrisanje).subscribe({
+          next: response => {
+            alert(response);
+            this.resetFieldDelete();
+            //obrisati fakturu i stavke iz operativne memorije:
+            for (let i = 0; i < this.invoices.length; i++) {
+              if (this.invoices[i].sifraFakture == idBrisanje) {
+                this.invoices.splice(i, 1);
+                return;
+              }
+            }
+          },
+          error: err => {
+            alert(`Error. Faktura i stavke nisu uspesno obrisane iz baze. ${err.message}`);
+          }
         }
-
+        );
+      }else{
+        alert(`Morate uneti sifru fakture koju zelite obrisati.`);
       }
-      );
 
-    }else{
+    } else {
       alert(`Status forme mora biti POPUNJENA ili PROVERENA da bi obrisali fakturu.`);
     }
   }
@@ -87,40 +105,57 @@ export class FakturaPretragaComponent implements OnInit {
   }
 
   //za prikaz fakture
-  onSubmitShow(){
+  onSubmitShow() {
 
-    if(this.invoiceStatus != ""){
+    if (this.invoiceStatus != "") {
       let idPrikazi = this.searchInvoiceFormGroup.get('prikaz')?.value;
+      let zastavica = 0;
 
-      //faktura
+      //provera da li je uneta bilo koja vrednost u polje
+      if(idPrikazi == null){
+        alert(`Unesite sifru fakture koju zelite da pogledate.`);
+      }else{
+              //faktura
       this.fakturaService.getInvoiceForShowOrUpdate(idPrikazi).subscribe(
         data => {
-          this.invoiceForShow = data;
-          this.fakturaService.setInvoiceForShow(this.invoiceForShow);
+          if (data == null) {
+            alert(`U bazi ne postoji faktura sa sifrom: ` + idPrikazi);
+            zastavica = 1;
+          } else {
+            this.invoiceForShow = data;
+            this.fakturaService.setInvoiceForShow(this.invoiceForShow);
+          }
         }
       );
 
       //stavke fakture
       this.fakturaService.getInvoiceItemForShowOrUpdate(idPrikazi).subscribe(
         data => {
-          this.invoiceItemForShow = data;
-          this.fakturaService.setInvoiceItemForShow(this.invoiceItemForShow);
+          if (zastavica == 0) {
+            this.invoiceItemForShow = data;
+            this.fakturaService.setInvoiceItemForShow(this.invoiceItemForShow);
+          }
         }
       );
+      }
 
-    }else{
+    } else {
       alert(`Polje status forme mora biti oznaceno.`);
     }
   }
 
   // za update fakture
   onSubmitUpdate() {
-    
-        //ako je stiklirano polje popunjena ili proverena, onda mozemo izmeniti fakturu
-        if (this.invoiceStatus == "popunjena" || this.invoiceStatus == "proverena") {
 
-          let idIzmena = this.searchInvoiceFormGroup.get('izmena')?.value;
-    
+    //ako je stiklirano polje popunjena ili proverena, onda mozemo izmeniti fakturu
+    if (this.invoiceStatus == "popunjena" || this.invoiceStatus == "proverena") {
+
+      let idIzmena = this.searchInvoiceFormGroup.get('izmena')?.value;
+
+      if(idIzmena == null){
+        alert(`Unesite sifru fakture koju zelite da izmenite.`);
+      }else{
+        
       //faktura
       this.fakturaService.getInvoiceForShowOrUpdate(idIzmena).subscribe(
         data => {
@@ -136,11 +171,15 @@ export class FakturaPretragaComponent implements OnInit {
           this.fakturaService.setInvoiceItemsForUpdate(this.invoiceItemsForUpdate);
         }
       );
-    
-        }else{
-          alert(`Status forme mora biti POPUNJENA ili PROVERENA da bi izmenili fakturu i njene stavke.`);
-        }
+      }
+
+    } else {
+      alert(`Status forme mora biti POPUNJENA ili PROVERENA da bi izmenili fakturu i njene stavke.`);
+    }
 
   }
+
+
+  
 
 }

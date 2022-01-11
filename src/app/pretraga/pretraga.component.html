@@ -7,9 +7,12 @@
                     <input formControlName ="polje" type="text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <button type="submit" class="btn btn-info">Pronadji kupce</button>
                     <!-- validacija -->
-                    <div *ngIf="polje?.invalid && (polje?.dirty  || polje?.touched)" class="alert alert-danger mt1">
+                    <div *ngIf="polje?.invalid && (polje?.dirty  || polje?.touched)" class="alert alert-info mt1">
                         <div *ngIf="polje?.errors?.minlength">
-                            Ukucajte bar prva tri slova imena!
+                            Ukucajte bar prva tri slova imena.
+                        </div>
+                        <div *ngIf="polje?.errors?.pattern">
+                            Polje sme da sadrzi samo slova, ne i brojeve i druge karaktere.
                         </div>
                     </div>
                 </div>
@@ -57,6 +60,12 @@
                 <div class="input-space">
                     <input formControlName ="izmena" type="text"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <button type="submit" class="btn btn-info">Izmeni kupca</button>
+                    <!-- validacija -->
+                    <div *ngIf="izmena?.invalid && (izmena?.dirty  || izmena?.touched)" class="alert alert-info mt1">
+                        <div *ngIf="izmena?.errors?.pattern">
+                            Polje sme da sadrzi samo brojeve. Ne sme slova i druge karatkere.
+                        </div>
+                    </div>
                 </div> 
             </div> 
     </div>
@@ -72,6 +81,12 @@
                 <div class="input-space">
                     <input formControlName ="brisanje" type="text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <button type="submit" class="btn btn-info">Obrisi kupca</button>
+                    <!-- validacija -->
+                    <div *ngIf="brisanje?.invalid && (brisanje?.dirty  || brisanje?.touched)" class="alert alert-info mt1">
+                        <div *ngIf="brisanje?.errors?.pattern">
+                            Polje sme da sadrzi samo brojeve. Ne sme slova i druge karatkere.
+                        </div>
+                    </div>
                 </div> 
             </div> 
     </div>

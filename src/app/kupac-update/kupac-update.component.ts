@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Adresa } from '../klase/adresa';
 import { Grad } from '../klase/grad';
@@ -8,6 +8,7 @@ import { KupacInsert } from '../klase/kupac-insert';
 import { Ulica } from '../klase/ulica';
 import { Zaposleni } from '../klase/zaposleni';
 import { KupacService } from '../services/kupac.service';
+import { CustomValidators } from '../validators/custom-validators';
 
 @Component({
   selector: 'app-kupac-update',
@@ -48,14 +49,18 @@ export class KupacUpdateComponent implements OnInit {
 
     this.customerUpdateFormGroup = this.formBuilder.group({
       pib: [this.customer.pib],
-      naziv_kupca: [this.customer.naziv_kupca],
-      email_kupca: [this.customer.email_kupca],
-      telefon_kupca: [this.customer.telefon_kupca],
-      potpis: [this.customer.potpis],
-      adresa: [this.customer.adresa],
-      ulica: [this.customer.adresa.ulica],
-      grad: [this.customer.adresa.ulica.grad],
-      zaposleni: [this.customer.zaposleni]
+
+      naziv_kupca: new FormControl(this.customer.naziv_kupca,[Validators.required, Validators.minLength(6),
+        Validators.maxLength(30),Validators.pattern('[a-zA-Z ]*'),CustomValidators.whiteSpace]),
+
+      email_kupca: new FormControl(this.customer.email_kupca,[Validators.required, 
+                                        Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'), CustomValidators.whiteSpace]),
+      telefon_kupca: new FormControl(this.customer.telefon_kupca,[Validators.required, Validators.minLength(9),Validators.maxLength(20),Validators.pattern('[0-9]*'),CustomValidators.whiteSpace]),
+      potpis: new FormControl(this.customer.potpis,[Validators.required, Validators.minLength(2),Validators.maxLength(20),Validators.pattern('[a-zA-Z]*'),CustomValidators.whiteSpace]),
+      adresa: new FormControl(this.customer.adresa, [Validators.required]),
+      ulica: new FormControl(this.customer.adresa.ulica, [Validators.required]),
+      grad: new FormControl(this.customer.adresa.ulica.grad, [Validators.required]),
+      zaposleni: new FormControl(this.customer.zaposleni, [Validators.required])
     });
   }
   
@@ -113,32 +118,38 @@ export class KupacUpdateComponent implements OnInit {
   //izmeni kupca
   onSubmit() {
 
-    let newCustomer = new KupacInsert();
+    //provera da li je forma dobro popunjena
+    if(this.customerUpdateFormGroup.invalid){
+      this.customerUpdateFormGroup.markAllAsTouched();
+      alert(`Popunite sva polja odgovarajucim vrednostima.`)
+    }else{
+      let newCustomer = new KupacInsert();
 
-    newCustomer.pib = this.customerUpdateFormGroup.get('pib')?.value;
-    newCustomer.naziv_kupca = this.customerUpdateFormGroup.get('naziv_kupca')?.value; 
-    newCustomer.email_kupca = this.customerUpdateFormGroup.get('email_kupca')?.value;
-    newCustomer.telefon_kupca = this.customerUpdateFormGroup.get('telefon_kupca')?.value;
-    newCustomer.potpis = this.customerUpdateFormGroup.get('potpis')?.value;   
-    newCustomer.adresa_ID = this.customerUpdateFormGroup.get('adresa')?.value.id.adresa_ID;
-    newCustomer.sifra_ulice = this.customerUpdateFormGroup.get('ulica')?.value.id.sifra_ulice;
-    newCustomer.postanski_broj = this.customerUpdateFormGroup.get('grad')?.value.postanski_broj;
-    newCustomer.jmbg = this.customerUpdateFormGroup.get('zaposleni')?.value.jmbg;   
-
-    console.log("Moj novi kupac:",newCustomer);
-
-    this.kupacService.putCustomer(newCustomer).subscribe({
-        next: response => {
-          alert(`Kupac je uspesno izmenjen!`);
-          this.resetForm();
-          this.router.navigate(['/']);
-        },
-        error: err => {
-          alert(`Kupac nije uspesno izmenjen!. ${err.message}`);
+      newCustomer.pib = this.customerUpdateFormGroup.get('pib')?.value;
+      newCustomer.naziv_kupca = this.customerUpdateFormGroup.get('naziv_kupca')?.value; 
+      newCustomer.email_kupca = this.customerUpdateFormGroup.get('email_kupca')?.value;
+      newCustomer.telefon_kupca = this.customerUpdateFormGroup.get('telefon_kupca')?.value;
+      newCustomer.potpis = this.customerUpdateFormGroup.get('potpis')?.value;   
+      newCustomer.adresa_ID = this.customerUpdateFormGroup.get('adresa')?.value.id.adresa_ID;
+      newCustomer.sifra_ulice = this.customerUpdateFormGroup.get('ulica')?.value.id.sifra_ulice;
+      newCustomer.postanski_broj = this.customerUpdateFormGroup.get('grad')?.value.postanski_broj;
+      newCustomer.jmbg = this.customerUpdateFormGroup.get('zaposleni')?.value.jmbg;   
+  
+      console.log("Moj novi kupac:",newCustomer);
+  
+      this.kupacService.putCustomer(newCustomer).subscribe({
+          next: response => {
+            alert(`Kupac je uspesno izmenjen!`);
+            this.resetForm();
+            this.router.navigate(['/']);
+          },
+          error: err => {
+            alert(`Kupac nije uspesno izmenjen!. ${err.message}`);
+          }
+  
         }
-
-      }
-    );
+      );
+    }
   }
 
   resetForm() {
@@ -146,7 +157,15 @@ export class KupacUpdateComponent implements OnInit {
 
   }
 
-
+    //getter metode potrebne zbog validacije
+    get naziv_kupca(){ return this.customerUpdateFormGroup.get('naziv_kupca'); }
+    get email_kupca(){ return this.customerUpdateFormGroup.get('email_kupca'); }
+    get telefon_kupca(){ return this.customerUpdateFormGroup.get('telefon_kupca'); }
+    get potpis(){ return this.customerUpdateFormGroup.get('potpis'); }
+    get adresa(){ return this.customerUpdateFormGroup.get('adresa'); }
+    get ulica(){ return this.customerUpdateFormGroup.get('ulica'); }
+    get grad(){ return this.customerUpdateFormGroup.get('grad'); }
+    get zaposleni(){ return this.customerUpdateFormGroup.get('zaposleni'); }
 
 
 

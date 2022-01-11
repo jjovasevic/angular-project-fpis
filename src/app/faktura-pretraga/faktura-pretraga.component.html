@@ -17,6 +17,12 @@
                         <br>
                         <input type="radio" name = "radio" value="validirana" (change)="fillInvoiceStatus($event)">Validirana
                     </label>
+                    <!-- validacija -->
+                    <div *ngIf="pretraga?.invalid && (pretraga?.dirty  || pretraga?.touched)" class="alert alert-info mt1">
+                        <div *ngIf="pretraga?.errors?.pattern">
+                            Polje sme da sadrzi tacno 3 slova, ne sme brojeve i druge karaktere.
+                        </div>
+                    </div>
                 </div>
                 
             </div> 
@@ -62,6 +68,12 @@
                 <div class="input-space">
                     <input formControlName ="prikaz" type="text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <button type="submit" class="btn btn-info">Prikazi fakturu i njene stavke</button>
+                    <!-- validacija -->
+                    <div *ngIf="prikaz?.invalid && (prikaz?.dirty  || prikaz?.touched)" class="alert alert-info mt1">
+                        <div *ngIf="prikaz?.errors?.pattern">
+                            Polje sme da sadrzi samo brojeve. Ne sme slova i druge karatkere.
+                        </div>
+                    </div>
                 </div>
             </div>         
     </div>
@@ -79,6 +91,12 @@
                 <div class="input-space">
                     <input formControlName ="izmena" type="text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <button type="submit" class="btn btn-info">Izmeni fakturu i njene stavke</button>
+                    <!-- validacija -->
+                    <div *ngIf="izmena?.invalid && (izmena?.dirty  || izmena?.touched)" class="alert alert-info mt1">
+                        <div *ngIf="izmena?.errors?.pattern">
+                            Polje sme da sadrzi samo brojeve. Ne sme slova i druge karatkere.
+                        </div>
+                    </div>
                 </div>
                 
             </div> 
@@ -99,6 +117,12 @@
                 <div class="input-space">
                     <input formControlName ="brisanje" type="text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <button type="submit" class="btn btn-info">Obrisi fakturu i njene stavke</button>
+                    <!-- validacija -->
+                    <div *ngIf="brisanje?.invalid && (brisanje?.dirty  || brisanje?.touched)" class="alert alert-info mt1">
+                        <div *ngIf="brisanje?.errors?.pattern">
+                            Polje sme da sadrzi samo brojeve. Ne sme slova i druge karatkere.
+                        </div>
+                    </div>
                 </div>
                 
             </div> 

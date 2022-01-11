@@ -9,12 +9,12 @@
     <div formGroupName="customer" class="form-area">
         <h3>Unos novog kupca</h3>
         <br>
-        
+
         <div class="row">
             <div class="col-md-2"><label>pib</label></div>
             <div class="col-md-9">
                 <div class="input-space">
-                    <input formControlName ="pib" type="text" readonly="true"/>
+                    <input formControlName="pib" type="text" readonly="true" />
                 </div>
             </div>
         </div>
@@ -23,20 +23,20 @@
             <div class="col-md-2"><label>Naziv kupca</label></div>
             <div class="col-md-9">
                 <div class="input-space">
-                    <input formControlName ="naziv_kupca" type="text">
+                    <input formControlName="naziv_kupca" type="text">
                     <!-- validacija -->
                     <div *ngIf="naziv_kupca?.invalid && (naziv_kupca?.dirty  || naziv_kupca?.touched)" class="alert alert-danger mt1">
                         <div *ngIf="naziv_kupca?.errors?.required || naziv_kupca?.errors?.whiteSpace">
-                            Polje naziv kupca je obavezno!
+                            Polje naziv kupca je obavezno.
                         </div>
                         <div *ngIf="naziv_kupca?.errors?.minlength">
-                            Polje naziv kupca mora imati minimalno 6 karaktera!
+                            Polje naziv kupca mora imati minimalno 6 karaktera.
                         </div>
                         <div *ngIf="naziv_kupca?.errors?.maxlength">
-                            Polje naziv kupca ne sme imati vise od 30 karaktera!
+                            Polje naziv kupca ne sme imati vise od 30 karaktera.
                         </div>
                         <div *ngIf="naziv_kupca?.errors?.pattern">
-                            Polje naziv kupca sme da sadrzi samo slova!
+                            Polje naziv kupca sme da sadrzi samo slova.
                         </div>
                     </div>
 
@@ -48,11 +48,12 @@
             <div class="col-md-2"><label>Email kupca</label></div>
             <div class="col-md-9">
                 <div class="input-space">
-                    <input formControlName ="email_kupca" type="text">
+                    <input formControlName="email_kupca" type="text">
 
-                    <div *ngIf="email_kupca?.invalid && (email_kupca?.dirty || email_kupca?.touched)" class="alert alert-danger mt1">
+                    <div *ngIf="email_kupca?.invalid && (email_kupca?.dirty || email_kupca?.touched)"
+                        class="alert alert-danger mt1">
                         <div *ngIf="email_kupca?.errors?.required || email_kupca?.errors?.whiteSpace">
-                            Polje email kupca je obavezno!
+                            Polje email kupca je obavezno.
                         </div>
                         <div *ngIf="email_kupca?.errors?.pattern">
                             Unesite Vas pravi email.
@@ -67,18 +68,19 @@
             <div class="col-md-2"><label>Telefon kupca</label></div>
             <div class="col-md-9">
                 <div class="input-space">
-                    <input formControlName ="telefon_kupca" type="text">
+                    <input formControlName="telefon_kupca" type="text">
 
-                     <!-- validacija -->
-                     <div *ngIf="telefon_kupca?.invalid && (telefon_kupca?.dirty  || telefon_kupca?.touched)" class="alert alert-danger mt1">
+                    <!-- validacija -->
+                    <div *ngIf="telefon_kupca?.invalid && (telefon_kupca?.dirty  || telefon_kupca?.touched)"
+                        class="alert alert-danger mt1">
                         <div *ngIf="telefon_kupca?.errors?.required || telefon_kupca?.errors?.whiteSpace">
-                            Polje telefon kupca je obavezno!
+                            Polje telefon kupca je obavezno.
                         </div>
                         <div *ngIf="telefon_kupca?.errors?.minlength">
-                            Polje telefon kupca mora imati minimalno 9 karaktera!
+                            Polje telefon kupca mora imati minimalno 9 karaktera.
                         </div>
                         <div *ngIf="telefon_kupca?.errors?.maxlength">
-                            Polje telefon kupca ne sme imati vise od 20 karaktera!
+                            Polje telefon kupca ne sme imati vise od 20 karaktera.
                         </div>
                         <div *ngIf="telefon_kupca?.errors?.pattern">
                             Polje telefon kupca sme da sadrzi samo brojeve.
@@ -93,7 +95,7 @@
             <div class="col-md-2"><label>Potpis kupca</label></div>
             <div class="col-md-9">
                 <div class="input-space">
-                    <input formControlName ="potpis" type="text">
+                    <input formControlName="potpis" type="text">
 
                     <!-- validacija -->
                     <div *ngIf="potpis?.invalid && (potpis?.dirty  || potpis?.touched)" class="alert alert-danger mt1">
@@ -101,13 +103,13 @@
                             Polje potpis kupca je obavezno!
                         </div>
                         <div *ngIf="potpis?.errors?.minlength">
-                            Polje potpis kupca mora imati minimalno 2 karaktera!
+                            Polje potpis kupca mora imati minimalno 2 karaktera.
                         </div>
                         <div *ngIf="potpis?.errors?.maxlength">
-                            Polje potpis kupca ne sme imati vise od 20 karaktera!
+                            Polje potpis kupca ne sme imati vise od 20 karaktera.
                         </div>
                         <div *ngIf="potpis?.errors?.pattern">
-                            Polje potpis sme da sadrzi samo slova!
+                            Polje potpis sme da sadrzi samo slova.
                         </div>
                     </div>
 
@@ -119,7 +121,7 @@
             <div class="col-md-2"><label>Grad</label></div>
             <div class="col-md-9">
                 <div class="input-space">
-                    <select formControlName ="grad" (change)="getStreets()">
+                    <select formControlName="grad" (change)="getStreets()">
                         <!-- [ngValue] cuvamo referencu na city objekat -->
                         <option *ngFor="let city of cities" [ngValue]="city">
                             {{city.postanski_broj}} | {{city.naziv_grada}}
@@ -129,7 +131,7 @@
                     <!-- validacija -->
                     <div *ngIf="grad?.invalid && (grad?.dirty || grad?.touched)" class="alert alert-danger mt1">
                         <div *ngIf="grad?.errors?.required">
-                            Polje mora biti popunjeno.
+                            Polje grad mora biti popunjeno.
                         </div>
                     </div>
 
@@ -141,7 +143,7 @@
             <div class="col-md-2"><label>Ulica</label></div>
             <div class="col-md-9">
                 <div class="input-space">
-                    <select formControlName ="ulica" (change)="getAdress()">
+                    <select formControlName="ulica" (change)="getAdress()">
                         <!-- [ngValue] cuvamo referencu na street objekat -->
                         <option *ngFor="let street of streets" [ngValue]="street">
                             {{street.id.sifra_ulice}} | {{street.naziv_ulice}}
@@ -151,7 +153,7 @@
                     <!-- validacija -->
                     <div *ngIf="ulica?.invalid && (ulica?.dirty || ulica?.touched)" class="alert alert-danger mt1">
                         <div *ngIf="ulica?.errors?.required">
-                            Polje mora biti popunjeno.
+                            Polje ulica mora biti popunjeno. Popunjava se nakon popunjavanja polja grad.
                         </div>
                     </div>
 
@@ -163,7 +165,7 @@
             <div class="col-md-2"><label>Adresa</label></div>
             <div class="col-md-9">
                 <div class="input-space">
-                    <select formControlName ="adresa">
+                    <select formControlName="adresa">
                         <option *ngFor="let adr of adress" [ngValue]="adr">
                             {{adr.id.adresa_ID}}
                         </option>
@@ -171,7 +173,7 @@
                     <!-- validacija -->
                     <div *ngIf="adresa?.invalid && (adresa?.dirty || adresa?.touched)" class="alert alert-danger mt1">
                         <div *ngIf="adresa?.errors?.required">
-                            Polje mora biti popunjeno.
+                            Polje adresa mora biti popunjeno. Popunjava se nakon popunjavanja polja ulica.
                         </div>
                     </div>
 
@@ -183,15 +185,16 @@
             <div class="col-md-2"><label>Zaposleni</label></div>
             <div class="col-md-9">
                 <div class="input-space">
-                    <select formControlName ="zaposleni">
+                    <select formControlName="zaposleni">
                         <option *ngFor="let employee of employees" [ngValue]="employee">
                             {{employee.jmbg}} | {{employee.ime_prezime}}
                         </option>
                     </select>
                     <!-- validacija -->
-                    <div *ngIf="zaposleni?.invalid && (zaposleni?.dirty || zaposleni?.touched)" class="alert alert-danger mt1">
+                    <div *ngIf="zaposleni?.invalid && (zaposleni?.dirty || zaposleni?.touched)"
+                        class="alert alert-danger mt1">
                         <div *ngIf="zaposleni?.errors?.required">
-                            Polje mora biti popunjeno.
+                            Polje zaposleni mora biti popunjeno.
                         </div>
                     </div>
 
@@ -209,5 +212,5 @@
 <br>
 
 <div>
-    <button [routerLink]="['/']"class="btn btn-info">Vrati se na pocetnu stranu</button>
+    <button [routerLink]="['/']" class="btn btn-info">Vrati se na pocetnu stranu</button>
 </div>

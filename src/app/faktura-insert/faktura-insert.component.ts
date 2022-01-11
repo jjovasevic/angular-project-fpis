@@ -143,7 +143,7 @@ export class FakturaInsertComponent implements OnInit {
 
     if (this.invoiceFormGroup.get('inoviceItem')?.invalid) {
       this.invoiceFormGroup.get('inoviceItem')?.markAllAsTouched();
-      alert(`Ukoliko zelite da unesete novu stavku, morate popuniti sva polja.`)
+      alert(`Ukoliko zelite da unesete novu stavku, morate popuniti sva polja za stavku.`)
     } else {
       if (this.invoiceFormGroup.get('inoviceItem')?.value.kolicina != 0) {
         let s = new StavkaFaktureInsert();

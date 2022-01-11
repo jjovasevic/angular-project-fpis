@@ -23,9 +23,9 @@ export class PretragaComponent implements OnInit {
   ngOnInit(): void {
 
     this.searchFormGroup = new FormGroup({
-      'polje': new FormControl('', [Validators.minLength(3)]),
-      'izmena': new FormControl(''),
-      'brisanje': new FormControl('')
+      'polje': new FormControl('', [Validators.minLength(3),Validators.pattern('[a-zA-Z ]*')]),
+      'izmena': new FormControl('',[Validators.pattern('[0-9]*')]),
+      'brisanje': new FormControl('',[Validators.pattern('[0-9]*')])
     })
 
   }
@@ -35,21 +35,31 @@ export class PretragaComponent implements OnInit {
 
     const name = this.searchFormGroup.get('polje')?.value;
 
-    this.kupacService.getCustomersByName(name).subscribe(
-      data => {
-        this.customers = data;
-        if (this.customers.length === 0) {
-          alert(`Ne postoje kupci sa nazivom: ` + name);
+    if(this.searchFormGroup.get('polje')?.invalid){
+      this.searchFormGroup.markAllAsTouched();
+      alert(`Naziv kupca mora biti pravilno unet.`);
+    }else{
+      this.kupacService.getCustomersByName(name).subscribe(
+        data => {
+          this.customers = data;
+          if (this.customers.length === 0) {
+            alert(`Ne postoje kupci sa nazivom: ` + name);
+          }
         }
-      }
-    );
+      );
+    }
   }
 
   onSubmitUpdate() {
+
+    if(this.searchFormGroup.get('izmena')?.invalid){
+      this.searchFormGroup.markAllAsTouched();
+      alert(`Ukoliko zelite da izmenite kupca sa odredjenim PIB-om, morate pravilno popuniti polje.`);
+    }else{
+      
     console.log("Pib iz inputa: ", this.searchFormGroup.get('izmena')?.value);
 
-    const pibForUpdateString = this.searchFormGroup.get('izmena')?.value;
-    const pibForUpdate = parseInt(pibForUpdateString);
+    const pibForUpdate = this.searchFormGroup.get('izmena')?.value;
 
     this.kupacService.getCustomersById(pibForUpdate).subscribe(
       data => {
@@ -67,33 +77,43 @@ export class PretragaComponent implements OnInit {
       }
     );
 
+    }
   }
 
   onSubmitDelete() {
-    console.log(this.searchFormGroup.get('brisanje')?.value);
 
-    const pibForDeleteString = this.searchFormGroup.get('brisanje')?.value;
-    const pibForDelete = parseInt(pibForDeleteString);
+    if(this.searchFormGroup.get('brisanje')?.invalid){
+      this.searchFormGroup.markAllAsTouched();
+      alert(`Ukoliko zelite da obrisete kupca sa odredjenim PIB-om, morate pravilno popuniti polje.`);
+    }else{
+      console.log(this.searchFormGroup.get('brisanje')?.value);
 
-    this.kupacService.deleteCustomer(pibForDelete).subscribe({
-      next: response => {
-        alert(response);
-        this.resetFieldDelete();
-        //obrisati kupca i iz operativne memorije:
-        for(let c = 0; c < this.customers.length; c++){
-          if(this.customers[c].pib == pibForDelete){
-            this.customers.splice(c,1);
-            return;
+      const pibForDelete = this.searchFormGroup.get('brisanje')?.value;
+  
+      this.kupacService.deleteCustomer(pibForDelete).subscribe({
+        next: response => {
+          alert(response);
+          this.resetFieldDelete();
+          //obrisati kupca i iz operativne memorije ukoliko je uspesno obrisan i iz baze:
+          if(response != "Kupac nije obrisan jer ne postoji u bazi."){
+            for(let c = 0; c < this.customers.length; c++){
+              if(this.customers[c].pib == pibForDelete){
+                this.customers.splice(c,1);
+                return;
+              }
+            }
           }
-        } 
-      },
-      error: err => {
-        alert(`Error pri brisanju kupca iz baze.`);
+           
+        },
+        error: err => {
+          alert(`Error pri brisanju kupca iz baze.`);
+        }
+  
       }
-
+      );
     }
-    );
   }
+
   resetFieldDelete() {
     this.searchFormGroup.get('brisanje')?.setValue("");
   }
@@ -103,5 +123,9 @@ export class PretragaComponent implements OnInit {
 
   //getter metode potrebne zbog validacije
   get polje() { return this.searchFormGroup.get('polje'); }
+  get izmena() { return this.searchFormGroup.get('izmena'); }
+  get brisanje() { return this.searchFormGroup.get('brisanje'); }
+
+
 
 }

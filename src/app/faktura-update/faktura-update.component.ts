@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Adresa } from '../klase/adresa';
 import { Grad } from '../klase/grad';
@@ -13,6 +13,7 @@ import { StavkaFaktureInsert } from '../klaseSlozen/new-stavka-fakture';
 import { Proizvod } from '../klaseSlozen/proizvod';
 import { StavkaFakture } from '../klaseSlozen/stavka-fakture';
 import { FakturaService } from '../services/faktura.service';
+import { CustomValidators } from '../validators/custom-validators';
 
 @Component({
   selector: 'app-faktura-update',
@@ -47,21 +48,21 @@ export class FakturaUpdateComponent implements OnInit {
     this.invoiceFormGroupUpdate = this.formBuilder.group({
       invoice: this.formBuilder.group({
         sifraFakture: [this.invoiceForUpdate.sifraFakture],
-        datumPrometa: [this.invoiceForUpdate.datumPrometa],
-        valuta: [this.invoiceForUpdate.valuta],
-        nacinPlacanja: [this.invoiceForUpdate.nacinPlacanja],
-        nacinIsporuke: [this.invoiceForUpdate.nacinIsporuke],
-        grad: [this.invoiceForUpdate.adresa.ulica.grad],
-        ulica: [this.invoiceForUpdate.adresa.ulica],
-        adresa: [this.invoiceForUpdate.adresa],
-        zaposleni: [this.invoiceForUpdate.zaposleni]
+        datumPrometa: new FormControl(this.invoiceForUpdate.datumPrometa, [Validators.required]),
+        valuta: new FormControl(this.invoiceForUpdate.valuta, [Validators.required]),
+        nacinPlacanja: new FormControl(this.invoiceForUpdate.nacinPlacanja, [Validators.required]),
+        nacinIsporuke: new FormControl(this.invoiceForUpdate.nacinIsporuke, [Validators.required]),
+        grad: new FormControl(this.invoiceForUpdate.adresa.ulica.grad, [Validators.required]),
+        ulica: new FormControl(this.invoiceForUpdate.adresa.ulica, [Validators.required]),
+        adresa: new FormControl(this.invoiceForUpdate.adresa, [Validators.required]),
+        zaposleni: new FormControl(this.invoiceForUpdate.zaposleni, [Validators.required])
       }),
       inoviceItem: this.formBuilder.group({
-        sifraStavke: [''],
-        opis: [''],
-        ean: [''],
-        proizvod: [''],
-        kolicina: ['']
+        sifraStavke: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(6),Validators.pattern('[0-9]*'), CustomValidators.whiteSpace]),
+        opis: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(40), CustomValidators.whiteSpace]),
+        ean: new FormControl('', [Validators.required, Validators.pattern('[0-9]{13}'), CustomValidators.whiteSpace]),
+        proizvod: new FormControl('', [Validators.required]),
+        kolicina: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(4),Validators.pattern('[0-9]*'), CustomValidators.whiteSpace])
       })
 
     });
@@ -263,7 +264,21 @@ export class FakturaUpdateComponent implements OnInit {
 
   }
 
+  //gett metode zbog validacije
+  get datumPrometa() { return this.invoiceFormGroupUpdate.get('invoice.datumPrometa'); }
+  get valuta() { return this.invoiceFormGroupUpdate.get('invoice.valuta'); }
+  get nacinPlacanja() { return this.invoiceFormGroupUpdate.get('invoice.nacinPlacanja'); }
+  get nacinIsporuke() { return this.invoiceFormGroupUpdate.get('invoice.nacinIsporuke'); }
+  get grad() { return this.invoiceFormGroupUpdate.get('invoice.grad'); }
+  get ulica() { return this.invoiceFormGroupUpdate.get('invoice.ulica'); }
+  get adresa() { return this.invoiceFormGroupUpdate.get('invoice.adresa'); }
+  get zaposleni() { return this.invoiceFormGroupUpdate.get('invoice.zaposleni'); }
 
+  get sifraStavke() { return this.invoiceFormGroupUpdate.get('inoviceItem.sifraStavke'); }
+  get opis() { return this.invoiceFormGroupUpdate.get('inoviceItem.opis'); }
+  get ean() { return this.invoiceFormGroupUpdate.get('inoviceItem.ean'); }
+  get proizvod() { return this.invoiceFormGroupUpdate.get('inoviceItem.proizvod'); }
+  get kolicina() { return this.invoiceFormGroupUpdate.get('inoviceItem.kolicina'); }
 
 
 

@@ -88,7 +88,7 @@ export class FakturaPretragaComponent implements OnInit {
         let idBrisanje = this.searchInvoiceFormGroup.get('brisanje')?.value;
 
         //proveravamo da li je uneta bilo koja vrednost:
-        if (idBrisanje != null) {
+        if (idBrisanje != 0) {
           this.fakturaService.deleteInvoice(idBrisanje).subscribe({
             next: response => {
               alert(response);
@@ -135,7 +135,7 @@ export class FakturaPretragaComponent implements OnInit {
         let zastavica = 0;
 
         //provera da li je uneta bilo koja vrednost u polje
-        if (idPrikazi == null) {
+        if (idPrikazi == 0) {
           alert(`Unesite sifru fakture koju zelite da pogledate.`);
         } else {
           //faktura
@@ -182,7 +182,7 @@ export class FakturaPretragaComponent implements OnInit {
         let idIzmena = this.searchInvoiceFormGroup.get('izmena')?.value;
         let zastavica2 = 0;
 
-        if (idIzmena == null) {
+        if (idIzmena == 0) {
           alert(`Unesite sifru fakture koju zelite da izmenite.`);
         } else {
 

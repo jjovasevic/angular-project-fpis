@@ -188,7 +188,7 @@
                     <!-- validacija -->
                     <div *ngIf="sifraStavke?.invalid && (sifraStavke?.dirty  || sifraStavke?.touched)" class="alert alert-danger mt1">
                         <div *ngIf="sifraStavke?.errors?.required || sifraStavke?.errors?.whiteSpace">
-                            Polje broj stavke je obavezno polje!
+                            Polje broj stavke je obavezno polje.
                         </div>
                         <div *ngIf="sifraStavke?.errors?.minlength">
                             Polje broj stavke mora imati minimalno 2 karaktera.
@@ -212,13 +212,13 @@
                     <!-- validacija -->
                     <div *ngIf="opis?.invalid && (opis?.dirty  || opis?.touched)" class="alert alert-danger mt1">
                         <div *ngIf="opis?.errors?.required || opis?.errors?.whiteSpace">
-                            Polje opis je obavezno polje!
+                            Polje opis je obavezno polje.
                         </div>
                         <div *ngIf="opis?.errors?.minlength">
-                            Polje opis mora imati minimalno 2 karaktera!
+                            Polje opis mora imati minimalno 2 karaktera.
                         </div>
                         <div *ngIf="opis?.errors?.maxlength">
-                            Polje opis ne sme imati vise od 40 karaktera!
+                            Polje opis ne sme imati vise od 40 karaktera.
                         </div>
                     </div>
                 </div>
@@ -233,7 +233,7 @@
                     <!-- validacija -->
                     <div *ngIf="ean?.invalid && (ean?.dirty  || ean?.touched)" class="alert alert-danger mt1">
                         <div *ngIf="ean?.errors?.required || ean?.errors?.whiteSpace">
-                            Polje ean je obavezno polje!
+                            Polje ean je obavezno polje.
                         </div>
                         <div *ngIf="ean?.errors?.pattern">
                             Polje ean mora imati tacno 13 karaktera! I da sadrzi samo brojeve, ne slova.
@@ -270,13 +270,13 @@
                     <!-- validacija -->
                     <div *ngIf="kolicina?.invalid && (kolicina?.dirty  || kolicina?.touched)" class="alert alert-danger mt1">
                         <div *ngIf="kolicina?.errors?.required || kolicina?.errors?.whiteSpace">
-                            Polje kolicina je obavezno polje!
+                            Polje kolicina je obavezno polje.
                         </div>
                         <div *ngIf="kolicina?.errors?.minlength">
-                            Polje kolicina mora imati minimalno 1 karakter!
+                            Polje kolicina mora imati minimalno 1 karakter.
                         </div>
                         <div *ngIf="kolicina?.errors?.maxlength">
-                            Polje kolicina ne sme imati vise od 4 karaktera!
+                            Polje kolicina ne sme imati vise od 4 karaktera.
                         </div>
                         <div *ngIf="kolicina?.errors?.pattern">
                             Polje kolicina sme da zadrzi samo brojeve.

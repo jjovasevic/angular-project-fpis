@@ -37,7 +37,7 @@ export class FakturaUpdateComponent implements OnInit {
 
   invoiceFormGroupUpdate!: FormGroup;
 
-  constructor(private fakturaService: FakturaService, private formBuilder: FormBuilder, private router:Router) { }
+  constructor(private fakturaService: FakturaService, private formBuilder: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
 
@@ -58,11 +58,11 @@ export class FakturaUpdateComponent implements OnInit {
         zaposleni: new FormControl(this.invoiceForUpdate.zaposleni, [Validators.required])
       }),
       inoviceItem: this.formBuilder.group({
-        sifraStavke: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(6),Validators.pattern('[0-9]*'), CustomValidators.whiteSpace]),
+        sifraStavke: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(6), Validators.pattern('[0-9]*'), CustomValidators.whiteSpace]),
         opis: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(40), CustomValidators.whiteSpace]),
         ean: new FormControl('', [Validators.required, Validators.pattern('[0-9]{13}'), CustomValidators.whiteSpace]),
         proizvod: new FormControl('', [Validators.required]),
-        kolicina: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(4),Validators.pattern('[0-9]*'), CustomValidators.whiteSpace])
+        kolicina: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(4), Validators.pattern('[0-9]*'), CustomValidators.whiteSpace])
       })
 
     });
@@ -148,60 +148,99 @@ export class FakturaUpdateComponent implements OnInit {
 
   onSubmitAddNewItem() {
 
-    if (this.invoiceFormGroupUpdate.get('inoviceItem')?.value.kolicina != 0) {
-      let s = new StavkaFaktureInsert();
+    if (this.invoiceFormGroupUpdate.get('inoviceItem')?.invalid) {
+      this.invoiceFormGroupUpdate.get('inoviceItem')?.markAllAsTouched();
+      alert(`Ukoliko zelite da unesete novu stavku, morate popuniti sva polja za stavku.`)
+    } else {
 
-      s.sifraStavke = this.invoiceFormGroupUpdate.get('inoviceItem')?.value.sifraStavke;
-      s.opis = this.invoiceFormGroupUpdate.get('inoviceItem')?.value.opis;
-      s.ean = this.invoiceFormGroupUpdate.get('inoviceItem')?.value.ean;
-      s.sifraProizvoda = this.invoiceFormGroupUpdate.get('inoviceItem')?.value.proizvod.sifraProizvoda;
-      s.kolicina = this.invoiceFormGroupUpdate.get('inoviceItem')?.value.kolicina;
-      
-      //poslati do servica da sacuva stavku
-      this.fakturaService.setInvoiceItem(s);
+      if (this.invoiceFormGroupUpdate.get('inoviceItem')?.value.kolicina != 0) {
+        let s = new StavkaFaktureInsert();
+        let zastavica3 = 1;
 
-      // stavke koje su sacuvane u operativnoj memoriji
-      this.stavke = this.fakturaService.vratiStavkeZaUnos();
+        s.sifraStavke = this.invoiceFormGroupUpdate.get('inoviceItem')?.value.sifraStavke;
+        s.opis = this.invoiceFormGroupUpdate.get('inoviceItem')?.value.opis;
+        s.ean = this.invoiceFormGroupUpdate.get('inoviceItem')?.value.ean;
+        s.sifraProizvoda = this.invoiceFormGroupUpdate.get('inoviceItem')?.value.proizvod.sifraProizvoda;
+        s.kolicina = this.invoiceFormGroupUpdate.get('inoviceItem')?.value.kolicina;
 
-      //reset formu
-      this.invoiceFormGroupUpdate.get('inoviceItem')?.reset({
-        sifraStavke: [''],
-        opis: [''],
-        ean: [''],
-        proizvod: [''],
-        kolicina: ['']
-      });
+        for (let it = 0; it < this.invoiceItemsForUpdate.length; it++) {
+          if (this.invoiceItemsForUpdate[it].id.sifraStavke == s.sifraStavke) {
+            zastavica3 = 0;
+            break;
+          }
+        }
+
+        if (this.stavke != null) {
+          for (let st = 0; st < this.stavke.length; st++) {
+            if (this.stavke[st].sifraStavke == s.sifraStavke) {
+              zastavica3 = 0;
+              break;
+            }
+          }
+        }
+
+        if (zastavica3 == 1) {
+          //poslati do servica da sacuva stavku
+          this.fakturaService.setInvoiceItem(s);
+
+          // stavke koje su sacuvane u operativnoj memoriji
+          this.stavke = this.fakturaService.vratiStavkeZaUnos();
+
+          //reset formu
+          this.invoiceFormGroupUpdate.get('inoviceItem')?.reset({
+            sifraStavke: [''],
+            opis: [''],
+            ean: [''],
+            proizvod: [''],
+            kolicina: ['']
+          });
+        } else {
+          alert(`Pokusavate da unesete stavku koja vec postoji u bazi.`);
+          zastavica3 = 1;
+        }
+
+      }
 
     }
 
   }
 
-  onSubmitUpdateItem(){
-    
-    if (this.invoiceFormGroupUpdate.get('inoviceItem')?.value.kolicina != 0) {
-      let s = new StavkaFaktureInsert();
+  onSubmitUpdateItem() {
 
-      s.sifraStavke = this.invoiceFormGroupUpdate.get('inoviceItem')?.value.sifraStavke;
-      s.opis = this.invoiceFormGroupUpdate.get('inoviceItem')?.value.opis;
-      s.ean = this.invoiceFormGroupUpdate.get('inoviceItem')?.value.ean;
-      s.sifraProizvoda = this.invoiceFormGroupUpdate.get('inoviceItem')?.value.proizvod.sifraProizvoda;
-      s.kolicina = this.invoiceFormGroupUpdate.get('inoviceItem')?.value.kolicina;
-      
-      //poslati do servica da sacuva stavku
-      this.fakturaService.updateInvoiceItem(s);
+    if (this.invoiceFormGroupUpdate.get('inoviceItem')?.invalid) {
+      this.invoiceFormGroupUpdate.get('inoviceItem')?.markAllAsTouched();
+      alert(`Ukoliko zelite da izmenite postojecu stavku, morate popuniti sva polja za stavku.`)
+    } else {
+      if (this.invoiceFormGroupUpdate.get('inoviceItem')?.value.kolicina != 0) {
+        let s = new StavkaFaktureInsert();
 
-      // stavke koje su sacuvane u operativnoj memoriji
-      this.stavke = this.fakturaService.vratiStavkeZaUnos();
-      this.invoiceItemsForUpdate = this.fakturaService.getInvoiceItemsForIzmena();
+        s.sifraStavke = this.invoiceFormGroupUpdate.get('inoviceItem')?.value.sifraStavke;
+        s.opis = this.invoiceFormGroupUpdate.get('inoviceItem')?.value.opis;
+        s.ean = this.invoiceFormGroupUpdate.get('inoviceItem')?.value.ean;
+        s.sifraProizvoda = this.invoiceFormGroupUpdate.get('inoviceItem')?.value.proizvod.sifraProizvoda;
+        s.kolicina = this.invoiceFormGroupUpdate.get('inoviceItem')?.value.kolicina;
 
-      //reset formu
-      this.invoiceFormGroupUpdate.get('inoviceItem')?.reset({
-        sifraStavke: [''],
-        opis: [''],
-        ean: [''],
-        proizvod: [''],
-        kolicina: ['']
-      });
+        //poslati do servica da sacuva stavku
+        let rezultatPromene = this.fakturaService.updateInvoiceItem(s);
+
+        if (rezultatPromene == 1) {
+          // stavke koje su sacuvane u operativnoj memoriji
+          this.stavke = this.fakturaService.vratiStavkeZaUnos();
+          this.invoiceItemsForUpdate = this.fakturaService.getInvoiceItemsForIzmena();
+          alert(`Uspesno izmenjena stavka sa sifrom: ` + s.sifraStavke);
+          //reset formu
+          this.invoiceFormGroupUpdate.get('inoviceItem')?.reset({
+            sifraStavke: [''],
+            opis: [''],
+            ean: [''],
+            proizvod: [''],
+            kolicina: ['']
+          });
+        } else {
+          alert(`Nije izmenjena stavka fakture jer ne postoji stavka sa sifrom: ` + s.sifraStavke);
+        }
+
+      }
 
     }
 
@@ -209,57 +248,70 @@ export class FakturaUpdateComponent implements OnInit {
 
   onSubmit() {
 
-    let f = new FakturaInsert();
+    if (this.invoiceFormGroupUpdate.get('invoice')?.invalid) {
+      this.invoiceFormGroupUpdate.get('invoice')?.markAllAsTouched();
+      alert(`Ukoliko zelite da izmenite fakturu, morate popuniti sva polja za fakturu.`)
+    } else {
+      let f = new FakturaInsert();
 
-    f.sifraFakture = this.invoiceFormGroupUpdate.get('invoice')?.value.sifraFakture;
-    f.datumPrometa = this.invoiceFormGroupUpdate.get('invoice')?.value.datumPrometa;
-    f.valuta = this.invoiceFormGroupUpdate.get('invoice')?.value.valuta;
-    f.npID = this.invoiceFormGroupUpdate.get('invoice')?.value.nacinPlacanja.npID;
-    f.niID = this.invoiceFormGroupUpdate.get('invoice')?.value.nacinIsporuke.niID;
-    f.jmbg = this.invoiceFormGroupUpdate.get('invoice')?.value.zaposleni.jmbg;
-    f.postanskiBroj = this.invoiceFormGroupUpdate.get('invoice')?.value.grad.postanski_broj;
-    f.sifraUlice = this.invoiceFormGroupUpdate.get('invoice')?.value.ulica.id.sifra_ulice;
-    f.adresaID = this.invoiceFormGroupUpdate.get('invoice')?.value.adresa.id.adresa_ID;
+      f.sifraFakture = this.invoiceFormGroupUpdate.get('invoice')?.value.sifraFakture;
+      f.datumPrometa = this.invoiceFormGroupUpdate.get('invoice')?.value.datumPrometa;
+      f.valuta = this.invoiceFormGroupUpdate.get('invoice')?.value.valuta;
+      f.npID = this.invoiceFormGroupUpdate.get('invoice')?.value.nacinPlacanja.npID;
+      f.niID = this.invoiceFormGroupUpdate.get('invoice')?.value.nacinIsporuke.niID;
+      f.jmbg = this.invoiceFormGroupUpdate.get('invoice')?.value.zaposleni.jmbg;
+      f.postanskiBroj = this.invoiceFormGroupUpdate.get('invoice')?.value.grad.postanski_broj;
+      f.sifraUlice = this.invoiceFormGroupUpdate.get('invoice')?.value.ulica.id.sifra_ulice;
+      f.adresaID = this.invoiceFormGroupUpdate.get('invoice')?.value.adresa.id.adresa_ID;
 
-    this.fakturaService.putInvoice(f).subscribe({
-      next: response => {
-        alert(`Faktura je uspesno izmenjena!`);
-        this.invoiceFormGroupUpdate.reset();
-        //isprazni operativnu memoriju koja sadrzi stavke
-        this.fakturaService.isprazni();
-        this.router.navigate(['']);
-      },
-      error: err => {
-        alert(`Faktura nije uspesno izmenjena. ${err.message}`);
-        this.fakturaService.isprazni();
-        this.router.navigate(['']);
-      }
-    });
+      this.fakturaService.putInvoice(f).subscribe({
+        next: response => {
+          alert(`Faktura je uspesno izmenjena!`);
+          this.invoiceFormGroupUpdate.reset();
+          //isprazni operativnu memoriju koja sadrzi stavke
+          this.fakturaService.isprazni();
+          this.router.navigate(['']);
+        },
+        error: err => {
+          alert(`Faktura nije uspesno izmenjena. ${err.message}`);
+          this.fakturaService.isprazni();
+          this.router.navigate(['']);
+        }
+      });
+    }
 
   }
 
-  
-  onSubmitDeleteItem(){
-    
-    if (this.invoiceFormGroupUpdate.get('inoviceItem')?.value.sifraStavke != 0) {
+  onSubmitDeleteItem() {
 
-      //obrisi iz operativne memorije
-      this.fakturaService.deleteInvoiceItemFromMemory(this.invoiceFormGroupUpdate.get('inoviceItem')?.value.sifraStavke);
-     
-      this.stavke = this.fakturaService.vratiStavkeZaUnos();
-      this.invoiceItemsForUpdate = this.fakturaService.getInvoiceItemsForIzmena();
+    if (this.invoiceFormGroupUpdate.get('inoviceItem.sifraStavke')?.invalid) {
+      this.invoiceFormGroupUpdate.get('inoviceItem.sifraStavke')?.markAllAsTouched();
+      alert(`Ukoliko zelite da obrisete stavku fakture, morate popuniti polje broj stavke.`);
+    } else {
+      if (this.invoiceFormGroupUpdate.get('inoviceItem')?.value.sifraStavke != 0) {
 
-      //obrisi odmah iz baze
-      this.fakturaService.deleteInvoiceItem(this.invoiceFormGroupUpdate.get('inoviceItem')?.value.sifraStavke,this.invoiceFormGroupUpdate.get('invoice')?.value.sifraFakture).subscribe();      
-      
-      this.invoiceFormGroupUpdate.get('inoviceItem')?.reset({
-        sifraStavke: [''],
-        opis: [''],
-        ean: [''],
-        proizvod: [''],
-        kolicina: ['']
-      });
+        //obrisi iz operativne memorije
+        let rezultatBrisanja = this.fakturaService.deleteInvoiceItemFromMemory(this.invoiceFormGroupUpdate.get('inoviceItem')?.value.sifraStavke);
 
+        if (rezultatBrisanja === 1) {
+          this.stavke = this.fakturaService.vratiStavkeZaUnos();
+          this.invoiceItemsForUpdate = this.fakturaService.getInvoiceItemsForIzmena();
+
+          //obrisi odmah iz baze
+          this.fakturaService.deleteInvoiceItem(this.invoiceFormGroupUpdate.get('inoviceItem')?.value.sifraStavke, this.invoiceFormGroupUpdate.get('invoice')?.value.sifraFakture).subscribe();
+        } else {
+          alert(`Stavka nije obrisana, jer ne postoji stavka sa sifrom: ` + this.invoiceFormGroupUpdate.get('inoviceItem')?.value.sifraStavke);
+        }
+
+        this.invoiceFormGroupUpdate.get('inoviceItem')?.reset({
+          sifraStavke: [''],
+          opis: [''],
+          ean: [''],
+          proizvod: [''],
+          kolicina: ['']
+        });
+
+      }
     }
 
   }

@@ -175,7 +175,7 @@ export class FakturaService {
 
 
   // izmeni stavku koja se nalazi u bazi
-  updateInvoiceItem(data: StavkaFaktureInsert) {
+  updateInvoiceItem(data: StavkaFaktureInsert):number {
     if (this.invoiceItemsForUpdate != null) {
       for (let i = 0; i < this.invoiceItemsForUpdate.length; i++) {
         if (data.sifraStavke == this.invoiceItemsForUpdate[i].id.sifraStavke) {
@@ -184,9 +184,11 @@ export class FakturaService {
           this.invoiceItemsForUpdate[i].kolicina = data.kolicina;
           this.invoiceItemsForUpdate[i].proizvod.nazivProizvoda = "";
           this.invoiceItemsForUpdate[i].proizvod.sifraProizvoda = data.sifraProizvoda;
+          return 1;
         }
       }
     }
+    return 0;
   }
 
   // put za fakturu
@@ -218,17 +220,20 @@ export class FakturaService {
   }
 
     //obrisi stavku iz operativne memorije
-  deleteInvoiceItemFromMemory(sifraSt:number){
+  deleteInvoiceItemFromMemory(sifraSt:number):number{
     for(let j = 0; j < this.invoiceItemsForUpdate.length; j++){
       if(sifraSt == this.invoiceItemsForUpdate[j].id.sifraStavke){
-          this.invoiceItemsForUpdate.splice(j,1);          
+          this.invoiceItemsForUpdate.splice(j,1);  
+          return 1;        
       }
     }
     for(let k = 0; k < this.stavkeZaUnos.length; k++){
       if(sifraSt == this.stavkeZaUnos[k].sifraStavke){
           this.stavkeZaUnos.splice(k,1);
+          return 1;
       }
     }
+    return 0;
   }
 
   //  obrisi stavku fakture iz baze!!!!

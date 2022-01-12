@@ -61,21 +61,25 @@ export class PretragaComponent implements OnInit {
 
     const pibForUpdate = this.searchFormGroup.get('izmena')?.value;
 
-    this.kupacService.getCustomersById(pibForUpdate).subscribe(
-      data => {
-        console.log("Data from kupacService: ", data);
-        this.customer = data;
-        if (this.customer === null) {
-          this.resetFieldUpdate();
-          alert(`Ne postoji kupac sa unetim pib-om: ` + pibForUpdate);
-        
-        } else {
-          //saljem kupca kojeg treba izmeniti
-          this.kupacService.setCustomerForUpdate(this.customer);
+    if(pibForUpdate != 0){
+      this.kupacService.getCustomersById(pibForUpdate).subscribe(
+        data => {
+          console.log("Data from kupacService: ", data);
+          this.customer = data;
+          if (this.customer === null) {
+            this.resetFieldUpdate();
+            alert(`Ne postoji kupac sa unetim pib-om: ` + pibForUpdate);
+          
+          } else {
+            //saljem kupca kojeg treba izmeniti
+            this.kupacService.setCustomerForUpdate(this.customer);
+          }
+  
         }
-
-      }
-    );
+      );
+    }else{
+      alert(`Unesite PIB kupca kojeg zelite da izmenite.`);
+    }
 
     }
   }
@@ -90,27 +94,31 @@ export class PretragaComponent implements OnInit {
 
       const pibForDelete = this.searchFormGroup.get('brisanje')?.value;
   
-      this.kupacService.deleteCustomer(pibForDelete).subscribe({
-        next: response => {
-          alert(response);
-          this.resetFieldDelete();
-          //obrisati kupca i iz operativne memorije ukoliko je uspesno obrisan i iz baze:
-          if(response != "Kupac nije obrisan jer ne postoji u bazi."){
-            for(let c = 0; c < this.customers.length; c++){
-              if(this.customers[c].pib == pibForDelete){
-                this.customers.splice(c,1);
-                return;
+      if(pibForDelete != 0){
+        this.kupacService.deleteCustomer(pibForDelete).subscribe({
+          next: response => {
+            alert(response);
+            this.resetFieldDelete();
+            //obrisati kupca i iz operativne memorije ukoliko je uspesno obrisan i iz baze:
+            if(response != "Kupac nije obrisan jer ne postoji u bazi."){
+              for(let c = 0; c < this.customers.length; c++){
+                if(this.customers[c].pib == pibForDelete){
+                  this.customers.splice(c,1);
+                  return;
+                }
               }
             }
+             
+          },
+          error: err => {
+            alert(`Error pri brisanju kupca iz baze.`);
           }
-           
-        },
-        error: err => {
-          alert(`Error pri brisanju kupca iz baze.`);
+    
         }
-  
+        );
+      }else{
+        alert(`Unesite PIB kupca kojeg zelite da nadjete.`);
       }
-      );
     }
   }
 

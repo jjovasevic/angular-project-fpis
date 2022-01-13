@@ -1,10 +1,207 @@
-<!-- <p *ngFor = "let customer of customers">
-    {{ customer.naziv_kupca }} | {{customer.adresa.broj_adrese}} | {{customer.adresa.id.adresa_ID}} | {{ customer.zaposleni.jmbg }}
-</p>
-<p>--------------------------------------------------------------------------------------------</p> -->
+<form [formGroup]="customerFormGroup" (ngSubmit)="onSubmit()" id="section1">
+    <div formGroupName="customer" class="form-area">
 
+        <div class="container light-style flex-grow-1 container-p-y">
 
-<form [formGroup]="customerFormGroup" (ngSubmit)="onSubmit()">
+            <h4 class="font-weight-bold py-3 mb-4"> Novi kupac </h4>
+
+            <div class="card overflow-hidden">
+                <div class="row no-gutters row-bordered row-border-light">
+                    <div class="col-md-12">
+                        <div class="tab-content">
+                            <div class="tab-pane fade active show" id="account-general">
+
+                                <div class="card-body">
+                                    <!-- Polje za pib -->
+                                    <div class="form-group">
+                                        <label class="form-label">PIB</label>
+                                        <input formControlName="pib" type="text" class="form-control mb-1"
+                                            readonly="true">
+                                    </div>
+
+                                    <!-- Polje za naziv kupca -->
+                                    <div class="form-group">
+                                        <label class="form-label">Naziv kupca</label>
+                                        <input formControlName="naziv_kupca" type="text" class="form-control mb-1" />
+                                        <!-- validacija -->
+                                        <div *ngIf="naziv_kupca?.invalid && (naziv_kupca?.dirty  || naziv_kupca?.touched)"
+                                            class="alert alert-danger mt1">
+                                            <div
+                                                *ngIf="naziv_kupca?.errors?.required || naziv_kupca?.errors?.whiteSpace">
+                                                Polje naziv kupca je obavezno.
+                                            </div>
+                                            <div *ngIf="naziv_kupca?.errors?.minlength">
+                                                Polje naziv kupca mora imati minimalno 6 karaktera.
+                                            </div>
+                                            <div *ngIf="naziv_kupca?.errors?.maxlength">
+                                                Polje naziv kupca ne sme imati vise od 30 karaktera.
+                                            </div>
+                                            <div *ngIf="naziv_kupca?.errors?.pattern">
+                                                Polje naziv kupca sme da sadrzi samo slova.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Polje email kupca -->
+                                    <div class="form-group">
+                                        <label class="form-label">Email kupca</label>
+                                        <input formControlName="email_kupca" type="text" class="form-control mb-1">
+                                        <!-- validacija -->
+                                        <div *ngIf="email_kupca?.invalid && (email_kupca?.dirty || email_kupca?.touched)"
+                                            class="alert alert-danger mt1">
+                                            <div
+                                                *ngIf="email_kupca?.errors?.required || email_kupca?.errors?.whiteSpace">
+                                                Polje email kupca je obavezno.
+                                            </div>
+                                            <div *ngIf="email_kupca?.errors?.pattern">
+                                                Unesite Vas pravi email.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Polje telefon kupca -->
+                                    <div class="form-group">
+                                        <label class="form-label">Telefon kupca</label>
+                                        <input formControlName="telefon_kupca" type="text" class="form-control mb-1">
+                                        <!-- validacija -->
+                                        <div *ngIf="telefon_kupca?.invalid && (telefon_kupca?.dirty  || telefon_kupca?.touched)"
+                                            class="alert alert-danger mt1">
+                                            <div
+                                                *ngIf="telefon_kupca?.errors?.required || telefon_kupca?.errors?.whiteSpace">
+                                                Polje telefon kupca je obavezno.
+                                            </div>
+                                            <div *ngIf="telefon_kupca?.errors?.minlength">
+                                                Polje telefon kupca mora imati minimalno 9 karaktera.
+                                            </div>
+                                            <div *ngIf="telefon_kupca?.errors?.maxlength">
+                                                Polje telefon kupca ne sme imati vise od 20 karaktera.
+                                            </div>
+                                            <div *ngIf="telefon_kupca?.errors?.pattern">
+                                                Polje telefon kupca sme da sadrzi samo brojeve.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Potpis kupca -->
+                                    <div class="form-group">
+                                        <label class="form-label">Potpis</label>
+                                        <input formControlName="potpis" type="text" class="form-control mb-1">
+                                        <!-- validacija -->
+                                        <div *ngIf="potpis?.invalid && (potpis?.dirty  || potpis?.touched)"
+                                            class="alert alert-danger mt1">
+                                            <div *ngIf="potpis?.errors?.required || potpis?.errors?.whiteSpace">
+                                                Polje potpis kupca je obavezno!
+                                            </div>
+                                            <div *ngIf="potpis?.errors?.minlength">
+                                                Polje potpis kupca mora imati minimalno 2 karaktera.
+                                            </div>
+                                            <div *ngIf="potpis?.errors?.maxlength">
+                                                Polje potpis kupca ne sme imati vise od 20 karaktera.
+                                            </div>
+                                            <div *ngIf="potpis?.errors?.pattern">
+                                                Polje potpis sme da sadrzi samo slova.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Grad -->
+                                    <div class="form-group">
+                                        <label class="form-label">Grad</label>
+                                        <select formControlName="grad" class="form-control mb-1"
+                                            (change)="getStreets()">
+                                            <!-- [ngValue] cuvamo referencu na city objekat -->
+                                            <option *ngFor="let city of cities" [ngValue]="city">
+                                                {{city.postanski_broj}} | {{city.naziv_grada}}
+                                            </option>
+                                        </select>
+                                        <!-- validacija -->
+                                        <div *ngIf="grad?.invalid && (grad?.dirty || grad?.touched)"
+                                            class="alert alert-danger mt1">
+                                            <div *ngIf="grad?.errors?.required">
+                                                Polje grad mora biti popunjeno.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Ulica -->
+                                    <div class="form-group">
+                                        <label class="form-label">Ulica</label>
+                                        <select formControlName="ulica" class="form-control mb-1"
+                                            (change)="getAdress()">
+                                            <!-- [ngValue] cuvamo referencu na street objekat -->
+                                            <option *ngFor="let street of streets" [ngValue]="street">
+                                                {{street.id.sifra_ulice}} | {{street.naziv_ulice}}
+                                            </option>
+                                        </select>
+                                        <!-- validacija -->
+                                        <div *ngIf="ulica?.invalid && (ulica?.dirty || ulica?.touched)"
+                                            class="alert alert-danger mt1">
+                                            <div *ngIf="ulica?.errors?.required">
+                                                Polje ulica mora biti popunjeno. Popunjava se nakon popunjavanja polja
+                                                grad.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Adresa -->
+                                    <div class="form-group">
+                                        <label class="form-label">Adresa</label>
+                                        <select formControlName="adresa" class="form-control">
+                                            <option *ngFor="let adr of adress" [ngValue]="adr">
+                                                {{adr.id.adresa_ID}}
+                                            </option>
+                                        </select>
+                                        <!-- validacija -->
+                                        <div *ngIf="adresa?.invalid && (adresa?.dirty || adresa?.touched)"
+                                            class="alert alert-danger mt1">
+                                            <div *ngIf="adresa?.errors?.required">
+                                                Polje adresa mora biti popunjeno. Popunjava se nakon popunjavanja polja
+                                                ulica.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Zaposleni -->
+                                    <div class="form-group">
+                                        <label class="form-label">Zaposleni</label>
+                                        <select formControlName="zaposleni" class="form-control">
+                                            <option *ngFor="let employee of employees" [ngValue]="employee">
+                                                {{employee.jmbg}} | {{employee.ime_prezime}}
+                                            </option>
+                                        </select>
+                                        <!-- validacija -->
+                                        <div *ngIf="zaposleni?.invalid && (zaposleni?.dirty || zaposleni?.touched)"
+                                            class="alert alert-danger mt1">
+                                            <div *ngIf="zaposleni?.errors?.required">
+                                                Polje zaposleni mora biti popunjeno.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="text-right mt-3">
+                        &nbsp;<button type="submit" class="btn btn-primary">Sacuvaj kupca</button>&nbsp;&nbsp;
+                        <button [routerLink]="['/']" class="btn btn-danger">Pocetna strana</button>
+                        <br>
+                        <br>
+                    </div>
+
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+</form>
+
+<!-- Moj pocetni kod bez sredjivanja -->
+
+<!-- <form [formGroup]="customerFormGroup" (ngSubmit)="onSubmit()">
 
     <div formGroupName="customer" class="form-area">
         <h3>Unos novog kupca</h3>
@@ -24,8 +221,9 @@
             <div class="col-md-9">
                 <div class="input-space">
                     <input formControlName="naziv_kupca" type="text">
-                    <!-- validacija -->
-                    <div *ngIf="naziv_kupca?.invalid && (naziv_kupca?.dirty  || naziv_kupca?.touched)" class="alert alert-danger mt1">
+                    
+                    <div *ngIf="naziv_kupca?.invalid && (naziv_kupca?.dirty  || naziv_kupca?.touched)"
+                        class="alert alert-danger mt1">
                         <div *ngIf="naziv_kupca?.errors?.required || naziv_kupca?.errors?.whiteSpace">
                             Polje naziv kupca je obavezno.
                         </div>
@@ -70,7 +268,6 @@
                 <div class="input-space">
                     <input formControlName="telefon_kupca" type="text">
 
-                    <!-- validacija -->
                     <div *ngIf="telefon_kupca?.invalid && (telefon_kupca?.dirty  || telefon_kupca?.touched)"
                         class="alert alert-danger mt1">
                         <div *ngIf="telefon_kupca?.errors?.required || telefon_kupca?.errors?.whiteSpace">
@@ -97,7 +294,6 @@
                 <div class="input-space">
                     <input formControlName="potpis" type="text">
 
-                    <!-- validacija -->
                     <div *ngIf="potpis?.invalid && (potpis?.dirty  || potpis?.touched)" class="alert alert-danger mt1">
                         <div *ngIf="potpis?.errors?.required || potpis?.errors?.whiteSpace">
                             Polje potpis kupca je obavezno!
@@ -122,13 +318,11 @@
             <div class="col-md-9">
                 <div class="input-space">
                     <select formControlName="grad" (change)="getStreets()">
-                        <!-- [ngValue] cuvamo referencu na city objekat -->
                         <option *ngFor="let city of cities" [ngValue]="city">
                             {{city.postanski_broj}} | {{city.naziv_grada}}
                         </option>
                     </select>
 
-                    <!-- validacija -->
                     <div *ngIf="grad?.invalid && (grad?.dirty || grad?.touched)" class="alert alert-danger mt1">
                         <div *ngIf="grad?.errors?.required">
                             Polje grad mora biti popunjeno.
@@ -144,19 +338,16 @@
             <div class="col-md-9">
                 <div class="input-space">
                     <select formControlName="ulica" (change)="getAdress()">
-                        <!-- [ngValue] cuvamo referencu na street objekat -->
                         <option *ngFor="let street of streets" [ngValue]="street">
                             {{street.id.sifra_ulice}} | {{street.naziv_ulice}}
                         </option>
                     </select>
 
-                    <!-- validacija -->
                     <div *ngIf="ulica?.invalid && (ulica?.dirty || ulica?.touched)" class="alert alert-danger mt1">
                         <div *ngIf="ulica?.errors?.required">
                             Polje ulica mora biti popunjeno. Popunjava se nakon popunjavanja polja grad.
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -170,13 +361,11 @@
                             {{adr.id.adresa_ID}}
                         </option>
                     </select>
-                    <!-- validacija -->
                     <div *ngIf="adresa?.invalid && (adresa?.dirty || adresa?.touched)" class="alert alert-danger mt1">
                         <div *ngIf="adresa?.errors?.required">
                             Polje adresa mora biti popunjeno. Popunjava se nakon popunjavanja polja ulica.
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -190,14 +379,12 @@
                             {{employee.jmbg}} | {{employee.ime_prezime}}
                         </option>
                     </select>
-                    <!-- validacija -->
                     <div *ngIf="zaposleni?.invalid && (zaposleni?.dirty || zaposleni?.touched)"
                         class="alert alert-danger mt1">
                         <div *ngIf="zaposleni?.errors?.required">
                             Polje zaposleni mora biti popunjeno.
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -213,4 +400,4 @@
 
 <div>
     <button [routerLink]="['/']" class="btn btn-info">Vrati se na pocetnu stranu</button>
-</div>
+</div> -->

@@ -1,4 +1,99 @@
-<h3>Faktura</h3>
+<table class="body-wrap">
+  <tbody>
+    <tr>
+      <td></td>
+      <td class="container" width="600">
+        <div class="content">
+          <table class="main" width="100%" cellpadding="0" cellspacing="0">
+            <tbody>
+              <tr>
+                <td class="content-wrap aligncenter">
+                  <table width="100%" cellpadding="0" cellspacing="0">
+                    <tbody>
+                      <tr>
+                        <td class="content-block">
+                          <h2>Faktura sa sifrom {{invoice.sifraFakture}}</h2>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="content-block">
+                          <table class="invoice">
+                            <tbody>
+                              <tr>
+                                <td>Adresa: {{invoice.adresa.ulica.grad.naziv_grada}},
+                                  {{invoice.adresa.ulica.naziv_ulice}}
+                                  {{invoice.adresa.id.adresa_ID}}<br>Datuma: {{invoice.datumPrometa}}<br>
+                                  Placanje: {{invoice.nacinPlacanja.nacinPlacanja}} ( {{invoice.valuta}} )
+                                  <br>Isporuka: {{invoice.nacinIsporuke.nacinIsporuke}}
+                                </td>
+                              </tr>
+                              <!-- Gotova faktura -->
+
+                              <br>
+                              <tr class="total">
+                                <td class="alignleft" width="100%">Stavke fakture:</td>
+                              </tr>
+                              <br>
+                              <tr>
+                                <td>
+                                  <table class="table">
+                                    <thead class="thead-dark">
+                                      <tr>
+                                        <th scope="col">Sifra</th> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <th scope="col">Opis</th> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <th scope="col">EAN</th> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <th scope="col">Proizvod</th> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <th scope="col">Kolicina</th> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr *ngFor="let i of invoiceItems">
+                                        <td>{{i.id.sifraStavke}}</td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <td>{{i.opis}}</td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <td>{{i.ean}}</td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <td>{{i.proizvod.nazivProizvoda}}</td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <td>{{i.kolicina}}</td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                              <!-- stavke fakture -->
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="content-block">
+                          Kompanija ESENSE, 2002. godine
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="footer">
+            <table width="100%">
+              <tbody>
+                <tr>
+                  <td class="aligncenter content-block"><a href="\faktura-pretraga">Vrati se na prethodnu stranicu</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- -------------------------------------------------------------------------------------------------------------------------------------- -->
+<!-- Moj kod pre sredjivanja -->
+<!-- <h3>Faktura</h3>
 <br>
 
 <table class="table">
@@ -57,4 +152,4 @@
   <br>
   <br>
 
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button [routerLink]="['/']" class="btn btn-primary">Vrati se na pocetnu stranicu</button>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button [routerLink]="['/']" class="btn btn-primary">Vrati se na pocetnu stranicu</button> -->

@@ -1,32 +1,215 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<header class="header">
+
+    <form [formGroup]="searchInvoiceFormGroup" (ngSubmit)="onSubmitSearch()">
+
+        <div class="text-box">
+            <h1 class="heading-primary">
+                <span class="heading-primary-main">Unesite naziv valute</span>
+                <br>
+                <span class="heading-primary-sub">
+                    <div class="input-space">
+                        <input formControlName="pretraga" type="text">
+                    </div>
+                </span>
+            </h1>
+            <h6>
+                <!-- validacija -->
+                <div *ngIf="pretraga?.invalid && (pretraga?.dirty  || pretraga?.touched)" class="alert alert-info mt1">
+                    <div *ngIf="pretraga?.errors?.pattern">
+                        Polje sme da sadrzi tacno 3 slova, ne sme brojeve i druge karaktere.
+                    </div>
+                </div>
+            </h6>
+            <button type="submit" class="btn btn-white btn-animated">Pronadji fakture</button>
+        </div>
+    </form>
+
+</header>
+
+<body>
+
+    <div class="container">
+        <div class="table-responsive">
+            <table class="table table-bordered" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Sifra fakture</th>
+                        <th>Datum prometa</th>
+                        <th>Valuta</th>
+                        <th>Nacin placanja</th>
+                        <th>Nacin isporuke</th>
+                        <th>Potpisnik</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let invoice of invoices">
+                        <td>{{ invoice.sifraFakture }}</td>
+                        <td>{{ invoice.datumPrometa }}</td>
+                        <td>{{ invoice.valuta }}</td>
+                        <td>{{ invoice.nacinPlacanja.nacinPlacanja }}</td>
+                        <td>{{ invoice.nacinIsporuke.nacinIsporuke }}</td>
+                        <td>{{ invoice.zaposleni.ime_prezime }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="footer-body">
+        <div class="d-flex flex-column justify-content-center w-100 h-100">
+
+            <div class="d-flex flex-column justify-content-center align-items-center">
+                <!-- <h1 class="fw-light text-white m-0">Izmeni ili obriši postojećeg kupca iz baze</h1> -->
+                <div class="center">
+
+                    <form [formGroup]="searchInvoiceFormGroup" (ngSubmit)="onSubmitShow()">
+                        <div class="row">
+                            <div class="col-md-9"><label>Unesite sifru fakture koju zelite da prikazete</label></div>
+                            <div class="col-md-9">
+                                <div class="input-space">
+                                    <input formControlName="prikaz"
+                                        type="text" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <button type="submit" class="btn btn-outline-light" aria-current="page"><i
+                                            class="fas fa-file-download me-2"></i>Prikazi fakturu i njene
+                                        stavke</button>
+                                    <!-- validacija -->
+                                    <div *ngIf="prikaz?.invalid && (prikaz?.dirty  || prikaz?.touched)"
+                                        class="alert alert-info mt1">
+                                        <div *ngIf="prikaz?.errors?.pattern">
+                                            Polje sme da sadrzi samo brojeve. Ne sme slova i druge karatkere.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <br>
+                    <br>
+
+                    <form [formGroup]="searchInvoiceFormGroup" (ngSubmit)="onSubmitUpdate()">
+                        <div class="row">
+                            <div class="col-md-9"><label>Unesite sifru fakture koju zelite da izmenite</label>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="input-space">
+                                    <input formControlName="izmena"
+                                        type="text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <button type="submit" class="btn btn-outline-light">Izmeni fakturu i njene stavke<i
+                                            class="fas fa-expand ms-2"></i></button>
+                                    <!-- validacija -->
+                                    <div *ngIf="izmena?.invalid && (izmena?.dirty  || izmena?.touched)"
+                                        class="alert alert-info mt1">
+                                        <div *ngIf="izmena?.errors?.pattern">
+                                            Polje sme da sadrzi samo brojeve. Ne sme slova i druge karatkere.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <br>
+                    <br>
+
+                    <form [formGroup]="searchInvoiceFormGroup" (ngSubmit)="onSubmitDelete()">
+                        <div class="row">
+                            <div class="col-md-9"><label>Unesite sifru fakture koju zelite da obrisete</label>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="input-space">
+                                    <input formControlName="brisanje"
+                                        type="text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <button type="submit" class="btn btn-outline-light">Obrisi fakturu i njene stavke<i
+                                            class="fas fa-expand ms-2"></i></button>
+                                    <!-- validacija -->
+                                    <div *ngIf="brisanje?.invalid && (brisanje?.dirty  || brisanje?.touched)"
+                                        class="alert alert-info mt1">
+                                        <div *ngIf="brisanje?.errors?.pattern">
+                                            Polje sme da sadrzi samo brojeve. Ne sme slova i druge karatkere.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <br>
+                    <br>
+
+                    <!-- check box -->
+                    <label class="au-checkbox">
+                        <input type="radio" name="radio" value="popunjena"
+                            (change)="fillInvoiceStatus($event)">Popunjena
+
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="radio" value="proverena"
+                            (change)="fillInvoiceStatus($event)">Proverena
+
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="radio" value="validirana"
+                            (change)="fillInvoiceStatus($event)">Validirana
+                    </label>
+
+                    <br>
+                    <br>
+
+                    <a href="\" class="text-decoration-none">
+                        <h5 class="fw-light text-white m-0">— ESENSA —</h5>
+                    </a>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+<!-- Moj stari kod pre sredjivanja -->
+<!-- 
 <form [formGroup]="searchInvoiceFormGroup" (ngSubmit)="onSubmitSearch()">
 
     <div class="row">
         <h3>Prikaz trazenih faktura</h3>
         <br>
         <br>
-        <div class="col-md-9"><label>Unesite naziv valute po kojoj zelite da pretrazite fakture:</label></div> 
-            <div class="col-md-9">
-                <div class="input-space">
-                    <input formControlName ="pretraga" type="text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <button type="submit" class="btn btn-info">Pronadji fakture</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                     <!-- check box -->
-                     <label class = "au-checkbox">
-                        <input type="radio" name = "radio" value="popunjena" (change)="fillInvoiceStatus($event)">Popunjena
-                        <br>
-                        <input type="radio" name = "radio" value="proverena" (change)="fillInvoiceStatus($event)">Proverena
-                        <br>
-                        <input type="radio" name = "radio" value="validirana" (change)="fillInvoiceStatus($event)">Validirana
-                    </label>
-                    <!-- validacija -->
-                    <div *ngIf="pretraga?.invalid && (pretraga?.dirty  || pretraga?.touched)" class="alert alert-info mt1">
-                        <div *ngIf="pretraga?.errors?.pattern">
-                            Polje sme da sadrzi tacno 3 slova, ne sme brojeve i druge karaktere.
-                        </div>
+        <div class="col-md-9"><label>Unesite naziv valute po kojoj zelite da pretrazite fakture:</label></div>
+        <div class="col-md-9">
+            <div class="input-space">
+                <input formControlName="pretraga" type="text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="submit" class="btn btn-info">Pronadji
+                    fakture</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              
+                <label class="au-checkbox">
+                    <input type="radio" name="radio" value="popunjena" (change)="fillInvoiceStatus($event)">Popunjena
+                    <br>
+                    <input type="radio" name="radio" value="proverena" (change)="fillInvoiceStatus($event)">Proverena
+                    <br>
+                    <input type="radio" name="radio" value="validirana" (change)="fillInvoiceStatus($event)">Validirana
+                </label>
+                <div *ngIf="pretraga?.invalid && (pretraga?.dirty  || pretraga?.touched)" class="alert alert-info mt1">
+                    <div *ngIf="pretraga?.errors?.pattern">
+                        Polje sme da sadrzi tacno 3 slova, ne sme brojeve i druge karaktere.
                     </div>
                 </div>
-                
-            </div> 
-        
+            </div>
+
+        </div>
+
     </div>
 
 </form>
@@ -36,46 +219,48 @@
 
 <table style="width:100%">
     <thead>
-      <tr>
-        <th>Sifra fakture</th>
-        <th>Datum prometa</th>
-        <th>Valuta</th>
-        <th>Nacin placanja</th>
-        <th>Nacin isporuke</th>
-        <th>Potpisnik</th>
-      </tr>
+        <tr>
+            <th>Sifra fakture</th>
+            <th>Datum prometa</th>
+            <th>Valuta</th>
+            <th>Nacin placanja</th>
+            <th>Nacin isporuke</th>
+            <th>Potpisnik</th>
+        </tr>
     </thead>
     <tbody style="text-align:center">
-      <tr *ngFor="let invoice of invoices">
-        <td>{{ invoice.sifraFakture }}</td>
-        <td>{{ invoice.datumPrometa }}</td>
-        <td>{{ invoice.valuta }}</td>
-        <td>{{ invoice.nacinPlacanja.nacinPlacanja }}</td>
-        <td>{{ invoice.nacinIsporuke.nacinIsporuke }}</td>
-        <td>{{ invoice.zaposleni.ime_prezime }}</td>
-      </tr>
+        <tr *ngFor="let invoice of invoices">
+            <td>{{ invoice.sifraFakture }}</td>
+            <td>{{ invoice.datumPrometa }}</td>
+            <td>{{ invoice.valuta }}</td>
+            <td>{{ invoice.nacinPlacanja.nacinPlacanja }}</td>
+            <td>{{ invoice.nacinIsporuke.nacinIsporuke }}</td>
+            <td>{{ invoice.zaposleni.ime_prezime }}</td>
+        </tr>
     </tbody>
-  </table>
+</table>
 
-  <br>
-  <br>
+<br>
+<br>
 
-  <form [formGroup]="searchInvoiceFormGroup" (ngSubmit)="onSubmitShow()">
+<form [formGroup]="searchInvoiceFormGroup" (ngSubmit)="onSubmitShow()">
 
     <div class="row">
-        <div class="col-md-9"><h6>Unesite sifru fakture koju zelite da prikazete:</h6></div> 
-            <div class="col-md-9">
-                <div class="input-space">
-                    <input formControlName ="prikaz" type="text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <button type="submit" class="btn btn-info">Prikazi fakturu i njene stavke</button>
-                    <!-- validacija -->
-                    <div *ngIf="prikaz?.invalid && (prikaz?.dirty  || prikaz?.touched)" class="alert alert-info mt1">
-                        <div *ngIf="prikaz?.errors?.pattern">
-                            Polje sme da sadrzi samo brojeve. Ne sme slova i druge karatkere.
-                        </div>
+        <div class="col-md-9">
+            <h6>Unesite sifru fakture koju zelite da prikazete:</h6>
+        </div>
+        <div class="col-md-9">
+            <div class="input-space">
+                <input formControlName="prikaz" type="text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="submit" class="btn btn-info">Prikazi fakturu i njene stavke</button>
+              
+                <div *ngIf="prikaz?.invalid && (prikaz?.dirty  || prikaz?.touched)" class="alert alert-info mt1">
+                    <div *ngIf="prikaz?.errors?.pattern">
+                        Polje sme da sadrzi samo brojeve. Ne sme slova i druge karatkere.
                     </div>
                 </div>
-            </div>         
+            </div>
+        </div>
     </div>
 
 </form>
@@ -83,50 +268,56 @@
 <br>
 <br>
 
-  <form [formGroup]="searchInvoiceFormGroup" (ngSubmit)="onSubmitUpdate()">
+<form [formGroup]="searchInvoiceFormGroup" (ngSubmit)="onSubmitUpdate()">
 
     <div class="row">
-        <div class="col-md-9"><h6>Unesite sifru fakture koju zelite da izmenite:</h6></div> 
-            <div class="col-md-9">
-                <div class="input-space">
-                    <input formControlName ="izmena" type="text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <button type="submit" class="btn btn-info">Izmeni fakturu i njene stavke</button>
-                    <!-- validacija -->
-                    <div *ngIf="izmena?.invalid && (izmena?.dirty  || izmena?.touched)" class="alert alert-info mt1">
-                        <div *ngIf="izmena?.errors?.pattern">
-                            Polje sme da sadrzi samo brojeve. Ne sme slova i druge karatkere.
-                        </div>
+        <div class="col-md-9">
+            <h6>Unesite sifru fakture koju zelite da izmenite:</h6>
+        </div>
+        <div class="col-md-9">
+            <div class="input-space">
+                <input formControlName="izmena" type="text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="submit" class="btn btn-info">Izmeni fakturu i njene stavke</button>
+               
+                <div *ngIf="izmena?.invalid && (izmena?.dirty  || izmena?.touched)" class="alert alert-info mt1">
+                    <div *ngIf="izmena?.errors?.pattern">
+                        Polje sme da sadrzi samo brojeve. Ne sme slova i druge karatkere.
                     </div>
                 </div>
-                
-            </div> 
-        
+            </div>
+
+        </div>
+
     </div>
 
 </form>
 
 <br>
 <br>
+
+
 
 <form [formGroup]="searchInvoiceFormGroup" (ngSubmit)="onSubmitDelete()">
 
     <div class="row">
         <br>
-        <div class="col-md-9"><h6>Unesite sifru fakture koju zelite da obrisete:</h6></div> 
-            <div class="col-md-9">
-                <div class="input-space">
-                    <input formControlName ="brisanje" type="text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <button type="submit" class="btn btn-info">Obrisi fakturu i njene stavke</button>
-                    <!-- validacija -->
-                    <div *ngIf="brisanje?.invalid && (brisanje?.dirty  || brisanje?.touched)" class="alert alert-info mt1">
-                        <div *ngIf="brisanje?.errors?.pattern">
-                            Polje sme da sadrzi samo brojeve. Ne sme slova i druge karatkere.
-                        </div>
+        <div class="col-md-9">
+            <h6>Unesite sifru fakture koju zelite da obrisete:</h6>
+        </div>
+        <div class="col-md-9">
+            <div class="input-space">
+                <input formControlName="brisanje" type="text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="submit" class="btn btn-info">Obrisi fakturu i njene stavke</button>
+                
+                <div *ngIf="brisanje?.invalid && (brisanje?.dirty  || brisanje?.touched)" class="alert alert-info mt1">
+                    <div *ngIf="brisanje?.errors?.pattern">
+                        Polje sme da sadrzi samo brojeve. Ne sme slova i druge karatkere.
                     </div>
                 </div>
-                
-            </div> 
-        
+            </div>
+
+        </div>
+
     </div>
 
 </form>
@@ -134,4 +325,5 @@
 <br>
 <br>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button [routerLink]="['/']" class="btn btn-primary">Vrati se na pocetu stranu</button>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button [routerLink]="['/']" class="btn btn-primary">Vrati se na pocetu
+    stranu</button> -->

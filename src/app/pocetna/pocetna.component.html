@@ -1,93 +1,49 @@
 <div class="container">
     <div class="row ">
+
         <div class="col-md-6">
             <div class="media blog-media">
-                <a [routerLink]="['/kupac']"><img class="d-flex" src="../../assets/newCustomer.jpg" alt="Generic placeholder image"></a>
-                <div class="circle">
-                    <h5 class="day">14</h5>
-                    <span class="month">sep</span>
-                </div>
+                <a [routerLink]="['/kupac']"><img class="d-flex" src="../../assets/newCustomerPicture.jpeg" alt="Slika novog kupca"></a>
                 <div class="media-body">
-                    <a [routerLink]="['/kupac']"><h5 class="mt-0">Standard Blog Post</h5></a> Sodales aliquid, in eget ac cupidatat velit autem numquam ullam ducimus occaecati placeat error.
-                    <a [routerLink]="['/kupac']" class="post-link">Read More</a>
-                    <ul>
-                        <li>by: Admin</li>
-                        <li class="text-right"><a [routerLink]="['/kupac']">07 comments</a></li>
-                    </ul>
+                    <a [routerLink]="['/kupac']"><h5 class="mt-0">Unos novog kupca</h5></a> Ukoliko želite da unesete novog kupca u bazu podataka, ova kartica je Vaš izbor.
                 </div>
             </div>
         </div>
 
         <div class="col-md-6">
             <div class="media blog-media">
-                <a [routerLink]="['/pretraga']"><img class="d-flex" src="../../assets/customersSearch3.jpg" alt="Generic placeholder image"></a>
-                <div class="circle">
-                    <h5 class="day">12</h5>
-                    <span class="month">sep</span>
-                </div>
+                <a [routerLink]="['/pretraga']"><img class="d-flex" src="../../assets/customersSearchPicture.jpeg" alt="Generic placeholder image"></a>
                 <div class="media-body">
-                    <a [routerLink]="['/pretraga']"><h5 class="mt-0">perferendis labore</h5></a> Sodales aliquid, in eget ac cupidatat velit autem numquam ullam ducimus occaecati placeat error.
-                    <a [routerLink]="['/pretraga']" class="post-link">Read More</a>
-                    <ul>
-                        <li>by: Admin</li>
-                        <li class="text-right"><a [routerLink]="['/pretraga']">04 comments</a></li>
-                    </ul>
+                    <a [routerLink]="['/pretraga']"><h5 class="mt-0">Pretraga kupaca</h5></a> Ukoliko želite da pronađete, izmenite ili obrišete određenog kupca iz baze podataka.
                 </div>
             </div>
         </div>
 
         <div class="col-md-6">
             <div class="media blog-media">
-                <a [routerLink]="['/faktura-insert']"><img class="d-flex" src="https://bootdey.com/img/Content/avatar/avatar4.png" alt="Generic placeholder image"></a>
-                <div class="circle">
-                    <h5 class="day">09</h5>
-                    <span class="month">sep</span>
-                </div>
+                <a [routerLink]="['/faktura-insert']"><img class="d-flex" src="../../assets/invoicePicture2.jpeg" alt="Generic placeholder image"></a>
                 <div class="media-body">
-                    <a [routerLink]="['/faktura-insert']"><h5 class="mt-0">deleniti incdunt magni</h5></a> Sodales aliquid, in eget ac cupidatat velit autem numquam ullam ducimus occaecati placeat error.
-                    <a [routerLink]="['/faktura-insert']" class="post-link">Read More</a>
-                    <ul>
-                        <li>by: Admin</li>
-                        <li class="text-right"><a [routerLink]="['/faktura-insert']">10 comments</a></li>
-                    </ul>
+                    <a [routerLink]="['/faktura-insert']"><h5 class="mt-0">Unos nove fakture</h5></a> Ukoliko želite da unesete novu fakturu u bazu podataka, ova kartica je Vaš izbor.
                 </div>
             </div>
         </div>
 
         <div class="col-md-6">
             <div class="media blog-media">
-                <a [routerLink]="['/faktura-pretraga']"><img class="d-flex" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Generic placeholder image"></a>
-                <div class="circle">
+                <a [routerLink]="['/faktura-pretraga']"><img class="d-flex" src="../../assets/invoicePicture3.jpeg" alt="Generic placeholder image"></a>
+                <!-- <div class="circle">
                     <h5 class="day">04</h5>
                     <span class="month">sep</span>
-                </div>
+                </div> -->
                 <div class="media-body">
-                    <a [routerLink]="['/faktura-pretraga']"><h5 class="mt-0">Explicabo magnam </h5></a> Sodales aliquid, in eget ac cupidatat velit autem numquam ullam ducimus occaecati placeat error.
-                    <a [routerLink]="['/faktura-pretraga']" class="post-link">Read More</a>
+                    <a [routerLink]="['/faktura-pretraga']"><h5 class="mt-0">Pretraga faktura </h5></a>  Ukoliko želite da pronađete, izmenite ili obrišete određenu fakturu iz baze podataka.
+                    <!-- <a [routerLink]="['/faktura-pretraga']" class="post-link">Read More</a>
                     <ul>
                         <li>by: Admin</li>
                         <li class="text-right"><a [routerLink]="['/faktura-pretraga']">06 comments</a></li>
-                    </ul>
+                    </ul> -->
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<!-- Moj kod -->
-<!-- <button [routerLink]="['/kupac']">Unesi novog kupca u bazu</button>
-
-<br>
-<br>
-
-<button [routerLink]="['/pretraga']">Nadji kupce, izmeni ih ili obrisi</button>
-
-<br>
-<br>
-
-<button [routerLink]="['/faktura-insert']">Kreiranje nove fakture</button>
-
-<br>
-<br>
-
-<button [routerLink]="['/faktura-pretraga']">Nadji fakturu, promeni ili obrisi</button> -->

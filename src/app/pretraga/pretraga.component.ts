@@ -117,7 +117,7 @@ export class PretragaComponent implements OnInit {
         }
         );
       }else{
-        alert(`Unesite PIB kupca kojeg zelite da nadjete.`);
+        alert(`Unesite PIB kupca kojeg zelite da obrisete.`);
       }
     }
   }

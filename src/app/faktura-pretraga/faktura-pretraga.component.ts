@@ -89,25 +89,30 @@ export class FakturaPretragaComponent implements OnInit {
 
         //proveravamo da li je uneta bilo koja vrednost:
         if (idBrisanje != 0) {
-          this.fakturaService.deleteInvoice(idBrisanje).subscribe({
-            next: response => {
-              alert(response);
-              this.resetFieldDelete();
-              //obrisati fakturu i stavke iz operativne memorije ako je obrisana iz baze:
-              if(response != "Faktura nije obrisana jer ne postoji u bazi."){
-                for (let i = 0; i < this.invoices.length; i++) {
-                  if (this.invoices[i].sifraFakture == idBrisanje) {
-                    this.invoices.splice(i, 1);
-                    return;
+          if(confirm('Da li ste sigurni da zelite da obrisete fakturu sa sifrom: '+idBrisanje)){
+            this.fakturaService.deleteInvoice(idBrisanje).subscribe({
+              next: response => {
+                alert(response);
+                this.resetFieldDelete();
+                //obrisati fakturu i stavke iz operativne memorije ako je obrisana iz baze:
+                if(response != "Faktura nije obrisana jer ne postoji u bazi."){
+                  for (let i = 0; i < this.invoices.length; i++) {
+                    if (this.invoices[i].sifraFakture == idBrisanje) {
+                      this.invoices.splice(i, 1);
+                      return;
+                    }
                   }
                 }
+              },
+              error: err => {
+                alert(`Error. Faktura i stavke nisu uspesno obrisane iz baze. ${err.message}`);
               }
-            },
-            error: err => {
-              alert(`Error. Faktura i stavke nisu uspesno obrisane iz baze. ${err.message}`);
             }
+            );
+          }else{
+            // Nemoj nista da uradis, ipak ne treba obrisati fakturu iz baze.
           }
-          );
+          
         } else {
           alert(`Morate uneti sifru fakture koju zelite obrisati.`);
         }

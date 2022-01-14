@@ -95,27 +95,31 @@ export class PretragaComponent implements OnInit {
       const pibForDelete = this.searchFormGroup.get('brisanje')?.value;
   
       if(pibForDelete != 0){
-        this.kupacService.deleteCustomer(pibForDelete).subscribe({
-          next: response => {
-            alert(response);
-            this.resetFieldDelete();
-            //obrisati kupca i iz operativne memorije ukoliko je uspesno obrisan i iz baze:
-            if(response != "Kupac nije obrisan jer ne postoji u bazi."){
-              for(let c = 0; c < this.customers.length; c++){
-                if(this.customers[c].pib == pibForDelete){
-                  this.customers.splice(c,1);
-                  return;
+        if(confirm('Da li sigurno zelite da obrisete kupca sa PIB-om: '+pibForDelete)){
+          this.kupacService.deleteCustomer(pibForDelete).subscribe({
+            next: response => {
+              alert(response);
+              this.resetFieldDelete();
+              //obrisati kupca i iz operativne memorije ukoliko je uspesno obrisan i iz baze:
+              if(response != "Kupac nije obrisan jer ne postoji u bazi."){
+                for(let c = 0; c < this.customers.length; c++){
+                  if(this.customers[c].pib == pibForDelete){
+                    this.customers.splice(c,1);
+                    return;
+                  }
                 }
               }
+               
+            },
+            error: err => {
+              alert(`Error pri brisanju kupca iz baze.`);
             }
-             
-          },
-          error: err => {
-            alert(`Error pri brisanju kupca iz baze.`);
+      
           }
-    
+          );
+        }else{
+          //ne redi nista, ipak ne zeli obrisati kupca iz baze.
         }
-        );
       }else{
         alert(`Unesite PIB kupca kojeg zelite da obrisete.`);
       }

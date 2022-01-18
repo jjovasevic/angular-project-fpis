@@ -38,7 +38,7 @@ export class KupacComponent implements OnInit {
             naziv_kupca: new FormControl('',[Validators.required, Validators.minLength(6),
                                         Validators.maxLength(30),Validators.pattern('[a-zA-Z ]*'),CustomValidators.whiteSpace]),
             email_kupca: new FormControl('',[Validators.required, 
-                                        Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'), CustomValidators.whiteSpace]),
+                                        Validators.pattern('[A-Za-z0-9._%-]+@[A-Za-z0-9._%-]+\\.[a-z]{2,3}'),Validators.maxLength(20), CustomValidators.whiteSpace]),
             telefon_kupca: new FormControl('',[Validators.required, Validators.minLength(9),Validators.maxLength(20),Validators.pattern('[0-9]*'),CustomValidators.whiteSpace]),
             potpis: new FormControl('',[Validators.required, Validators.minLength(2),Validators.maxLength(20),Validators.pattern('[a-zA-Z]*'),CustomValidators.whiteSpace]),
             adresa: new FormControl('', [Validators.required]),
@@ -91,6 +91,8 @@ export class KupacComponent implements OnInit {
           this.streets = data;
       }
     );
+    this.customerFormGroup.get('customer.ulica')?.reset();
+    this.customerFormGroup.get('customer.adresa')?.reset();
   }
 
   getAdress(){

@@ -48,7 +48,7 @@ export class FakturaUpdateComponent implements OnInit {
     this.invoiceFormGroupUpdate = this.formBuilder.group({
       invoice: this.formBuilder.group({
         sifraFakture: [this.invoiceForUpdate.sifraFakture],
-        datumPrometa: new FormControl(this.invoiceForUpdate.datumPrometa, [Validators.required]),
+        datumPrometa: new FormControl(this.invoiceForUpdate.datumPrometa.getDate, [Validators.required]),
         valuta: new FormControl(this.invoiceForUpdate.valuta, [Validators.required]),
         nacinPlacanja: new FormControl(this.invoiceForUpdate.nacinPlacanja, [Validators.required]),
         nacinIsporuke: new FormControl(this.invoiceForUpdate.nacinIsporuke, [Validators.required]),
@@ -126,6 +126,8 @@ export class FakturaUpdateComponent implements OnInit {
         this.streets = data;
       }
     );
+    this.invoiceFormGroupUpdate.get('invoice.ulica')?.reset();
+   this.invoiceFormGroupUpdate.get('invoice.adresa')?.reset();
   }
 
   getAdress() {

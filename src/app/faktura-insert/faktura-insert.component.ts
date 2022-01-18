@@ -119,6 +119,8 @@ export class FakturaInsertComponent implements OnInit {
         this.streets = data;
       }
     );
+    this.invoiceFormGroup.get('invoice.ulica')?.reset();
+    this.invoiceFormGroup.get('invoice.adresa')?.reset();
   }
 
   getAdress() {

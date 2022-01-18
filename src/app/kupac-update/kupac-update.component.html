@@ -55,6 +55,9 @@
                                             <div *ngIf="email_kupca?.errors?.pattern">
                                                 Unesite Vas pravi email.
                                             </div>
+                                            <div *ngIf="email_kupca?.errors?.maxlength">
+                                                Polje email kupca ne sme imati vise od 20 karaktera.
+                                            </div>
                                         </div>
                                     </div>
 

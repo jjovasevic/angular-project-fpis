@@ -54,7 +54,7 @@ export class KupacUpdateComponent implements OnInit {
         Validators.maxLength(30),Validators.pattern('[a-zA-Z ]*'),CustomValidators.whiteSpace]),
 
       email_kupca: new FormControl(this.customer.email_kupca,[Validators.required, 
-                                        Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'), CustomValidators.whiteSpace]),
+                                        Validators.pattern('[A-Za-z0-9._%-]+@[A-Za-z0-9._%-]+\\.[a-z]{2,3}'),Validators.maxLength(20), CustomValidators.whiteSpace]),
       telefon_kupca: new FormControl(this.customer.telefon_kupca,[Validators.required, Validators.minLength(9),Validators.maxLength(20),Validators.pattern('[0-9]*'),CustomValidators.whiteSpace]),
       potpis: new FormControl(this.customer.potpis,[Validators.required, Validators.minLength(2),Validators.maxLength(20),Validators.pattern('[a-zA-Z]*'),CustomValidators.whiteSpace]),
       adresa: new FormControl(this.customer.adresa, [Validators.required]),

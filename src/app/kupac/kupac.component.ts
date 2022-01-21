@@ -103,6 +103,7 @@ export class KupacComponent implements OnInit {
           this.adress = data;
       }
     );
+    this.customerFormGroup.get('customer.adresa')?.reset();
   }
 
 

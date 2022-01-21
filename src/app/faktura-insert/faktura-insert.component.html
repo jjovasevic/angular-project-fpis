@@ -41,16 +41,14 @@
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                     <div class="form-group">
                                         <label for="fullName">Sifra fakture</label>
-                                        <input formControlName="sifraFakture" type="text" class="form-control"
-                                            id="fullName" readonly="true">
+                                        <input formControlName="sifraFakture" type="text" class="form-control" readonly="true">
                                     </div>
                                 </div>
                                 <!-- Polje datum -->
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="fullName">Datum prometa</label>
-                                        <input formControlName="datumPrometa" type="date" class="form-control"
-                                            id="fullName">
+                                        <input formControlName="datumPrometa" type="date" class="form-control">
                                         <!-- validacija -->
                                         <div *ngIf="datumPrometa?.invalid && (datumPrometa?.dirty  || datumPrometa?.touched)"
                                             class="alert alert-danger mt1">
@@ -64,7 +62,7 @@
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="eMail">Valuta</label>
-                                        <select formControlName="valuta" class="form-control" id="eMail">
+                                        <select formControlName="valuta" class="form-control">
                                             <option *ngFor="let c of currency" [ngValue]="c">
                                                 {{c}}
                                             </option>
@@ -82,7 +80,7 @@
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="phone">Nacin placanja</label>
-                                        <select formControlName="nacinPlacanja" class="form-control" id="phone">
+                                        <select formControlName="nacinPlacanja" class="form-control">
                                             <option *ngFor="let np of paymentMethods" [ngValue]="np">
                                                 {{np.npID}} | {{np.nacinPlacanja}}
                                             </option>
@@ -100,7 +98,7 @@
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="website">Nacin isporuke</label>
-                                        <select formControlName="nacinIsporuke" class="form-control" id="website">
+                                        <select formControlName="nacinIsporuke" class="form-control">
                                             <option *ngFor="let ni of deliveryMethods" [ngValue]="ni">
                                                 {{ni.niID}} | {{ni.nacinIsporuke}}
                                             </option>
@@ -120,7 +118,7 @@
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="Street">Grad</label>
-                                        <select formControlName="grad" class="form-control" id="Street"
+                                        <select formControlName="grad" class="form-control"
                                             (change)="getStreets()">
                                             <!-- [ngValue] cuvamo referencu na city objekat -->
                                             <option *ngFor="let city of cities" [ngValue]="city">
@@ -140,7 +138,7 @@
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="ciTy">Ulica</label>
-                                        <select formControlName="ulica" class="form-control" id="ciTy"
+                                        <select formControlName="ulica" class="form-control"
                                             (change)="getAdress()">
                                             <!-- [ngValue] cuvamo referencu na street objekat -->
                                             <option *ngFor="let street of streets" [ngValue]="street">
@@ -161,7 +159,7 @@
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="sTate">Adresa</label>
-                                        <select formControlName="adresa" class="form-control" id="sTate">
+                                        <select formControlName="adresa" class="form-control">
                                             <option *ngFor="let adr of adress" [ngValue]="adr">
                                                 {{adr.id.adresa_ID}}
                                             </option>
@@ -180,7 +178,7 @@
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="zIp">Zaposleni</label>
-                                        <select formControlName="zaposleni" class="form-control" id="zIp">
+                                        <select formControlName="zaposleni" class="form-control">
                                             <option *ngFor="let employee of employees" [ngValue]="employee">
                                                 {{employee.jmbg}} | {{employee.ime_prezime}}
                                             </option>
@@ -232,8 +230,7 @@
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                     <div class="form-group">
                                         <label for="website">Sifra stavke</label>
-                                        <input formControlName="sifraStavke" type="text" class="form-control"
-                                        id="website">
+                                        <input formControlName="sifraStavke" type="text" class="form-control">
                                         <!-- validacija -->
                                         <div *ngIf="sifraStavke?.invalid && (sifraStavke?.dirty  || sifraStavke?.touched)"
                                             class="alert alert-danger mt1">
@@ -257,7 +254,7 @@
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="website">Opis</label>
-                                        <input formControlName="opis" type="text" class="form-control" id="website">
+                                        <input formControlName="opis" type="text" class="form-control">
                                         <!-- validacija -->
                                         <div *ngIf="opis?.invalid && (opis?.dirty  || opis?.touched)"
                                             class="alert alert-danger mt1">
@@ -277,7 +274,7 @@
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="website">EAN</label>
-                                        <input formControlName="ean" type="text" class="form-control" id="website"/>
+                                        <input formControlName="ean" type="text" class="form-control"/>
                                         <!-- validacija -->
                                         <div *ngIf="ean?.invalid && (ean?.dirty  || ean?.touched)"
                                             class="alert alert-danger mt1">
@@ -295,7 +292,7 @@
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="phone">Proizvod</label>
-                                        <select formControlName="proizvod" class="form-control" id="phone">
+                                        <select formControlName="proizvod" class="form-control">
                                             <option *ngFor="let product of products" [ngValue]="product">
                                                 {{product.sifraProizvoda}} | {{product.nazivProizvoda}}
                                             </option>
@@ -313,8 +310,7 @@
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="website">Kolicina</label>
-                                        <input formControlName="kolicina" type="text" class="form-control"
-                                            id="website" />
+                                        <input formControlName="kolicina" type="text" class="form-control"/>
                                         <!-- validacija -->
                                         <div *ngIf="kolicina?.invalid && (kolicina?.dirty  || kolicina?.touched)"
                                             class="alert alert-danger mt1">
@@ -335,14 +331,15 @@
                                 </div>
                             </div>
                             <br>
-                            <div class="row gutters">
+                            <div class="row no-gutters">
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <!-- <div class="col-sm-2 col-sm-8 col-sm-2 "> -->
                                     <div class="text-right">
                                         <button type="button" class="btn btn-primary" (click)="onSubmitAddItem()">Unesi
-                                            stavku</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            stavku</button>&nbsp;
                                         <button type="submit" class="btn btn-success">Sacuvaj
-                                            fakturu</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <button [routerLink]="['/']" class="btn btn-danger">Otkazi</button>
+                                            fakturu</button>&nbsp;
+                                        <button [routerLink]="['/']" class="btn btn-danger" (click)="resetArrayInvoiceItems()">Otkazi</button>
                                     </div>
                                 </div>
                             </div>

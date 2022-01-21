@@ -22,7 +22,7 @@
                               <tr>
                                 <td>Adresa: {{invoice.adresa.ulica.grad.naziv_grada}},
                                   {{invoice.adresa.ulica.naziv_ulice}}
-                                  {{invoice.adresa.id.adresa_ID}}<br>Datuma: {{invoice.datumPrometa}}<br>
+                                  {{invoice.adresa.id.adresa_ID}}<br>Datuma: {{dateString}}<br>
                                   Placanje: {{invoice.nacinPlacanja.nacinPlacanja}} ( {{invoice.valuta}} )
                                   <br>Isporuka: {{invoice.nacinIsporuke.nacinIsporuke}}
                                 </td>
@@ -90,66 +90,3 @@
     </tr>
   </tbody>
 </table>
-
-<!-- -------------------------------------------------------------------------------------------------------------------------------------- -->
-<!-- Moj kod pre sredjivanja -->
-<!-- <h3>Faktura</h3>
-<br>
-
-<table class="table">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">Sifra fakture</th>
-        <th scope="col">Datum prometa</th>
-        <th scope="col">Valuta</th>
-        <th scope="col">Nacin placanja</th>
-        <th scope="col">Nacin isporuke</th>
-        <th scope="col">Grad</th>
-        <th scope="col">Ulica</th>
-        <th scope="col">Adresa</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>{{invoice.sifraFakture}}</td>
-        <td>{{invoice.datumPrometa}}</td>
-        <td>{{invoice.valuta}}</td>
-        <td>{{invoice.nacinPlacanja.nacinPlacanja}}</td>
-        <td>{{invoice.nacinIsporuke.nacinIsporuke}}</td>
-        <td>{{invoice.adresa.ulica.grad.naziv_grada}}</td>
-        <td>{{invoice.adresa.ulica.naziv_ulice}}</td>
-        <td>{{invoice.adresa.id.adresa_ID}}</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <br>
-  <br>
-
-  <h4>Stavke fakture</h4>
-
-  <table class="table">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">Sifra stavke</th>
-        <th scope="col">Opis</th>
-        <th scope="col">EAN</th>
-        <th scope="col">Proizvod</th>
-        <th scope="col">Kolicina</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let i of invoiceItems">
-        <td>{{i.id.sifraStavke}}</td>
-        <td>{{i.opis}}</td>
-        <td>{{i.ean}}</td>
-        <td>{{i.proizvod.nazivProizvoda}}</td>
-        <td>{{i.kolicina}}</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <br>
-  <br>
-
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button [routerLink]="['/']" class="btn btn-primary">Vrati se na pocetnu stranicu</button> -->

@@ -1,10 +1,8 @@
-import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Kupac } from '../klase/kupac';
 import { KupacService } from '../services/kupac.service';
-import { CustomValidators } from '../validators/custom-validators';
 
 @Component({
   selector: 'app-pretraga',

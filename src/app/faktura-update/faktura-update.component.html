@@ -48,9 +48,8 @@
                                 <!-- Polje datum -->
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
-                                        <label for="fullName">Datum prometa</label>
-                                        <input formControlName="datumPrometa" type="date" class="form-control"
-                                            id="fullName"> 
+                                        <label>Datum prometa</label>
+                                        <input formControlName="datumPrometa" type="date" class="form-control">
                                         <!-- validacija -->
                                         <div *ngIf="datumPrometa?.invalid && (datumPrometa?.dirty  || datumPrometa?.touched)"
                                             class="alert alert-danger mt1">
@@ -252,8 +251,7 @@
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                     <div class="form-group">
                                         <label for="website">Sifra stavke</label>
-                                        <input formControlName="sifraStavke" type="text" class="form-control"
-                                            id="website">
+                                        <input formControlName="sifraStavke" type="text" class="form-control">
                                         <!-- validacija -->
                                         <div *ngIf="sifraStavke?.invalid && (sifraStavke?.dirty  || sifraStavke?.touched)"
                                             class="alert alert-danger mt1">
@@ -276,7 +274,7 @@
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="website">Opis</label>
-                                        <input formControlName="opis" type="text" class="form-control" id="website">
+                                        <input formControlName="opis" type="text" class="form-control">
                                         <!-- validacija -->
                                         <div *ngIf="opis?.invalid && (opis?.dirty  || opis?.touched)"
                                             class="alert alert-danger mt1">
@@ -296,7 +294,7 @@
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="website">EAN</label>
-                                        <input formControlName="ean" type="text" class="form-control" id="website" />
+                                        <input formControlName="ean" type="text" class="form-control"/>
                                         <!-- validacija -->
                                         <div *ngIf="ean?.invalid && (ean?.dirty  || ean?.touched)"
                                             class="alert alert-danger mt1">
@@ -314,7 +312,7 @@
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="phone">Proizvod</label>
-                                        <select formControlName="proizvod" class="form-control" id="phone">
+                                        <select formControlName="proizvod" class="form-control">
                                             <option *ngFor="let product of products" [ngValue]="product">
                                                 {{product.sifraProizvoda}} | {{product.nazivProizvoda}}
                                             </option>
@@ -332,8 +330,7 @@
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="website">Kolicina</label>
-                                        <input formControlName="kolicina" type="text" class="form-control"
-                                            id="website" />
+                                        <input formControlName="kolicina" type="text" class="form-control"/>
                                         <!-- validacija -->
                                         <div *ngIf="kolicina?.invalid && (kolicina?.dirty  || kolicina?.touched)"
                                             class="alert alert-danger mt1">
@@ -370,7 +367,7 @@
                                             izmenu</button>&nbsp;&nbsp;
 
                                         <button [routerLink]="['/']"
-                                            class="btn btn-danger">Otkazi</button>&nbsp;&nbsp;&nbsp;
+                                            class="btn btn-danger" (click)="resetArrayInvoiceItems()">Otkazi</button>&nbsp;&nbsp;&nbsp;
                                     </div>
                                 </div>
                             </div>

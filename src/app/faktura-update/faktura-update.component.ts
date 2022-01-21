@@ -36,6 +36,8 @@ export class FakturaUpdateComponent implements OnInit {
   currency!: String[];
 
   invoiceFormGroupUpdate!: FormGroup;
+  defaultDate!: Date;
+  dateString!: string;
 
   constructor(private fakturaService: FakturaService, private formBuilder: FormBuilder, private router: Router) { }
 
@@ -44,11 +46,17 @@ export class FakturaUpdateComponent implements OnInit {
     this.invoiceForUpdate = this.fakturaService.getInvoiceForIzmena();
     this.invoiceItemsForUpdate = this.fakturaService.getInvoiceItemsForIzmena();
 
+    this.defaultDate = new Date(this.invoiceForUpdate.datumPrometa);
+    console.log(this.defaultDate.getDate(), this.defaultDate.getMonth(), this.defaultDate.getFullYear());
+    const day = this.defaultDate.getDate() < 10 ? `0${this.defaultDate.getDate()}`: `${this.defaultDate.getDate()}`;
+    const month = this.defaultDate.getMonth() < 10 ? `0${this.defaultDate.getMonth()+1}`: `${this.defaultDate.getMonth()+1}`;
+    this.dateString = `${this.defaultDate.getFullYear()}-${month}-${day}`;
+  
     //forma za unos fakture i stavke fakture
     this.invoiceFormGroupUpdate = this.formBuilder.group({
       invoice: this.formBuilder.group({
         sifraFakture: [this.invoiceForUpdate.sifraFakture],
-        datumPrometa: new FormControl(this.invoiceForUpdate.datumPrometa.getDate, [Validators.required]),
+        datumPrometa: new FormControl(this.dateString, [Validators.required]),
         valuta: new FormControl(this.invoiceForUpdate.valuta, [Validators.required]),
         nacinPlacanja: new FormControl(this.invoiceForUpdate.nacinPlacanja, [Validators.required]),
         nacinIsporuke: new FormControl(this.invoiceForUpdate.nacinIsporuke, [Validators.required]),
@@ -246,6 +254,11 @@ export class FakturaUpdateComponent implements OnInit {
 
     }
 
+  }
+
+  resetArrayInvoiceItems(){
+    this.stavke = [];
+    this.fakturaService.resetInvoiceItems();
   }
 
   onSubmit() {

@@ -79,6 +79,11 @@ export class FakturaService {
     this.stavkeZaUnos.push(data);
   }
 
+  //ukoliko je doslo do otkaza, isprazni listu stavke za unos
+  resetInvoiceItems() {
+    this.stavkeZaUnos = [];
+  }
+
   // post za fakturu
   postInvoice(fakturatIns: FakturaInsert): Observable<any> {
 

@@ -112,6 +112,7 @@ export class KupacUpdateComponent implements OnInit {
         this.adress = data;
       }
     );
+    this.customerUpdateFormGroup.controls['adresa'].reset();
   }
 
 

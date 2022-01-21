@@ -80,7 +80,14 @@ body {
 	background: linear-gradient(-45deg, #747479, #5f6062, #565758, #47494c);
 	background-size: 400% 400%;
 	animation: gradient 15s ease infinite;
-	height: 75vh;
+	height: 100vh;
+    /* moj kod */
+    /* position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1rem; */
+    text-align: center;
 }
 
 @keyframes gradient {

@@ -163,19 +163,16 @@ export class FakturaInsertComponent implements OnInit {
         this.stavke = this.fakturaService.vratiStavkeZaUnos();
 
         //reset formu
-        this.invoiceFormGroup.get('inoviceItem')?.reset(
-        //   {
-        //   sifraStavke: [''],
-        //   opis: [''],
-        //   ean: [''],
-        //   proizvod: [''],
-        //   kolicina: ['']
-        // }
-        );
+        this.invoiceFormGroup.get('inoviceItem')?.reset();
 
       }
     }
 
+  }
+
+  resetArrayInvoiceItems(){
+    this.stavke = [];
+    this.fakturaService.resetInvoiceItems();
   }
 
   onSubmit() {

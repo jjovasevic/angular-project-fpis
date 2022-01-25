@@ -72,7 +72,6 @@
         <div class="d-flex flex-column justify-content-center w-100 h-100">
 
             <div class="d-flex flex-column justify-content-center align-items-center">
-                <!-- <h1 class="fw-light text-white m-0">Izmeni ili obriši postojećeg kupca iz baze</h1> -->
                 <div class="center">
 
                     <form [formGroup]="searchInvoiceFormGroup" (ngSubmit)="onSubmitShow()">
@@ -81,7 +80,7 @@
                             <div class="col-md-9">
                                 <div class="input-space">
                                     <input formControlName="prikaz"
-                                        type="text" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        type="text" />&nbsp;
                                     <button type="submit" class="btn btn-outline-light" aria-current="page"><i
                                             class="fas fa-file-download me-2"></i>Prikazi fakturu i njene
                                         stavke</button>
@@ -107,7 +106,7 @@
                             <div class="col-md-9">
                                 <div class="input-space">
                                     <input formControlName="izmena"
-                                        type="text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        type="text">&nbsp;
                                     <button type="submit" class="btn btn-outline-light">Izmeni fakturu i njene stavke<i
                                             class="fas fa-expand ms-2"></i></button>
                                     <!-- validacija -->
@@ -132,7 +131,7 @@
                             <div class="col-md-9">
                                 <div class="input-space">
                                     <input formControlName="brisanje"
-                                        type="text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        type="text">&nbsp;
                                     <button type="submit" class="btn btn-outline-light">Obrisi fakturu i njene stavke<i
                                             class="fas fa-expand ms-2"></i></button>
                                     <!-- validacija -->
@@ -154,10 +153,12 @@
                     <label class="au-checkbox">
                         <input type="radio" name="radio" value="popunjena"
                             (change)="fillInvoiceStatus($event)">Popunjena
-
+                    </label>
+                    <label class="au-checkbox">
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="radio" value="proverena"
                             (change)="fillInvoiceStatus($event)">Proverena
-
+                    </label>
+                    <label class="au-checkbox">
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="radio" value="validirana"
                             (change)="fillInvoiceStatus($event)">Validirana
                     </label>

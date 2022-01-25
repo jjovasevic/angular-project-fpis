@@ -8,7 +8,7 @@
 
 <!-- FORMA -->
 <form [formGroup]="invoiceFormGroupUpdate" (ngSubmit)="onSubmit()">
-    <!-- FORMA ZA IZMENU FAKTURU -->
+    <!-- FORMA ZA IZMENU FAKTURE -->
     <div formGroupName="invoice" class="form-area">
         <div class="container">
             <div class="row gutters">
@@ -16,12 +16,12 @@
                     <div class="card h-100">
                         <div class="card-body">
                             <div class="account-settings">
-                                <div class="user-profile">
-                                    <div class="user-avatar">
+                                <div class="invoice-profile">
+                                    <div class="invoice-avatar">
                                         <img src="../../assets/newInvoice1.png" alt="Invoice icon">
                                     </div>
-                                    <h5 class="user-name">Izmena postojece fakture</h5>
-                                    <h6 class="user-email">Forma za izmenu postojece fakture u bazi</h6>
+                                    <h5 class="invoice-name">Izmena postojece fakture</h5>
+                                    <h6 class="invoice-info">Forma za izmenu postojece fakture u bazi</h6>
                                 </div>
                                 <div class="about">
                                     <h5>Info</h5>
@@ -40,9 +40,9 @@
                                 <!-- Polje sifra fakture -->
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                     <div class="form-group">
-                                        <label for="fullName">Sifra fakture</label>
+                                        <label>Sifra fakture</label>
                                         <input formControlName="sifraFakture" type="text" class="form-control"
-                                            id="fullName" readonly="true">
+                                            readonly="true">
                                     </div>
                                 </div>
                                 <!-- Polje datum -->
@@ -62,8 +62,8 @@
                                 <!-- Polje valuta -->
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
-                                        <label for="eMail">Valuta</label>
-                                        <select formControlName="valuta" class="form-control" id="eMail">
+                                        <label>Valuta</label>
+                                        <select formControlName="valuta" class="form-control">
                                             <option *ngFor="let c of currency" [ngValue]="c">
                                                 {{c}}
                                             </option>
@@ -80,8 +80,8 @@
                                 <!-- Polje nacin placanja -->
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
-                                        <label for="phone">Nacin placanja</label>
-                                        <select formControlName="nacinPlacanja" class="form-control" id="phone">
+                                        <label>Nacin placanja</label>
+                                        <select formControlName="nacinPlacanja" class="form-control">
                                             <option selected hidden [value]="invoiceForUpdate.nacinPlacanja">
                                                 {{invoiceForUpdate.nacinPlacanja.npID}} |
                                                 {{invoiceForUpdate.nacinPlacanja.nacinPlacanja}}</option>
@@ -101,8 +101,8 @@
                                 <!-- Nacin isporuke -->
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
-                                        <label for="website">Nacin isporuke</label>
-                                        <select formControlName="nacinIsporuke" class="form-control" id="website">
+                                        <label>Nacin isporuke</label>
+                                        <select formControlName="nacinIsporuke" class="form-control">
                                             <option selected hidden [value]="invoiceForUpdate.nacinIsporuke">
                                                 {{invoiceForUpdate.nacinIsporuke.niID}} |
                                                 {{invoiceForUpdate.nacinIsporuke.nacinIsporuke}}</option>
@@ -124,8 +124,8 @@
                                 <!-- Polje grad -->
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
-                                        <label for="Street">Grad</label>
-                                        <select formControlName="grad" class="form-control" id="Street"
+                                        <label>Grad</label>
+                                        <select formControlName="grad" class="form-control"
                                             (change)="getStreets()">
                                             <option selected hidden [value]="invoiceForUpdate.adresa.ulica.grad">
                                                 {{invoiceForUpdate.adresa.ulica.grad.postanski_broj}} |
@@ -147,8 +147,8 @@
                                 <!-- Polje ulica -->
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
-                                        <label for="ciTy">Ulica</label>
-                                        <select formControlName="ulica" class="form-control" id="ciTy"
+                                        <label>Ulica</label>
+                                        <select formControlName="ulica" class="form-control"
                                             (change)="getAdress()">
                                             <option selected hidden [value]="invoiceForUpdate.adresa.ulica">
                                                 {{invoiceForUpdate.adresa.ulica.id.sifra_ulice}} |
@@ -172,8 +172,8 @@
                                 <!-- Polje adresa -->
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
-                                        <label for="sTate">Adresa</label>
-                                        <select formControlName="adresa" class="form-control" id="sTate">
+                                        <label>Adresa</label>
+                                        <select formControlName="adresa" class="form-control">
                                             <option selected hidden [value]="invoiceForUpdate.adresa">
                                                 {{invoiceForUpdate.adresa.id.adresa_ID}}</option>
 
@@ -194,8 +194,8 @@
                                 <!-- Polje zaposleni -->
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
-                                        <label for="zIp">Zaposleni</label>
-                                        <select formControlName="zaposleni" class="form-control" id="zIp">
+                                        <label>Zaposleni</label>
+                                        <select formControlName="zaposleni" class="form-control">
                                             <option selected hidden [value]="invoiceForUpdate.zaposleni">
                                                 {{invoiceForUpdate.zaposleni.jmbg}} |
                                                 {{invoiceForUpdate.zaposleni.ime_prezime}}</option>
@@ -231,12 +231,12 @@
                     <div class="card h-100">
                         <div class="card-body">
                             <div class="account-settings">
-                                <div class="user-profile">
-                                    <div class="user-avatar">
-                                        <img src="../../assets/newInvoiceItem1.jpeg" alt="Invoice icon">
+                                <div class="invoice-profile">
+                                    <div class="invoice-avatar">
+                                        <img src="../../assets/newInvoiceItem1.jpeg" alt="Invoice items icon">
                                     </div>
-                                    <h5 class="user-name">Izmena ili kreiranje novih stavki fakture</h5>
-                                    <h6 class="user-email">Forma za izmenu/unos stavki fakture u bazu</h6>
+                                    <h5 class="invoice-name">Izmena ili kreiranje novih stavki fakture</h5>
+                                    <h6 class="invoice-info">Forma za izmenu/unos stavki fakture u bazu</h6>
                                 </div>
                             </div>
                         </div>
@@ -250,7 +250,7 @@
                                 <!-- Polje sifra stavke -->
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                     <div class="form-group">
-                                        <label for="website">Sifra stavke</label>
+                                        <label>Sifra stavke</label>
                                         <input formControlName="sifraStavke" type="text" class="form-control">
                                         <!-- validacija -->
                                         <div *ngIf="sifraStavke?.invalid && (sifraStavke?.dirty  || sifraStavke?.touched)"
@@ -273,7 +273,7 @@
                                 <!-- Polje opis -->
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
-                                        <label for="website">Opis</label>
+                                        <label>Opis</label>
                                         <input formControlName="opis" type="text" class="form-control">
                                         <!-- validacija -->
                                         <div *ngIf="opis?.invalid && (opis?.dirty  || opis?.touched)"
@@ -293,7 +293,7 @@
                                 <!-- Polje ean -->
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
-                                        <label for="website">EAN</label>
+                                        <label>EAN</label>
                                         <input formControlName="ean" type="text" class="form-control"/>
                                         <!-- validacija -->
                                         <div *ngIf="ean?.invalid && (ean?.dirty  || ean?.touched)"
@@ -311,7 +311,7 @@
                                 <!-- Polje proizvod -->
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
-                                        <label for="phone">Proizvod</label>
+                                        <label>Proizvod</label>
                                         <select formControlName="proizvod" class="form-control">
                                             <option *ngFor="let product of products" [ngValue]="product">
                                                 {{product.sifraProizvoda}} | {{product.nazivProizvoda}}
@@ -329,7 +329,7 @@
                                 <!-- Polje kolicina -->
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
-                                        <label for="website">Kolicina</label>
+                                        <label>Kolicina</label>
                                         <input formControlName="kolicina" type="text" class="form-control"/>
                                         <!-- validacija -->
                                         <div *ngIf="kolicina?.invalid && (kolicina?.dirty  || kolicina?.touched)"

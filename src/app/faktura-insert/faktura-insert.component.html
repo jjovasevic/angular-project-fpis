@@ -16,12 +16,12 @@
                     <div class="card h-100">
                         <div class="card-body">
                             <div class="account-settings">
-                                <div class="user-profile">
-                                    <div class="user-avatar">
+                                <div class="invoice-profile">
+                                    <div class="invoice-avatar">
                                         <img src="../../assets/newInvoice1.png" alt="Invoice icon">
                                     </div>
-                                    <h5 class="user-name">Kreiranje nove fakture</h5>
-                                    <h6 class="user-email">Forma za unos nove fakture u bazu</h6>
+                                    <h5 class="invoice-name">Kreiranje nove fakture</h5>
+                                    <h6 class="invoice-info">Forma za unos nove fakture u bazu</h6>
                                 </div>
                                 <div class="about">
                                     <h5>Info</h5>
@@ -40,14 +40,14 @@
                                 <!-- Polje sifra fakture -->
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                     <div class="form-group">
-                                        <label for="fullName">Sifra fakture</label>
+                                        <label>Sifra fakture</label>
                                         <input formControlName="sifraFakture" type="text" class="form-control" readonly="true">
                                     </div>
                                 </div>
                                 <!-- Polje datum -->
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
-                                        <label for="fullName">Datum prometa</label>
+                                        <label>Datum prometa</label>
                                         <input formControlName="datumPrometa" type="date" class="form-control">
                                         <!-- validacija -->
                                         <div *ngIf="datumPrometa?.invalid && (datumPrometa?.dirty  || datumPrometa?.touched)"
@@ -61,7 +61,7 @@
                                 <!-- Polje valuta -->
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
-                                        <label for="eMail">Valuta</label>
+                                        <label>Valuta</label>
                                         <select formControlName="valuta" class="form-control">
                                             <option *ngFor="let c of currency" [ngValue]="c">
                                                 {{c}}
@@ -79,7 +79,7 @@
                                 <!-- Polje nacin placanja -->
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
-                                        <label for="phone">Nacin placanja</label>
+                                        <label>Nacin placanja</label>
                                         <select formControlName="nacinPlacanja" class="form-control">
                                             <option *ngFor="let np of paymentMethods" [ngValue]="np">
                                                 {{np.npID}} | {{np.nacinPlacanja}}
@@ -97,7 +97,7 @@
                                 <!-- Nacin isporuke -->
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
-                                        <label for="website">Nacin isporuke</label>
+                                        <label>Nacin isporuke</label>
                                         <select formControlName="nacinIsporuke" class="form-control">
                                             <option *ngFor="let ni of deliveryMethods" [ngValue]="ni">
                                                 {{ni.niID}} | {{ni.nacinIsporuke}}
@@ -117,7 +117,7 @@
                                 <!-- Polje grad -->
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
-                                        <label for="Street">Grad</label>
+                                        <label>Grad</label>
                                         <select formControlName="grad" class="form-control"
                                             (change)="getStreets()">
                                             <!-- [ngValue] cuvamo referencu na city objekat -->
@@ -137,7 +137,7 @@
                                 <!-- Polje ulica -->
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
-                                        <label for="ciTy">Ulica</label>
+                                        <label>Ulica</label>
                                         <select formControlName="ulica" class="form-control"
                                             (change)="getAdress()">
                                             <!-- [ngValue] cuvamo referencu na street objekat -->
@@ -158,7 +158,7 @@
                                 <!-- Polje adresa -->
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
-                                        <label for="sTate">Adresa</label>
+                                        <label>Adresa</label>
                                         <select formControlName="adresa" class="form-control">
                                             <option *ngFor="let adr of adress" [ngValue]="adr">
                                                 {{adr.id.adresa_ID}}
@@ -177,7 +177,7 @@
                                 <!-- Polje zaposleni -->
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
-                                        <label for="zIp">Zaposleni</label>
+                                        <label>Zaposleni</label>
                                         <select formControlName="zaposleni" class="form-control">
                                             <option *ngFor="let employee of employees" [ngValue]="employee">
                                                 {{employee.jmbg}} | {{employee.ime_prezime}}
@@ -210,12 +210,12 @@
                     <div class="card h-100">
                         <div class="card-body">
                             <div class="account-settings">
-                                <div class="user-profile">
-                                    <div class="user-avatar">
-                                        <img src="../../assets/newInvoiceItem1.jpeg" alt="Invoice icon">
+                                <div class="invoice-profile">
+                                    <div class="invoice-avatar">
+                                        <img src="../../assets/newInvoiceItem1.jpeg" alt="Invoice item icon">
                                     </div>
-                                    <h5 class="user-name">Kreiranje stavki fakture</h5>
-                                    <h6 class="user-email">Forma za unos stavki fakture u bazu</h6>
+                                    <h5 class="invoice-name">Kreiranje stavki fakture</h5>
+                                    <h6 class="invoice-info">Forma za unos stavki fakture u bazu</h6>
                                 </div>
                             </div>
                         </div>
@@ -229,7 +229,7 @@
                                 <!-- Polje sifra stavke -->
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                     <div class="form-group">
-                                        <label for="website">Sifra stavke</label>
+                                        <label>Sifra stavke</label>
                                         <input formControlName="sifraStavke" type="text" class="form-control">
                                         <!-- validacija -->
                                         <div *ngIf="sifraStavke?.invalid && (sifraStavke?.dirty  || sifraStavke?.touched)"
@@ -253,7 +253,7 @@
                                 <!-- Polje opis -->
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
-                                        <label for="website">Opis</label>
+                                        <label>Opis</label>
                                         <input formControlName="opis" type="text" class="form-control">
                                         <!-- validacija -->
                                         <div *ngIf="opis?.invalid && (opis?.dirty  || opis?.touched)"
@@ -273,7 +273,7 @@
                                 <!-- Polje ean -->
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
-                                        <label for="website">EAN</label>
+                                        <label>EAN</label>
                                         <input formControlName="ean" type="text" class="form-control"/>
                                         <!-- validacija -->
                                         <div *ngIf="ean?.invalid && (ean?.dirty  || ean?.touched)"
@@ -291,7 +291,7 @@
                                 <!-- Polje proizvod -->
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
-                                        <label for="phone">Proizvod</label>
+                                        <label>Proizvod</label>
                                         <select formControlName="proizvod" class="form-control">
                                             <option *ngFor="let product of products" [ngValue]="product">
                                                 {{product.sifraProizvoda}} | {{product.nazivProizvoda}}
@@ -309,7 +309,7 @@
                                 <!-- Polje kolicina -->
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
-                                        <label for="website">Kolicina</label>
+                                        <label>Kolicina</label>
                                         <input formControlName="kolicina" type="text" class="form-control"/>
                                         <!-- validacija -->
                                         <div *ngIf="kolicina?.invalid && (kolicina?.dirty  || kolicina?.touched)"

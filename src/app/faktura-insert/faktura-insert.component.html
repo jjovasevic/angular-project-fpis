@@ -331,9 +331,24 @@
                                 </div>
                             </div>
                             <br>
-                            <div class="row no-gutters">
-                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                <!-- <div class="col-sm-2 col-sm-8 col-sm-2 "> -->
+                            <div class="container">
+                            <div class="row">
+                                <div class="well col-md-4 col-xs-12">
+                                    <div class="text-center">
+                                    <button type="button" class="btn btn-primary" (click)="onSubmitAddItem()">Unesi stavku</button>
+                                    </div>
+                                </div>
+                                <div class="well col-md-4 col-xs-12">
+                                    <div class="text-center">
+                                    <button type="submit" class="btn btn-success">Sacuvaj fakturu</button>
+                                    </div>
+                                </div>
+                                <div class="well col-md-4 col-xs-12">
+                                    <div class="text-center">
+                                    <button [routerLink]="['/']" class="btn btn-danger" (click)="resetArrayInvoiceItems()">Otkazi</button>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-sm-4 col-sm-4 col-sm-4 ">
                                     <div class="text-right">
                                         <button type="button" class="btn btn-primary" (click)="onSubmitAddItem()">Unesi
                                             stavku</button>&nbsp;
@@ -341,8 +356,9 @@
                                             fakturu</button>&nbsp;
                                         <button [routerLink]="['/']" class="btn btn-danger" (click)="resetArrayInvoiceItems()">Otkazi</button>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
+                        </div>
                         </div>
                     </div>
                 </div>

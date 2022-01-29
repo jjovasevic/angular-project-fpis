@@ -62,5 +62,12 @@ body {
 
 .btn {
     cursor: pointer;
-    font-size: 1.1vw;
+    /* font-size: 1.1vw; */
 }
+
+/* .col-xs{
+    font-size: 2vw;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+} */

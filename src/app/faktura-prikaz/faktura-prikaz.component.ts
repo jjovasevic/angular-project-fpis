@@ -33,4 +33,5 @@ export class FakturaPrikazComponent implements OnInit {
     this.dateString = `${this.defaultDate.getFullYear()}-${month}-${day}`;
   }
 
+
 }

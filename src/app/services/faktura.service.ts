@@ -217,7 +217,6 @@ export class FakturaService {
     //dodala sam i ovo, da ispraznimo listu nakon unosa novog objekta.
     this.stavkeZaUnos = [];
     this.invoiceItemsForUpdate = [];
-    //trebalo bi i objekat invoiceForUpdate da reset.
 
     console.log(insertObject);
 

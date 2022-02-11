@@ -18,7 +18,6 @@ export class FakturaPretragaComponent implements OnInit {
   searchInvoiceFormGroup!: FormGroup;
   invoices!: Faktura[];
 
-  invoiceStatus: String = '';
   invoiceForShow!: Faktura;
   invoiceItemForShow!: StavkaFakture[];
   invoiceForUpdate!: Faktura;
@@ -72,16 +71,6 @@ export class FakturaPretragaComponent implements OnInit {
     this.searchInvoiceFormGroup.get('pretraga')?.setValue('');
   }
 
-  //popuni status forme
-  fillInvoiceStatus(event: any) {
-    this.invoiceStatus = '';
-
-    if (event.target.checked) {
-      this.invoiceStatus = event.target.value;
-      console.log(this.invoiceStatus);
-    }
-  }
-
   //brisanje fakture
   onSubmitDelete() {
     if (this.searchInvoiceFormGroup.get('brisanje')?.invalid) {
@@ -90,11 +79,7 @@ export class FakturaPretragaComponent implements OnInit {
         `Ukoliko zelite da izbrisete fakturu, morate pravilno popuniti polje.`
       );
     } else {
-      //ako je stiklirano polje popunjena ili proverena, onda mozemo obrisati fakturu
-      if (
-        this.invoiceStatus == 'popunjena' ||
-        this.invoiceStatus == 'proverena'
-      ) {
+
         let idBrisanje = this.searchInvoiceFormGroup.get('brisanje')?.value;
 
         //proveravamo da li je uneta bilo koja vrednost:
@@ -133,11 +118,6 @@ export class FakturaPretragaComponent implements OnInit {
         } else {
           alert(`Morate uneti sifru fakture koju zelite obrisati.`);
         }
-      } else {
-        alert(
-          `Status forme mora biti POPUNJENA ili PROVERENA da bi obrisali fakturu.`
-        );
-      }
     }
   }
   // reset polje
@@ -153,7 +133,6 @@ export class FakturaPretragaComponent implements OnInit {
         `Ukoliko zelite da prikazete fakturu, morate pravilno popuniti polje.`
       );
     } else {
-      if (this.invoiceStatus != '') {
         let idPrikazi = this.searchInvoiceFormGroup.get('prikaz')?.value;
 
         //provera da li je uneta bilo koja vrednost u polje
@@ -182,9 +161,6 @@ export class FakturaPretragaComponent implements OnInit {
               }
             });
         }
-      } else {
-        alert(`Polje status forme mora biti oznaceno.`);
-      }
     }
   }
 
@@ -196,11 +172,6 @@ export class FakturaPretragaComponent implements OnInit {
         `Ukoliko zelite da izmenite fakturu, morate pravilno popuniti polje.`
       );
     } else {
-      //ako je stiklirano polje popunjena ili proverena, onda mozemo izmeniti fakturu
-      if (
-        this.invoiceStatus == 'popunjena' ||
-        this.invoiceStatus == 'proverena'
-      ) {
         let idIzmena = this.searchInvoiceFormGroup.get('izmena')?.value;
         let zastavica2 = 0;
 
@@ -237,11 +208,6 @@ export class FakturaPretragaComponent implements OnInit {
               }
             });
         }
-      } else {
-        alert(
-          `Status forme mora biti POPUNJENA ili PROVERENA da bi izmenili fakturu i njene stavke.`
-        );
-      }
     }
   }
 

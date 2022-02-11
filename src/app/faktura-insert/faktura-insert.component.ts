@@ -131,6 +131,7 @@ export class FakturaInsertComponent implements OnInit {
         this.adress = data;
       }
     );
+    this.invoiceFormGroup.get('invoice.adresa')?.reset();
   }
 
   getProducts() {

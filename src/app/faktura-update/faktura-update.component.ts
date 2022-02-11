@@ -146,6 +146,7 @@ export class FakturaUpdateComponent implements OnInit {
         this.adress = data;
       }
     );
+    this.invoiceFormGroupUpdate.get('invoice.adresa')?.reset();
   }
 
   getProducts() {
